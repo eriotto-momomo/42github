@@ -1,25 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emonacho <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/10 11:31:38 by emonacho          #+#    #+#             */
-/*   Updated: 2024/10/10 16:08:32 by emonacho         ###   ########.fr       */
+/*   Created: 2024/10/10 15:42:35 by emonacho          #+#    #+#             */
+/*   Updated: 2024/10/10 17:02:17 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft.h>
 
-void	*ft_memcpy(void *restrict dst, const void *restrict src, size_t n)
+void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	unsigned char			*ptr_dst;
-	const unsigned char		*ptr_src;
+	unsigned char		*ptr_dst;
+	const unsigned char	*ptr_src;
 
 	ptr_dst = dst;
 	ptr_src = src;
-	while (n-- > 0)
-		*ptr_dst++ = *ptr_src++;
+	if (ptr_src <= ptr_dst)
+	{
+		while (len-- > 0)
+			*ptr_dst++ = *ptr_src++;
+	}
+	else if (dst > src)
+	{
+		ptr_dst += len - 1;
+		ptr_src += len - 1;
+		while (len-- > 0)
+			*ptr_dst-- = *ptr_src--;
+	}
 	return (dst);
 }
