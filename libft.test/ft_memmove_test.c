@@ -29,7 +29,7 @@ int	main(void)
 	char src[50] = ("UUUUUUUUUUUUUU");
 	printf("\nBefore ft_memmove(): %s\n", dst);
 
-	ft_memmove(dst, src, 8*sizeof(char));
+	ft_memmove(dst + 2, src, 8*sizeof(char));
 
 	printf("After ft_memmove(): %s", dst);
 	return (0);

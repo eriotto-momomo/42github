@@ -1,35 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memmove.c                                       :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emonacho <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/10 15:42:35 by emonacho          #+#    #+#             */
-/*   Updated: 2024/10/10 18:44:14 by emonacho         ###   ########.fr       */
+/*   Created: 2024/10/10 19:00:57 by emonacho          #+#    #+#             */
+/*   Updated: 2024/10/10 19:57:02 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft.h>
 
-void	*ft_memmove(void *dst, const void *src, size_t len)
+size_t	ft_strlcpy(char *restrict dst, const char *restrict src, size_t dstsize)
 {
-	unsigned char		*ptr_dst;
-	const unsigned char	*ptr_src;
+	size_t	pos;
 
-	ptr_dst = dst;
-	ptr_src = src;
-	if (ptr_dst <= ptr_src)
+	pos = 0;
+	if (dstsize < 1)
+		return (0);
+	dstsize--;
+	while ((pos < dstsize) && (*src))
 	{
-		while (len-- > 0)
-			*ptr_dst++ = *ptr_src++;
+		dst[pos++] = *src;
+		src++;
 	}
-	else if (dst > src)
-	{
-		ptr_dst += len - 1;
-		ptr_src += len - 1;
-		while (len-- > 0)
-			*ptr_dst-- = *ptr_src--;
-	}
-	return (dst);
+	dst[pos] = 0;
+	return (pos);
 }
