@@ -1,20 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emonacho <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/10 11:08:29 by emonacho          #+#    #+#             */
-/*   Updated: 2024/10/10 11:09:27 by emonacho         ###   ########.fr       */
+/*   Created: 2024/10/10 10:37:48 by emonacho          #+#    #+#             */
+/*   Updated: 2024/10/10 10:47:31 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H		// Si LIBFT_H n'est pas encore défini
-#define LIBFT_H		// On le définit ici
+#include <libft.h>
 
-
-
-void hello();		// Déclaration de la fonction 
-
-#endif // LIBFT_H	// Fin de la protection d'inclusion
+int	ft_isalnum(int c)
+{
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+		return (1);
+	else if (c >= '0' && c <= '9')
+		return (1);
+	else
+		return (0);
+}

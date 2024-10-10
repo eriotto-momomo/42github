@@ -1,7 +1,11 @@
 #include <stdio.h>
+
 int	ft_isprint(int c)
 {
-	return ((c >= 0040 && c <= 0077) || (c >= 0100 && c <= 0176) ? 1 : 0);
+	if ((c >= 0040 && c <= 0077) || (c >= 0100 && c <= 0176))
+		return (1);
+	else
+		return (0);
 }
 
 int main()

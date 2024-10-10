@@ -1,20 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emonacho <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/10 11:08:29 by emonacho          #+#    #+#             */
-/*   Updated: 2024/10/10 11:09:27 by emonacho         ###   ########.fr       */
+/*   Created: 2024/10/10 11:10:51 by emonacho          #+#    #+#             */
+/*   Updated: 2024/10/10 11:29:39 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H		// Si LIBFT_H n'est pas encore défini
-#define LIBFT_H		// On le définit ici
+#include <libft.h>
 
+void	*ft_bzero(void *s, size_t n)
+{
+	unsigned char	*ptr;
 
-
-void hello();		// Déclaration de la fonction 
-
-#endif // LIBFT_H	// Fin de la protection d'inclusion
+	ptr = s;
+	while (n-- > 0)
+		*ptr++ = 0;
+}

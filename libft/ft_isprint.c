@@ -1,20 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   ft_isprint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emonacho <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/10 11:08:29 by emonacho          #+#    #+#             */
-/*   Updated: 2024/10/10 11:09:27 by emonacho         ###   ########.fr       */
+/*   Created: 2024/10/10 10:53:50 by emonacho          #+#    #+#             */
+/*   Updated: 2024/10/10 10:57:59 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H		// Si LIBFT_H n'est pas encore défini
-#define LIBFT_H		// On le définit ici
+#include <libft.h>
 
-
-
-void hello();		// Déclaration de la fonction 
-
-#endif // LIBFT_H	// Fin de la protection d'inclusion
+int	ft_isprint(int c)
+{
+	if ((c >= 0040 && c <= 0077) || (c >= 0100 && c <= 0176))
+		return (1);
+	else
+		return (0);
+}

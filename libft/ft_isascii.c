@@ -1,20 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   ft_isascii.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emonacho <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/10 11:08:29 by emonacho          #+#    #+#             */
-/*   Updated: 2024/10/10 11:09:27 by emonacho         ###   ########.fr       */
+/*   Created: 2024/10/10 10:49:23 by emonacho          #+#    #+#             */
+/*   Updated: 2024/10/10 10:52:47 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H		// Si LIBFT_H n'est pas encore défini
-#define LIBFT_H		// On le définit ici
+#include <libft.h>
 
-
-
-void hello();		// Déclaration de la fonction 
-
-#endif // LIBFT_H	// Fin de la protection d'inclusion
+int	ft_isascii(int c)
+{
+	if (c >= 0 && c <= 127)
+		return (1);
+	else
+		return (0);
+}
