@@ -6,7 +6,7 @@
 /*   By: emonacho <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:31:38 by emonacho          #+#    #+#             */
-/*   Updated: 2024/10/10 11:34:08 by emonacho         ###   ########.fr       */
+/*   Updated: 2024/10/10 15:03:58 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,12 @@
 
 void	*ft_memcpy(void *restrict dst, const void *restrict src, size_t n)
 {
+	unsigned char			*ptr_dst;
+	unsigned const char		*ptr_src;
 
+	ptr_dst = dst;
+	ptr_src = src;
+	while (n-- > 0)
+		*ptr_dst++ = *ptr_src++;
+	return (dst);
 }
