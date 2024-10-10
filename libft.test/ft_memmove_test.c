@@ -8,7 +8,7 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 
 	ptr_dst = dst;
 	ptr_src = src;
-	if (ptr_src <= ptr_dst)
+	if (ptr_dst <= ptr_src)
 	{
 		while (len-- > 0)
 			*ptr_dst++ = *ptr_src++;
