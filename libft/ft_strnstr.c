@@ -6,18 +6,19 @@ char   *ft_strnstr(const char *haystack, const char *needle, size_t len)
     size_t j;
 
     i = 0;
-    if (needle[0] == '\0') //si needle est une chaine vide
-            return (haystack);
-    while ((i < len) && (haystack[i] =! '\0'))
+    j = 0;
+    if (needle[0] == 0)
+            return ((char *)haystack);
+    while ((i < len) && (haystack[i])
     {
-        j = 0;
-        while ((haystack[i + j] == needle[j]) && ((i + j) < len))
+        while ((haystack[i + j] == needle[j]) && (haystack[i + j]) && ((i + j) < len))
         {
-            if (needle[j] == '\0')
-                return ((char *)&haystack[i - j]);
             j++;
+            if (needle[j] == '\0')
+                return ((char *)&haystack + i);
         }
         i++;
+        j = 0;
     }
-    return (NULL); //si needle n'est pas trouve dans haystack
+    return (0);
 }
