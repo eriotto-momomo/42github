@@ -13,6 +13,11 @@
 #ifndef LIBFT_H		// Si LIBFT_H n'est pas encore défini
 #define LIBFT_H		// On le définit ici
 
+#include <limits.h>
+#include <stdlib.h>
+#include <strings.h>
+#include <unistd.h>
+#include <stdio.h>
 
 
 void hello();		// Déclaration de la fonction 
