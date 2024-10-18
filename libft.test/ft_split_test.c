@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-
 static char **free_array(char **ptr, int i)
 {
     while ( i > 0)
@@ -112,7 +111,7 @@ int main(void)
     }
     else
     {
-        printf("Nie udalo sie wczytac pamieci.\n");
+        printf("Echec!\n");
     }
 
     return 0;
