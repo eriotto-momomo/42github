@@ -1,5 +1,5 @@
-#include "libft.h"
-
+#include <stdio.h>
+#include <stdlib.h>
 char *ft_substr(char const *s, unsigned int start, size_t len)
 {
     char *dst;
@@ -21,4 +21,17 @@ char *ft_substr(char const *s, unsigned int start, size_t len)
     }
     dst[i] = '\0';
     return (dst);
+}
+
+int main(void)
+{
+    char *result;
+    char *s;
+
+    s = "Hello World!";
+    printf("Before ft_substr: %s\n", s);
+    result = ft_substr(s, 3, 5);
+    printf("After ft_substr: %s\n", result);
+
+    return (0);
 }
