@@ -6,7 +6,7 @@
 /*   By: emonacho <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:57:49 by emonacho          #+#    #+#             */
-/*   Updated: 2024/10/19 11:59:42 by emonacho         ###   ########.fr       */
+/*   Updated: 2024/10/19 16:17:42 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -22,11 +22,11 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 	i = 0;
 	if (dstsize <= dstlen)
 		return (dstsize + srclen);
-	while ((src[i]) && (dstlen + i < (dstsize - 1)))
+	while ((src[i]) && (i < dstsize - dstlen - 1))
 	{
 		dst[dstlen + i] = src[i];
 		i++;
 	}
-	dst[dstlen + srclen] = '\0';
-	return (ft_strlen(src) + dstlen);
+	dst[dstlen + i] = '\0';
+	return (srclen + dstlen);
 }

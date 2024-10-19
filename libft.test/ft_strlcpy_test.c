@@ -1,21 +1,20 @@
 #include <stdio.h>
 #include <string.h>
 
-size_t	ft_strlcpy(char *restrict dst, const char *restrict src, size_t dstsize)
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
-	size_t	i;
+	size_t 	src_len;
 
-	i = 0;
-	if (dstsize < 1)
-		return (0);
-	dstsize--;
-	while ((i < dstsize) && (src[i]))
+	src_len = strlen(src);
+
+	if (src_len + 1 < dstsize)
+		memcpy(dst, src, src_len + 1);
+	else if (dstsize != 0)
 	{
-		dst[i] = src[i];
-		i++;
+		memcpy(dst, src, dstsize - 1);
+		dst[dstsize - 1] = 0;
 	}
-	dst[i] = 0;
-	return (i);
+	return (src_len);
 }
 
 int	main(void)
@@ -24,7 +23,7 @@ int	main(void)
 	char src[50] = ("UUUUUUUUUUUUUU");
 	printf("\nBefore ft_strlcpy(): %s\n", dst);
 
-	ft_strlcpy(dst, src, 8*sizeof(char));
+	ft_strlcpy(dst, "aaa", 3);
 
 	printf("After ft_strlcpy(): %s", dst);
 	return (0);
