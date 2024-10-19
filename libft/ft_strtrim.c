@@ -6,19 +6,19 @@
 /*   By: emonacho <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 12:07:19 by emonacho          #+#    #+#             */
-/*   Updated: 2024/10/19 12:09:03 by emonacho         ###   ########.fr       */
+/*   Updated: 2024/10/19 19:01:33 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
 
-static int	to_trim(char const *s1, char c)
+static int	to_trim(char const *set, char c)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
-	while (s1[i])
+	while (set[i])
 	{
-		if (c == s1[i])
+		if (set[i] == c)
 			return (1);
 		i++;
 	}
@@ -33,13 +33,13 @@ char	*ft_strtrim(char const *s1, char const *set)
 	size_t	i;
 
 	start = 0;
-	end = 0;
+	end = ft_strlen(s1);
 	i = 0;
-	while (to_trim(set, s1[start]))
+	if (ft_strlen(s1) == 0)
+		return (ft_strdup(""));
+	while (s1[start] && to_trim(set, s1[start]))
 		start++;
-	while (s1[end])
-		end++;
-	while (to_trim(set, s1[end - 1]))
+	while (end > start && to_trim(set, s1[end - 1]))
 		end--;
 	res = (char *)malloc((end - start + 1) * sizeof(char));
 	if (res == 0)
