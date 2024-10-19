@@ -6,7 +6,7 @@
 /*   By: emonacho <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:42:41 by emonacho          #+#    #+#             */
-/*   Updated: 2024/10/19 11:48:23 by emonacho         ###   ########.fr       */
+/*   Updated: 2024/10/19 13:06:39 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -22,7 +22,7 @@ static char	**free_array(char **ptr, int i)
 	return (0);
 }
 
-static ini	cnt_word(char const *str, char c)
+static int	cnt_word(char const *str, char c)
 {
 	int	i;
 	int	cnt;

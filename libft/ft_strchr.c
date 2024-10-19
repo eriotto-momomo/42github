@@ -6,10 +6,10 @@
 /*   By: emonacho <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:48:43 by emonacho          #+#    #+#             */
-/*   Updated: 2024/10/19 11:49:35 by emonacho         ###   ########.fr       */
+/*   Updated: 2024/10/19 13:19:37 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <libft.h>
+#include "libft.h"
 
 char	*ft_strchr(const char *s, int c)
 {
