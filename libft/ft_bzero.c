@@ -6,13 +6,13 @@
 /*   By: emonacho <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:10:51 by emonacho          #+#    #+#             */
-/*   Updated: 2024/10/10 11:29:39 by emonacho         ###   ########.fr       */
+/*   Updated: 2024/10/19 11:24:55 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void    ft_bzero(void *s, size_t n)
+void	ft_bzero(void *s, size_t n)
 {
 	unsigned char	*ptr;
 

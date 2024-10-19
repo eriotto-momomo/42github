@@ -6,10 +6,9 @@
 /*   By: emonacho <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 19:00:57 by emonacho          #+#    #+#             */
-/*   Updated: 2024/10/10 19:57:02 by emonacho         ###   ########.fr       */
+/*   Updated: 2024/10/19 12:00:39 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "libft.h"
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)

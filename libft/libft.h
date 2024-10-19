@@ -6,12 +6,11 @@
 /*   By: emonacho <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:08:29 by emonacho          #+#    #+#             */
-/*   Updated: 2024/10/10 11:09:27 by emonacho         ###   ########.fr       */
+/*   Updated: 2024/10/19 12:15:41 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#ifndef LIBFT_H
-#define LIBFT_H
+#ifndef	LIBFT_H
+#define	LIBFT_H
 
 #include <stdlib.h>
 #include <unistd.h>

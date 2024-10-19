@@ -6,13 +6,12 @@
 /*   By: emonacho <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 10:58:56 by emonacho          #+#    #+#             */
-/*   Updated: 2024/10/10 11:06:11 by emonacho         ###   ########.fr       */
+/*   Updated: 2024/10/19 12:01:24 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "libft.h"
 
-size_t ft_strlen(const char *s)
+size_t	ft_strlen(const char *s)
 {
 	int	i;
 
