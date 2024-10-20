@@ -3,32 +3,27 @@ char	*ft_strrchr(const char *s, int c)
 {
 	size_t	i;
 	char	*res;
-	char	cc;
+	unsigned char	cc;
 
 	i = 0;
 	res = 0;
-	cc = (char)c;
+	cc = (unsigned char)c;
 	while (s[i])
 	{
-		if (s[i] == cc)
+		if ((unsigned char)s[i] == cc)
 			res = ((char *)&s[i]);
 		i++;
 	}
-	if (s[i] == c)
+	if ((unsigned char)s[i] == cc)
 		res = ((char *)&s[i]);
 	return (res);
 }
 
 int main(void)
 {
-    const char *s;
-    int c;
-    char *result;
+    const char *result;
 
-    s = "Hello World!";
-    c = '!';
-    printf("Before ft_strrchr: %s \n", s);
-    result = ft_strrchr(s, c);
-    printf("After ft_strrchr: %s \n", result);
+    result = ft_strrchr("teste", 1024);
+    printf("ft_strrchr: %p \n", result);
     return (0);
 }

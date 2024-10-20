@@ -6,7 +6,7 @@
 /*   By: emonacho <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:42:41 by emonacho          #+#    #+#             */
-/*   Updated: 2024/10/19 13:06:39 by emonacho         ###   ########.fr       */
+/*   Updated: 2024/10/20 12:57:10 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -77,7 +77,7 @@ static char	**splitword(const char *s, char c, char **s2, int num_word)
 			len_word++;
 		}
 		s2[word] = (char *)malloc((len_word + 1) * sizeof(char));
-		if (s2 == 0)
+		if (s2[word] == 0)
 			return (free_array(s2, word));
 		putword(s2[word], s, i, len_word);
 		len_word = 0;

@@ -6,7 +6,7 @@
 /*   By: emonacho <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:42:35 by emonacho          #+#    #+#             */
-/*   Updated: 2024/10/10 18:44:14 by emonacho         ###   ########.fr       */
+/*   Updated: 2024/10/20 12:01:20 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 
 	ptr_dst = dst;
 	ptr_src = src;
+	if (ptr_dst == 0 && ptr_src == 0)
+		return (NULL);
 	if (ptr_dst <= ptr_src)
 	{
 		while (len-- > 0)

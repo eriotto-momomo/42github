@@ -6,7 +6,7 @@
 /*   By: emonacho <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:31:38 by emonacho          #+#    #+#             */
-/*   Updated: 2024/10/10 16:08:32 by emonacho         ###   ########.fr       */
+/*   Updated: 2024/10/20 11:57:50 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
 
 	ptr_dst = dst;
 	ptr_src = src;
+	if (ptr_dst == 0 && ptr_src == 0)
+		return (NULL);
 	while (n-- > 0)
 		*ptr_dst++ = *ptr_src++;
 	return (dst);
