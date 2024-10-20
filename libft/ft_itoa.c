@@ -6,35 +6,29 @@
 /*   By: emonacho <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:28:29 by emonacho          #+#    #+#             */
-/*   Updated: 2024/10/19 19:50:05 by emonacho         ###   ########.fr       */
+/*   Updated: 2024/10/20 14:39:22 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
 
-static int	itoa_isnegative(int number)
+static int	isnegative(int nbr)
 {
-	if (number < 0)
-	{
+	if (nbr < 0)
 		return (1);
-	}
 	else
-	{
 		return (0);
-	}
 }
 
-static int	itoa_countdigit(unsigned int number)
+static int	cntdigits(unsigned int nbr)
 {
 	size_t	digits;
 
-	if (number == 0)
-	{
+	if (nbr == 0)
 		return (1);
-	}
 	digits = 0;
-	while (number >= 1)
+	while (nbr >= 1)
 	{
-		number /= 10;
+		nbr /= 10;
 		digits++;
 	}
 	return (digits);
@@ -42,28 +36,28 @@ static int	itoa_countdigit(unsigned int number)
 
 char	*ft_itoa(int n)
 {
-	char			*string;
+	char			*str;
 	unsigned int	neg;
-	unsigned int	number;
+	unsigned int	nbr;
 	unsigned int	digits;
 
-	neg = itoa_isnegative(n);
+	neg = isnegative(n);
 	if (neg)
-		number = -n;
+		nbr = -n;
 	else
-		number = n;
-	digits = itoa_countdigit(number);
-	string = (char *)malloc(digits + neg + 1);
-	if (!(string))
+		nbr = n;
+	digits = cntdigits(nbr);
+	str = (char *)malloc(digits + neg + 1);
+	if (str == 0)
 		return (NULL);
 	if (neg == 1)
-		string[0] = '-';
-	string[digits + neg] = '\0';
+		str[0] = '-';
+	str[digits + neg] = '\0';
 	while (digits > 0)
 	{
-		string[(digits - 1) + neg] = (number % 10) + '0';
-		number /= 10;
+		str[(digits - 1) + neg] = (nbr % 10) + '0';
+		nbr /= 10;
 		digits--;
 	}
-	return (string);
+	return (str);
 }

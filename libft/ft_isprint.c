@@ -6,10 +6,9 @@
 /*   By: emonacho <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 10:53:50 by emonacho          #+#    #+#             */
-/*   Updated: 2024/10/10 10:57:59 by emonacho         ###   ########.fr       */
+/*   Updated: 2024/10/20 13:31:35 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "libft.h"
 
 int	ft_isprint(int c)

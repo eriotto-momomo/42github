@@ -6,10 +6,9 @@
 /*   By: emonacho <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:42:35 by emonacho          #+#    #+#             */
-/*   Updated: 2024/10/20 12:01:20 by emonacho         ###   ########.fr       */
+/*   Updated: 2024/10/20 13:39:14 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "libft.h"
 
 void	*ft_memmove(void *dst, const void *src, size_t len)

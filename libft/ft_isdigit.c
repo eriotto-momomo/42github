@@ -6,10 +6,9 @@
 /*   By: emonacho <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 10:29:05 by emonacho          #+#    #+#             */
-/*   Updated: 2024/10/10 10:32:59 by emonacho         ###   ########.fr       */
+/*   Updated: 2024/10/20 13:28:54 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "libft.h"
 
 int	ft_isdigit(int c)

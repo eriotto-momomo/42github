@@ -6,19 +6,19 @@
 /*   By: emonacho <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:50:00 by emonacho          #+#    #+#             */
-/*   Updated: 2024/10/19 11:51:21 by emonacho         ###   ########.fr       */
+/*   Updated: 2024/10/20 13:50:58 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
 
 char	*ft_strdup(const char *s1)
 {
-	char	*dst;
 	size_t	i;
+	char	*dst;
 
-	dst = (char *) malloc(ft_strlen(s1) + 1);
 	i = 0;
-	if (!dst)
+	dst = (char *) malloc(ft_strlen(s1) + 1);
+	if (dst == 0)
 		return (NULL);
 	while (s1[i])
 	{

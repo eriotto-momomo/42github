@@ -6,18 +6,18 @@
 /*   By: emonacho <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 12:01:31 by emonacho          #+#    #+#             */
-/*   Updated: 2024/10/19 12:02:30 by emonacho         ###   ########.fr       */
+/*   Updated: 2024/10/20 13:54:22 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
 
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	char			*res;
 	unsigned int	i;
+	char			*res;
 
-	res = malloc((ft_strlen(s) + 1) * sizeof(char));
 	i = 0;
+	res = malloc((ft_strlen(s) + 1) * sizeof(char));
 	if (res == 0)
 		return (NULL);
 	while (i < ft_strlen(s))

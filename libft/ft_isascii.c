@@ -6,10 +6,9 @@
 /*   By: emonacho <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 10:49:23 by emonacho          #+#    #+#             */
-/*   Updated: 2024/10/10 10:52:47 by emonacho         ###   ########.fr       */
+/*   Updated: 2024/10/20 13:30:27 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "libft.h"
 
 int	ft_isascii(int c)

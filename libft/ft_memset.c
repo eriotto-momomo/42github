@@ -6,10 +6,9 @@
 /*   By: emonacho <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 10:17:06 by emonacho          #+#    #+#             */
-/*   Updated: 2024/10/10 11:24:03 by emonacho         ###   ########.fr       */
+/*   Updated: 2024/10/20 13:34:52 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "libft.h"
 
 void	*ft_memset(void *b, int c, size_t len)
@@ -17,7 +16,10 @@ void	*ft_memset(void *b, int c, size_t len)
 	unsigned char	*ptr;
 
 	ptr = b;
-	while (len-- > 0)
+	while (len > 0)
+	{
 		*ptr++ = c;
+		len--;
+	}
 	return (b);
 }
