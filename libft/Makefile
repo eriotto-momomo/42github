@@ -6,7 +6,7 @@
 #    By: emonacho <marvin@42lausanne.ch>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/19 12:30:17 by emonacho          #+#    #+#              #
-#    Updated: 2024/10/19 13:07:23 by emonacho         ###   ########.fr        #
+#    Updated: 2024/10/20 15:28:04 by emonacho         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 NAME	= libft.a
@@ -55,7 +55,6 @@ all:	$(NAME)
 
 $(NAME): $(OBJS)
 	@ar rc $(NAME) $(OBJS)
-	@echo "$(NAME) created"
 
 clean:
 	rm -f $(OBJS)
