@@ -13,36 +13,83 @@
 
 int	ft_printf(const char *, ...);
 
-int	ft_printf(const char *, ...)
+int	ft_printf(const char *format, ...)
 {
 	va_list		args;
-	va_start	(args, *);
+	va_start	(args, *format);
 	size_t		count;
 	size_t		i;
 	
 	count = 0;
 	i = 0;
-	while (*[i] != '\0')
+	while (format[i] != '\0')
 	{
-		if (*[i + 1] == '%')
+		if (format[i] == '%')
 		{
-			conversion(*[i]);
+			
+            if (format[i + 1] == 'c')
+				ft_putchar(va_arg(args, char));
+            if (format[i + 1] == 's')
+                ft_putstr(va_arg(args, char *));
+            if (format[i + 1] == 'p')
+            if (format[i + 1] == 'd' || format[i + 1] == 'i')
+				ft_itoa(va_arg(args, int));
+            if (format[i + 1] == 'u')
+            if (format[i + 1] == 'x')
+            if (format[i + 1] == 'X')
+			if (format[i + 1] == '%')
+				write(1, '%', 1);
 		}
 		else
-			write(1, &*[i], 1);
-		count++;
+			ft_putchar(format[i]);
 		i++;
 	}
 	va_end(args);
 	return (0);
 }
 
-int	conversion(char c)
+// conversion dec to hexadec
+// 1453/16 = 90,8125
+// You take the number before the comma and you have 0,8125. 0,8125 * 16 = 13. So the remainder is 13
+
+int	conversion(int decimal_nbr)
 {
-	if (c + 1 =
+	int		tmp;
+	int		i;
+	char	hexa_nbr[100];
+
+	i = 0;
+	while (decimal_nbr != 0)
+		{
+			tmp = decimal_nbr % 16;
+			if (tmp < 10)
+				tmp += 48;
+			else
+				tmp += 55;
+			hexa_nbr[i] = tmp;
+			i++;
+			decimal_nbr /= 16;
+		}
 }
 
-// write(1, &va_arg, 1) ???
+char	write_hex(int hex)
+{
+	if (hex >= 0 && hex <= 9)
+		ft_itoa(hex);
+	if (hex == 10)
+		write(1 , 'a', 1);
+	if (hex == 11)
+		write(1 , 'b', 1);
+	if (hex == 12)
+		write(1 , 'c', 1);
+	if (hex == 13)
+		write(1 , 'd', 1);
+	if (hex == 14)
+		write(1 , 'e', 1);
+	if (hex == 15)
+		write(1 , 'f', 1);
+	return (0);
+}
 
 /*
  * %c prints a single character
