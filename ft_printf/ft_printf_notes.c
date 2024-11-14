@@ -10,8 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-// write(1, &va_arg, 1) ???
-
 /*
  * %c prints a single character
  * %s prints a string
@@ -40,10 +38,6 @@
  * 		write(1, &i, 1)
  * 	i++ 
  */
-
-size_t i;
-
-i = -1;
 
 // 1. `printf` prend une chaine de caracteres et X arguments variables en parametres.
 // 2. La fonction parcoure la chaine et ecrit chaque caracteres jusqu'a `\0`.
