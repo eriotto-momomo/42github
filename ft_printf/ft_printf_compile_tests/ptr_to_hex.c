@@ -1,4 +1,4 @@
-#include <unistd.h>
+#include "ft_printf"
 
 void reverse_string(char *str, int len)
 {
@@ -43,7 +43,7 @@ char	*hexa_conversion(unsigned long long ptr)
     return (hexa_ptr);
 }
 
-int ptr_to_hex(void *ptr) // ptr to [lower]case hexadecimal
+int ptr_to_hex(void *ptr, size_t *cnt) // ptr to [lower]case hexadecimal
 { 
     unsigned long long  castptr;
     char                *hexa_ptr;
@@ -60,15 +60,4 @@ int ptr_to_hex(void *ptr) // ptr to [lower]case hexadecimal
         printf_putstr(hexa_ptr, cnt);
     }
     return(0);
-}
-
-int main(void)
-{
-    int a;
-    void *ptr;
-
-    a = 10;
-    ptr = &a;
-    ptr_to_hex(ptr);
-    return (0);
 }

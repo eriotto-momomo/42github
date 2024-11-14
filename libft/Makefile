@@ -3,13 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: emonacho <marvin@42lausanne.ch>            +#+  +:+       +#+         #
+#    By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/19 12:30:17 by emonacho          #+#    #+#              #
-#    Updated: 2024/10/20 15:28:04 by emonacho         ###   ########.fr        #
+#    Updated: 2024/11/14 20:00:58 by emonacho         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-NAME	= libft.a
+
+NAME = libftprintf.a
 
 SRCS	= ft_atoi.c \
 ft_bzero.c \
@@ -64,3 +65,5 @@ fclean: clean
 
 re: fclean
 	$(MAKE) all
+
+.PHONY: all clean fclean re

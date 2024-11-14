@@ -1,4 +1,13 @@
+
 #include "ft_printf.h"
+
+static int	isnegative(int nbr)
+{
+	if (nbr < 0)
+		return (1);
+	else
+		return (0);
+}
 
 static int	cntdigits(unsigned int nbr)
 {
@@ -15,32 +24,39 @@ static int	cntdigits(unsigned int nbr)
 	return (digits);
 }
 
-char	*unsigned_itoa(unsigned int n)
+char	*ft_itoa(int n)
 {
 	char			*str;
+	unsigned int	neg;
 	unsigned int	nbr;
 	unsigned int	digits;
 
-    nbr = n;
+	neg = isnegative(n);
+	if (neg)
+		nbr = -n;
+	else
+		nbr = n;
 	digits = cntdigits(nbr);
-	str = (char *)malloc(digits + 1);
+	str = (char *)malloc(digits + neg + 1);
 	if (str == 0)
 		return (NULL);
-	str[digits] = '\0';
+	if (neg == 1)
+		str[0] = '-';
+	str[digits + neg] = '\0';
 	while (digits > 0)
 	{
-		str[(digits - 1)] = (nbr % 10) + '0';
+		str[(digits - 1) + neg] = (nbr % 10) + '0';
 		nbr /= 10;
 		digits--;
 	}
 	return (str);
 }
 
-void	printf_unsigned_itoa(int n, size_t *cnt)
+void	printf_itoa(int n, size_t *cnt)
 {
 	char *str;
 
-	str = unsigned_itoa(n);
+	str = ft_itoa(n);
 	printf_putstr(str, cnt);
 	return (0);
 }
