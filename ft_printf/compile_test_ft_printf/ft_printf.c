@@ -11,27 +11,54 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-int	ft_printf(const char *, ...);
-
-void	check_spec(va_list args, char spec, size_t *cnt) // check specifier after '%'
+// Affiche le specificateur avec la fonction correspondante.
+void	put_args(va_list args, char spec, size_t *cnt)
 {
         if (spec == 'c')
 			printf_putchar(va_arg(args, int), cnt);
-        if (spec == 's')
+        else if (spec == 's')
            	printf_putstr(va_arg(args, char *), cnt);
-        if (spec == 'p')
+        else if (spec == 'p')
 			ptr_to_hex(va_arg(args, void *), cnt);
-        if (spec == 'd' || spec == 'i')
+        else if (spec == 'd' || spec == 'i')
 			printf_itoa(va_arg(args, int), cnt);
-        if (spec == 'u')
+        else if (spec == 'u')
 			printf_unsigned_itoa(va_arg(args, unsigned int), cnt);
-    	if (spec == 'x')
+    	else if (spec == 'x')
 			dec_to_lowerhex(va_arg(args, int), cnt);
-        if (spec == 'X')
+        else if (spec == 'X')
 			dec_to_upperhex(va_arg(args, int), cnt);
-		if (spec == '%')
-			printf_putchar(spec, cnt);
+        else if (spec == '%')
+			printf_putchar('%', cnt);
+}
+
+int	specifier_check(char c)// specifier_check: Controle si le caractere
+{			//suivant `%` correspond a un specificateur de conversion.
+	const char *spec_list; // specifiers list
+	int i;
+	
+	spec_list = "cspdiuxX%";
+	i = 0;
+	while (spec_list[i] != '\0')
+	{
+		if (c == spec_list[i])
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+void percent_check(va_list args, const char *format, size_t *i, size_t *cnt)
+{// percent_check: Decide du comportement a adopter a la suite d'un `%`.
+	if (format[*i] == '\0')
+		return;
+	if (specifier_check(format[*i])) // Controle si le spec est dans la liste. 
+		put_args(args, format[*i], cnt); 	// Affiche l'argument du spec et execute
+	else									// execute la fonction correspondante.
+	{
+		printf_putchar('%', cnt);
+		printf_putchar(format[*i], cnt);
+	}
 }
 
 int	ft_printf(const char *format, ...)
@@ -47,8 +74,8 @@ int	ft_printf(const char *format, ...)
 	{
 		if (format[i] == '%')
 		{
-			i++;
-			check_spec(args, format[i], &cnt); // check for specifier after '%'
+			i++; // avance et decide de la suite apres avoir rencontre ce `%`
+			percent_check(args, format, &i, &cnt); 
 		}
 		else
 			printf_putchar(format[i], &cnt);
