@@ -42,5 +42,9 @@ void	printf_itoa_unsigned(int n, size_t *cnt)
 	char *str;
 
 	str = itoa_unsigned(n);
-	printf_putstr(str, cnt);
+	if (str != 0)
+	{
+		printf_putstr(str, cnt);
+		free(str);
+	}
 }

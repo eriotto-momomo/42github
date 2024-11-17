@@ -1,0 +1,50 @@
+#include "ft_printf.h"
+
+static int	cntdigits(unsigned int nbr)
+{
+	size_t	digits;
+
+	if (nbr == 0)
+		return (1);
+	digits = 0;
+	while (nbr >= 1)
+	{
+		nbr /= 10;
+		digits++;
+	}
+	return (digits);
+}
+
+char	*itoa_unsigned(unsigned int n)
+{
+	char			*str;
+	unsigned int	nbr;
+	unsigned int	digits;
+
+    nbr = n;
+	digits = cntdigits(nbr);
+	str = (char *)malloc(digits + 1);
+	if (str == 0)
+		return (NULL);
+	str[digits] = '\0';
+	while (digits > 0)
+	{
+		str[(digits - 1)] = (nbr % 10) + '0';
+		nbr /= 10;
+		digits--;
+	}
+	return (str);
+	free(str);
+}
+
+void	printf_itoa_unsigned(int n, size_t *cnt)
+{
+	char *str;
+
+	str = itoa_unsigned(n);
+	if (str != 0)
+	{
+		printf_putstr(str, cnt);
+		free(str);
+	}
+}

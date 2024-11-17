@@ -24,7 +24,7 @@ static int	cntdigits(unsigned int nbr)
 	return (digits);
 }
 
-char	*ft_itoa(int n)
+char	*itoa(int n)
 {
 	char			*str;
 	unsigned int	neg;
@@ -56,6 +56,10 @@ void	printf_itoa(int n, size_t *cnt)
 {
 	char *str;
 
-	str = ft_itoa(n);
-	printf_putstr(str, cnt);
+	str = itoa(n);
+	if (str != 0)
+	{
+		printf_putstr(str, cnt);
+		free(str);
+	}
 }
