@@ -15,7 +15,12 @@ int puthex_ptr(void *ptr, char spec, size_t *cnt) // ptr to [lower]case hexadeci
     unsigned long long  castptr;
     
     castptr = (unsigned long long)ptr;
-    printf_putstr("0x", cnt);
-    hex_conversion(castptr, cnt);
+    if (ptr == 0)
+        printf_putstr("(nil)", cnt);
+    else
+    {
+        printf_putstr("0x", cnt);
+        hex_conversion(castptr, cnt);
+    }
     return(0);
 }

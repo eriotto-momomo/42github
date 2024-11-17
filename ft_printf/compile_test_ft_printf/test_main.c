@@ -77,5 +77,19 @@ int main(void)
     ft_printf("FT_PRINTF:\nNegative decimal:%X\nPositive decimal; %X\n", nb2, nb1);
     printf("---PRINTF:\nNegative decimal:%X\nPositive decimal; %X\n", nb2, nb1);
 
+     printf("\n*********PTR*********\n");
+    ft_printf("FT_PRINTF: %p %p\n", 0, 0);
+    printf("---PRINTF: %p %p\n", 0, 0);
+
+
+  printf("\n*********..44..*********\n");
+    ft_printf("FT_PRINTF: %d\n", 0);
+    printf("---PRINTF: %d", 0);
+
+
+printf("\n*********..47..*********\n");
+    ft_printf("FT_PRINTF: %d%d%d%d\n", 10, 20, 30, 5);
+    printf("---PRINTF: %d%d%d%d", 10, 20, 30, 5);
+
     return (0);
 }
