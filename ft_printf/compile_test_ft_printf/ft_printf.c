@@ -19,15 +19,15 @@ void	put_args(va_list args, char spec, size_t *cnt)
         else if (spec == 's')
            	printf_putstr(va_arg(args, char *), cnt);
         else if (spec == 'p')
-			ptr_to_hex(va_arg(args, void *), cnt);
+			ptr_to_hex(va_arg(args, void *), spec, cnt);
         else if (spec == 'd' || spec == 'i')
 			printf_itoa(va_arg(args, int), cnt);
         else if (spec == 'u')
 			printf_unsigned_itoa(va_arg(args, unsigned int), cnt);
     	else if (spec == 'x')
-			dec_to_lowerhex(va_arg(args, int), cnt);
+			dec_to_hex(va_arg(args, int), spec, cnt);
         else if (spec == 'X')
-			dec_to_upperhex(va_arg(args, int), cnt);
+			dec_to_hex(va_arg(args, int), spec, cnt);
         else if (spec == '%')
 			printf_putchar('%', cnt);
 }

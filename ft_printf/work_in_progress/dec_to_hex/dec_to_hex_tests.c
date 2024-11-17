@@ -1,5 +1,21 @@
 #include <unistd.h>
 
+void	printf_putchar(char c) // *cnt = counter
+{
+    write(1, &c, 1);
+}
+void	printf_putstr(char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] != '\0')
+	{
+		printf_putchar(s[i]);
+		i++;
+	}
+}
+
 void reverse_string(char *str, int len)
 {
     int start = 0;
@@ -46,20 +62,13 @@ char	*hexa_conversion(int decimal_nbr)
 
 int dec_to_hex(int decimal_nbr)
 {
-    char    *hexa_nbr = hexa_conversion(decimal_nbr);
-    int     i;
-    
-    i = 0;
-    while (hexa_nbr[i] != 0)
-    {
-        write(1, &hexa_nbr[i], 1);
-        i++;
-    }
-    write(1, "\n", 1);
+    char    *hexa_nbr;
+    hexa_nbr = hexa_conversion(decimal_nbr);
+
+    printf_putstr(hexa_nbr);
     return(0);
 }
 
-/*
 int main(void)
 {
     int decimal_nbr;
@@ -68,7 +77,7 @@ int main(void)
     dec_to_hex(decimal_nbr);
     return (0);
 }
-*/
+
 
 // conversion dec to hexadec
 // 1453/16 = 90,8125
