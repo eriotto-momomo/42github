@@ -2,7 +2,7 @@
 
 void	printf_putchar(char, size_t *);
 
-void	dec_to_hex(int decimal_nbr, char spec, size_t *cnt)
+void	puthex_dec(int decimal_nbr, char spec, size_t *cnt)
 {
 	char		*hex;
 	unsigned	num;
@@ -12,6 +12,6 @@ void	dec_to_hex(int decimal_nbr, char spec, size_t *cnt)
 	if (spec == 'X')
 		hex = "0123456789ABCDEF";
 	if (num > 15)
-		dec_to_hex(num / 16, spec, cnt);
+		puthex_dec(num / 16, spec, cnt);
 	printf_putchar(hex[num % 16], cnt);
 }

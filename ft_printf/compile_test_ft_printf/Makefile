@@ -14,12 +14,12 @@ TITLE = $(shell printf "\33[32;40m")
 # **************************************************************************** #
 HEADER 	= ft_printf.h
 SRC	= ft_printf.c \
-dec_to_hex.c \
 printf_itoa.c \
+printf_itoa_unsigned.c \
 printf_putchar.c \
 printf_putstr.c \
-ptr_to_hex.c \
-unsigned_itoa.c \
+puthex_dec.c \
+puthex_ptr.c \
 
 OBJS	= $(SRC:.c=.o)
 
