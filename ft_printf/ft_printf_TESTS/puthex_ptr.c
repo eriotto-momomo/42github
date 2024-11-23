@@ -1,5 +1,7 @@
 #include "ft_printf.h"
 
+int	puthex_ptr(void *ptr, char spec, size_t *cnt);
+
 void	*hex_conversion(unsigned long long ptr, size_t *cnt)
 {
 	char	*hex;

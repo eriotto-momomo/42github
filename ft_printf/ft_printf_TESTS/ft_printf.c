@@ -11,6 +11,10 @@
 /* ************************************************************************** */
 #include "ft_printf.h"
 
+int	ft_printf(const char *format, ...);
+void	percent_check(va_list args, const char *format, size_t *i, size_t *cnt);
+int	specifier_check(char c);
+
 void	put_args(va_list args, char spec, size_t *cnt)
 {
 	if (spec == 'c')

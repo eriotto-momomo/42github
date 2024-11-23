@@ -14,8 +14,8 @@ TITLE = $(shell printf "\33[32;40m")
 # **************************************************************************** #
 HEADER 	= ft_printf.h
 SRC	= ft_printf.c \
-printf_itoa.c \
 printf_itoa_unsigned.c \
+printf_itoa.c \
 printf_putchar.c \
 printf_putstr.c \
 puthex_dec.c \
@@ -45,7 +45,7 @@ $(NAME): $(OBJS) ft_printf.h
 	@echo
 
 %.o: %.c  $(HEADER)
-	$(CC) -c $(CFLAGS) -I ./ $< -o $@ 
+	$(CC) -c $(CFLAGS) -I ./ $< -o $@
 
 test: $(NAME) test_main.c
 	$(CC) $(CFLAGS) test_main.c -L. -lftprintf -o $(TEST_NAME)

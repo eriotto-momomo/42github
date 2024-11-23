@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 int main(void)
-{   
+{
     char    *s1;
     s1 = "World";
     char    *s2;
@@ -24,7 +24,7 @@ int main(void)
     nb3 = 1234567890;
     nb4 = 0;
 
-    unsigned int   unb1; 
+    unsigned int   unb1;
     unb1 = 123;
 
     void    *ptr;
@@ -68,7 +68,7 @@ int main(void)
     printf("\n****ALL & CNT OUTPUT***\n");
     int printed_chars_printf =      printf("\n---PRINTF:\nCHAR: %c\nSTR: Hello %s\nPTR: %p\nUNSIGNED NBR: %u\nNBR: %d\nLOWERHEX: %x\nUPPERHEX: %X\nPERCENT: %% \n", c, s1, ptr, unb1, nb1, nb2, nb2);
     printf("printf a imprimé %d caractères.\n", printed_chars_printf);
-    int printed_chars_ftprintf =    ft_printf("\nFT_PRINTF:\nCHAR: %c\nSTR: Hello %s\nPTR: %p\nUNSIGNED NBR: %u\nNBR: %d\nLOWERHEX: %x\nUPPERHEX: %X\nPERCENT: %% \n", c, s1, ptr, unb1, nb1, nb2, nb2);
+    int printed_chars_ftprintf =    ft_printf("\nFT_PRINTF:\nCHAR: %c\nSTR: Hello nPTR: %p\nUNSIGNED NBR: %u\nNBR: %d\nLOWERHEX: %x\nUPPERHEX: %X\nPERCENT: %% \n", c, s1, ptr, unb1, nb1, nb2, nb2);
     printf("ft_printf a imprimé %d caractères.\n", printed_chars_ftprintf);
 
 
@@ -82,12 +82,12 @@ int main(void)
     printf("---PRINTF: %p %p\n", 0, 0);
 
 
-  printf("\n*********..44..*********\n");
+ 	printf("\n*********..44..*********\n");
     ft_printf("FT_PRINTF: %d\n", 0);
     printf("---PRINTF: %d", 0);
 
 
-printf("\n*********..47..*********\n");
+	printf("\n*********..47..*********\n");
     ft_printf("FT_PRINTF: %d%d%d%d\n", 10, 20, 30, 5);
     printf("---PRINTF: %d%d%d%d", 10, 20, 30, 5);
 

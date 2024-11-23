@@ -1,6 +1,6 @@
 #include <unistd.h>
 
-void	printf_putchar(char hex, size_t *cnt);
+void	printf_putchar(char c, size_t *cnt);
 
 void	puthex_dec(int decimal_nbr, char spec, size_t *cnt)
 {

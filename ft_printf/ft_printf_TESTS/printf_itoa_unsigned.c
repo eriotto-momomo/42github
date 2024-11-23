@@ -1,5 +1,8 @@
 #include "ft_printf.h"
 
+void	printf_itoa_unsigned(int n, size_t *cnt);
+char	*itoa_unsigned(unsigned int n);
+
 static int	cntdigits(unsigned int nbr)
 {
 	size_t	digits;
@@ -34,7 +37,6 @@ char	*itoa_unsigned(unsigned int n)
 		digits--;
 	}
 	return (str);
-	free(str);
 }
 
 void	printf_itoa_unsigned(int n, size_t *cnt)
@@ -45,6 +47,6 @@ void	printf_itoa_unsigned(int n, size_t *cnt)
 	if (str != 0)
 	{
 		printf_putstr(str, cnt);
-		free(str);
 	}
+	free(str);
 }

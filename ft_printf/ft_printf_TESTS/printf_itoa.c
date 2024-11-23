@@ -1,6 +1,10 @@
 
 #include "ft_printf.h"
 
+void	printf_itoa(int n, size_t *cnt);
+char	*itoa(int n);
+static int	cntdigits(unsigned int nbr);
+
 static int	isnegative(int nbr)
 {
 	if (nbr < 0)
