@@ -6,9 +6,10 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 19:15:29 by emonacho          #+#    #+#             */
-/*   Updated: 2024/11/17 19:39:47 by emonacho         ###   ########.fr       */
+/*   Updated: 2024/11/26 10:28:13 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "ft_printf.h"
 
 void	put_args(va_list args, char spec, size_t *cnt)
