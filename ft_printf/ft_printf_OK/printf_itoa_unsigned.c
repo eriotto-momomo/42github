@@ -46,7 +46,6 @@ char	*itoa_unsigned(unsigned int n)
 		digits--;
 	}
 	return (str);
-	free(str);
 }
 
 void	printf_itoa_unsigned(int n, size_t *cnt)

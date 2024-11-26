@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 10:28:52 by emonacho          #+#    #+#             */
-/*   Updated: 2024/11/26 10:29:22 by emonacho         ###   ########.fr       */
+/*   Updated: 2024/11/26 12:56:24 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	puthex_ptr(void *ptr, char spec, size_t *cnt)
 
 	castptr = (unsigned long long)ptr;
 	if (ptr == 0)
-		printf_putstr("(nil)", cnt);
+		printf_putstr("0x0", cnt);
 	else
 	{
 		printf_putstr("0x", cnt);

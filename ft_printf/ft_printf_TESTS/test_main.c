@@ -35,15 +35,15 @@ int main(void)
     ft_printf("FT_PRINTF: Hello %s!\n", s1);
     printf("---PRINTF: Hello %s!\n", s1);
 
-    ft_printf("CHAR STR s2 is: %s\n", s2);
+    ft_printf("\nCHAR STR s2 is: %s\n", s2);
     ft_printf("FT_PRINTF: %s\n", s2);
     printf("---PRINTF: %s\n", s2);
 
-    ft_printf("CHAR STR s3 is: %s\n", s3);
+    ft_printf("\nCHAR STR s3 is: %s\n", s3);
     ft_printf("FT_PRINTF: %s\n", s3);
     printf("---PRINTF: %s\n", s3);
 
-    ft_printf("CHAR STR s4 is: %s\n", s4);
+    ft_printf("\nCHAR STR s4 is: %s\n", s4);
     ft_printf("FT_PRINTF: %s\n", s4);
     printf("---PRINTF: %s\n", s4);
 
@@ -84,12 +84,12 @@ int main(void)
 
  	printf("\n*********..44..*********\n");
     ft_printf("FT_PRINTF: %d\n", 0);
-    printf("---PRINTF: %d", 0);
+    printf("---PRINTF: %d\n", 0);
 
 
 	printf("\n*********..47..*********\n");
     ft_printf("FT_PRINTF: %d%d%d%d\n", 10, 20, 30, 5);
-    printf("---PRINTF: %d%d%d%d", 10, 20, 30, 5);
+    printf("---PRINTF: %d%d%d%d\n", 10, 20, 30, 5);
 
     return (0);
 }
