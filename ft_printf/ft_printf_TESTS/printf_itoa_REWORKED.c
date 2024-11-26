@@ -1,65 +1,57 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   printf_itoa.c                                      :+:      :+:    :+:   */
+/*   printf_itoa_REWORKED.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 10:28:26 by emonacho          #+#    #+#             */
-/*   Updated: 2024/11/26 11:36:44 by emonacho         ###   ########.fr       */
+/*   Updated: 2024/11/26 11:35:48 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	isnegative(int nbr)
+static int	count(int n)
 {
-	if (nbr < 0)
-		return (1);
-	else
-		return (0);
-}
+	int	i;
 
-static int	cntdigits(unsigned int nbr)
-{
-	size_t	digits;
-
-	if (nbr == 0)
-		return (1);
-	digits = 0;
-	while (nbr >= 1)
+	i = 2;
+	if (n < 0)
 	{
-		nbr /= 10;
-		digits++;
+		i++;
+		n = n * -1;
 	}
-	return (digits);
+	while (n > 9)
+	{
+		i++;
+		n = n / 10;
+	}
+	return (i);
 }
 
-char	*itoa(int n)
+char		*itoa(int n)
 {
-	char			*str;
-	unsigned int	neg;
-	unsigned int	nbr;
-	unsigned int	digits;
+	long	i;
+	int		longueur;
+	char	*str;
 
-	neg = isnegative(n);
-	if (neg)
-		nbr = -n;
-	else
-		nbr = n;
-	digits = cntdigits(nbr);
-	str = (char *)malloc(digits + neg + 1);
-	if (str == 0)
+	i = n;
+	if (n == -2147483648)
+		write(1, "-2147483648", 12);
+	longueur = count(n);
+	if (!(str = (char *)malloc(sizeof(char) * longueur)))
 		return (NULL);
-	if (neg == 1)
-		str[0] = '-';
-	str[digits + neg] = '\0';
-	while (digits > 0)
+	if (n < 0)
+		n = n * (-1);
+	str[--longueur] = '\0';
+	while ((--longueur) >= 0)
 	{
-		str[(digits - 1) + neg] = (nbr % 10) + '0';
-		nbr /= 10;
-		digits--;
+		str[longueur] = n % 10 + '0';
+		n = n / 10;
 	}
+	if (i < 0)
+		*str = '-';
 	return (str);
 }
 

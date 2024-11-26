@@ -68,7 +68,7 @@ int main(void)
     printf("\n****ALL & CNT OUTPUT***\n");
     int printed_chars_printf =      printf("\n---PRINTF:\nCHAR: %c\nSTR: Hello %s\nPTR: %p\nUNSIGNED NBR: %u\nNBR: %d\nLOWERHEX: %x\nUPPERHEX: %X\nPERCENT: %% \n", c, s1, ptr, unb1, nb1, nb2, nb2);
     printf("printf a imprimé %d caractères.\n", printed_chars_printf);
-    int printed_chars_ftprintf =    ft_printf("\nFT_PRINTF:\nCHAR: %c\nSTR: Hello nPTR: %p\nUNSIGNED NBR: %u\nNBR: %d\nLOWERHEX: %x\nUPPERHEX: %X\nPERCENT: %% \n", c, s1, ptr, unb1, nb1, nb2, nb2);
+    int printed_chars_ftprintf =    ft_printf("\nFT_PRINTF:\nCHAR: %c\nSTR: Hello %s\nPTR: %p\nUNSIGNED NBR: %u\nNBR: %d\nLOWERHEX: %x\nUPPERHEX: %X\nPERCENT: %% \n", c, s1, ptr, unb1, nb1, nb2, nb2);
     printf("ft_printf a imprimé %d caractères.\n", printed_chars_ftprintf);
 
 
