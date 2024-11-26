@@ -6,14 +6,11 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 19:15:29 by emonacho          #+#    #+#             */
-/*   Updated: 2024/11/17 19:39:47 by emonacho         ###   ########.fr       */
+/*   Updated: 2024/11/26 10:28:13 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "ft_printf.h"
 
-int	ft_printf(const char *format, ...);
-void	percent_check(va_list args, const char *format, size_t *i, size_t *cnt);
-int	specifier_check(char c);
+#include "ft_printf.h"
 
 void	put_args(va_list args, char spec, size_t *cnt)
 {

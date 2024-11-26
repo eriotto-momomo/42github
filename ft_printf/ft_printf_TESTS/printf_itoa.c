@@ -1,9 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   printf_itoa.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/26 10:28:26 by emonacho          #+#    #+#             */
+/*   Updated: 2024/11/26 10:28:29 by emonacho         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "ft_printf.h"
-
-void	printf_itoa(int n, size_t *cnt);
-char	*itoa(int n);
-static int	cntdigits(unsigned int nbr);
 
 static int	isnegative(int nbr)
 {

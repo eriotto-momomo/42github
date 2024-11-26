@@ -1,6 +1,16 @@
-#include "ft_printf.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   puthex_ptr.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/26 10:28:52 by emonacho          #+#    #+#             */
+/*   Updated: 2024/11/26 10:29:22 by emonacho         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int	puthex_ptr(void *ptr, char spec, size_t *cnt);
+#include "ft_printf.h"
 
 void	*hex_conversion(unsigned long long ptr, size_t *cnt)
 {

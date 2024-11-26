@@ -1,7 +1,16 @@
-#include "ft_printf.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   printf_itoa_unsigned.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/26 10:27:51 by emonacho          #+#    #+#             */
+/*   Updated: 2024/11/26 10:28:21 by emonacho         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void	printf_itoa_unsigned(int n, size_t *cnt);
-char	*itoa_unsigned(unsigned int n);
+#include "ft_printf.h"
 
 static int	cntdigits(unsigned int nbr)
 {
@@ -37,6 +46,7 @@ char	*itoa_unsigned(unsigned int n)
 		digits--;
 	}
 	return (str);
+	free(str);
 }
 
 void	printf_itoa_unsigned(int n, size_t *cnt)
@@ -47,6 +57,6 @@ void	printf_itoa_unsigned(int n, size_t *cnt)
 	if (str != 0)
 	{
 		printf_putstr(str, cnt);
+		free(str);
 	}
-	free(str);
 }

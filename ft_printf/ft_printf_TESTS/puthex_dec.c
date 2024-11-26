@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   puthex_dec.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/26 10:28:47 by emonacho          #+#    #+#             */
+/*   Updated: 2024/11/26 10:28:49 by emonacho         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <unistd.h>
 
-void	printf_putchar(char c, size_t *cnt);
+void	printf_putchar(char hex, size_t *cnt);
 
 void	puthex_dec(int decimal_nbr, char spec, size_t *cnt)
 {
