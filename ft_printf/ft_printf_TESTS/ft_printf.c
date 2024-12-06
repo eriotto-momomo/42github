@@ -24,10 +24,8 @@ void	put_args(va_list args, char spec, size_t *cnt)
 		printf_itoa(va_arg(args, int), cnt);
 	else if (spec == 'u')
 		printf_itoa_unsigned(va_arg(args, unsigned int), cnt);
-	else if (spec == 'x')
-		puthex_dec(va_arg(args, int), spec, cnt);
-	else if (spec == 'X')
-		puthex_dec(va_arg(args, int), spec, cnt);
+	else if (spec == 'x' || spec == 'X')
+		puthex(va_arg(args, int), spec, cnt);
 	else if (spec == '%')
 		printf_putchar('%', cnt);
 }
