@@ -17,12 +17,14 @@
 # include <unistd.h>
 # include <stdarg.h>
 
+static int	cntdigits(unsigned int nbr);
 int		ft_printf(const char *format, ...);
-void	printf_itoa_unsigned(int n, size_t *cnt);
+char	*itoa(unsigned int n);
+void	printf_itoa_unsigned(unsigned int n, size_t *cnt);
 void	printf_itoa(int n, size_t *cnt);
 void	printf_putchar(char c, size_t *cnt);
 void	printf_putstr(char *s, size_t *cnt);
-void	puthex_dec(int decimal_nbr, char spec, size_t *cnt);
+void	puthex(unsigned int to_convert, char spec, size_t *cnt);
 int		puthex_ptr(void *ptr, char spec, size_t *cnt);
 
 #endif

@@ -16,9 +16,7 @@ HEADER 	= ft_printf.h
 SRC	= ft_printf.c \
 printf_itoa_unsigned.c \
 printf_itoa.c \
-printf_putchar.c \
-printf_putstr.c \
-puthex_dec.c \
+printf_utils.c \
 puthex_ptr.c \
 
 OBJS	= $(SRC:.c=.o)

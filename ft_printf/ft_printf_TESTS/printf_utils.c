@@ -1,5 +1,11 @@
 #include "ft_printf.h"
 
+static int	cntdigits(unsigned int nbr);
+char	*itoa(unsigned int n);
+void	printf_putchar(char c, size_t *cnt);
+void	printf_putstr(char *s, size_t *cnt);
+void	puthex(unsigned int to_convert, char spec, size_t *cnt);
+
 void	printf_putchar(char c, size_t *cnt)
 {
 	write(1, &c, 1);

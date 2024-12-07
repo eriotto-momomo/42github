@@ -24,8 +24,6 @@ void	printf_itoa(int n, size_t *cnt)
 	}
 	str = itoa(n);
 	if (str != 0)
-	{
 		printf_putstr(str, cnt);
-		free(str);
-	}
+	free(str);
 }

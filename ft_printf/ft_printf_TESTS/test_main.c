@@ -54,7 +54,7 @@ int main(void)
     printf("---PRINTF: The value of the following ints are:\nnb1 = %d\nnb2 = %d\nnb4 = %d\nnb3 = %d\n", nb1, nb2, nb3, nb4);
 
 
-
+/*
     printf("\n********PERCENT*******\n");
     ft_printf("FT_PRINTF: un %, puis %%, puis %%%, puis %%%%, puis %%%%%, puis %%%%%% \n");
     printf("---PRINTF: un %, puis %%, puis %%%, puis %%%%, puis %%%%%, puis %%%%%% \n");
@@ -70,7 +70,7 @@ int main(void)
     printf("printf a imprimé %d caractères.\n", printed_chars_printf);
     int printed_chars_ftprintf =    ft_printf("\nFT_PRINTF:\nCHAR: %c\nSTR: Hello %s\nPTR: %p\nUNSIGNED NBR: %u\nNBR: %d\nLOWERHEX: %x\nUPPERHEX: %X\nPERCENT: %% \n", c, s1, ptr, unb1, nb1, nb2, nb2);
     printf("ft_printf a imprimé %d caractères.\n", printed_chars_ftprintf);
-
+*/
 
 
     printf("\n******DEC TO HEX******\n");
