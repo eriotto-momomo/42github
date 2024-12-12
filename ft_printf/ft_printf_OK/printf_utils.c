@@ -1,11 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   printf_utils.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: emonacho <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/12 14:09:12 by emonacho          #+#    #+#             */
+/*   Updated: 2024/12/12 14:10:01 by emonacho         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 static int	cntdigits(unsigned int nbr);
-char	*itoa(unsigned int n);
-void	printf_putchar(char c, size_t *cnt);
-void	printf_putstr(char *s, size_t *cnt);
-void	puthex_dec(unsigned int to_convert, char spec, size_t *cnt);
-void	puthex_ptr(unsigned long long to_convert, char spec, size_t *cnt);
+char		*itoa(unsigned int n);
+void		printf_putchar(char c, size_t *cnt);
+void		printf_putstr(char *s, size_t *cnt);
+void		puthex_dec(unsigned int to_convert, char spec, size_t *cnt);
 
 void	printf_putchar(char c, size_t *cnt)
 {
@@ -43,16 +54,6 @@ void	puthex_dec(unsigned int to_convert, char spec, size_t *cnt)
 		hex = "0123456789ABCDEF";
 	if (to_convert > 15)
 		puthex_dec(to_convert / 16, spec, cnt);
-	printf_putchar(hex[to_convert % 16], cnt);
-}
-
-void	puthex_ptr(unsigned long long to_convert, char spec, size_t *cnt)
-{
-	char	*hex;
-
-	hex = "0123456789abcdef";
-	if (to_convert > 15)
-		puthex_ptr(to_convert / 16, spec, cnt);
 	printf_putchar(hex[to_convert % 16], cnt);
 }
 

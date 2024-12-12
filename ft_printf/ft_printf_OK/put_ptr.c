@@ -6,15 +6,25 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 10:28:52 by emonacho          #+#    #+#             */
-/*   Updated: 2024/11/26 12:55:03 by emonacho         ###   ########.fr       */
+/*   Updated: 2024/12/12 14:08:35 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
+void	puthex_ptr(unsigned long long to_convert, char spec, size_t *cnt)
+{
+	char	*hex;
+
+	hex = "0123456789abcdef";
+	if (to_convert > 15)
+		puthex_ptr(to_convert / 16, spec, cnt);
+	printf_putchar(hex[to_convert % 16], cnt);
+}
+
 int	put_ptr(void *ptr, char spec, size_t *cnt)
 {
-	unsigned long long	castptr; //`long long` garantit la portabilité
+	unsigned long long	castptr;
 
 	castptr = (unsigned long long)ptr;
 	if (ptr == 0)
