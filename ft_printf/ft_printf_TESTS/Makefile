@@ -17,7 +17,7 @@ SRC	= ft_printf.c \
 printf_itoa_unsigned.c \
 printf_itoa.c \
 printf_utils.c \
-puthex_ptr.c \
+put_ptr.c \
 
 OBJS	= $(SRC:.c=.o)
 

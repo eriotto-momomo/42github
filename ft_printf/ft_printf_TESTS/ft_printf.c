@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 19:15:29 by emonacho          #+#    #+#             */
-/*   Updated: 2024/11/26 10:28:13 by emonacho         ###   ########.fr       */
+/*   Updated: 2024/12/12 14:34:49 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ void	put_args(va_list args, char spec, size_t *cnt)
 	else if (spec == 's')
 		printf_putstr(va_arg(args, char *), cnt);
 	else if (spec == 'p')
-		puthex_ptr(va_arg(args, void *), spec, cnt);
+		put_ptr(va_arg(args, void *), spec, cnt);
 	else if (spec == 'd' || spec == 'i')
 		printf_itoa(va_arg(args, int), cnt);
 	else if (spec == 'u')
 		printf_itoa_unsigned(va_arg(args, unsigned int), cnt);
 	else if (spec == 'x' || spec == 'X')
-		puthex(va_arg(args, int), spec, cnt);
+		puthex_dec(va_arg(args, int), spec, cnt);
 	else if (spec == '%')
 		printf_putchar('%', cnt);
 }

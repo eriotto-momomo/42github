@@ -1,20 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   puthex_ptr.c                                       :+:      :+:    :+:   */
+/*   put_ptr.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 10:28:52 by emonacho          #+#    #+#             */
-/*   Updated: 2024/11/26 12:55:03 by emonacho         ###   ########.fr       */
+/*   Updated: 2024/12/12 14:33:51 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	puthex_ptr(void *ptr, char spec, size_t *cnt)
+void	puthex_ptr(unsigned long long to_convert, char spec, size_t *cnt)
 {
-	unsigned long long	castptr; //`long long` garantit la portabilité
+	char	*hex;
+
+	hex = "0123456789abcdef";
+	if (to_convert > 15)
+		puthex_ptr(to_convert / 16, spec, cnt);
+	printf_putchar(hex[to_convert % 16], cnt);
+}
+
+int	put_ptr(void *ptr, char spec, size_t *cnt)
+{
+	unsigned long long	castptr;
 
 	castptr = (unsigned long long)ptr;
 	if (ptr == 0)
@@ -22,7 +32,7 @@ int	puthex_ptr(void *ptr, char spec, size_t *cnt)
 	else
 	{
 		printf_putstr("0x", cnt);
-		puthex(castptr, spec, cnt);
+		puthex_ptr(castptr, spec, cnt);
 	}
 	return (0);
 }

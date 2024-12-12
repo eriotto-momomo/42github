@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   printf_utils.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/12 14:09:12 by emonacho          #+#    #+#             */
+/*   Updated: 2024/12/12 14:34:36 by emonacho         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 static int	cntdigits(unsigned int nbr);
-char	*itoa(unsigned int n);
-void	printf_putchar(char c, size_t *cnt);
-void	printf_putstr(char *s, size_t *cnt);
-void	puthex(unsigned int to_convert, char spec, size_t *cnt);
+char		*itoa(unsigned int n);
+void		printf_putchar(char c, size_t *cnt);
+void		printf_putstr(char *s, size_t *cnt);
+void		puthex_dec(unsigned int to_convert, char spec, size_t *cnt);
 
 void	printf_putchar(char c, size_t *cnt)
 {
@@ -32,19 +44,17 @@ void	printf_putstr(char *s, size_t *cnt)
 	}
 }
 
-void	puthex(unsigned int to_convert, char spec, size_t *cnt)
+void	puthex_dec(unsigned int to_convert, char spec, size_t *cnt)
 {
-	char				*hex;
-	unsigned long long	conversion;
+	char	*hex;
 
-	conversion = to_convert;
-	if (spec == 'x' || spec == 'p')
+	if (spec == 'x')
 		hex = "0123456789abcdef";
 	else if (spec == 'X')
 		hex = "0123456789ABCDEF";
-	if (conversion > 15)
-		puthex(conversion / 16, spec, cnt);
-	printf_putchar(hex[conversion % 16], cnt);
+	if (to_convert > 15)
+		puthex_dec(to_convert / 16, spec, cnt);
+	printf_putchar(hex[to_convert % 16], cnt);
 }
 
 static int	cntdigits(unsigned int nbr)

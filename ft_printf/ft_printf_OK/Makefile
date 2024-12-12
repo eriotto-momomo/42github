@@ -26,7 +26,6 @@ OBJS	= $(SRC:.c=.o)
 # **************************************************************************** #
 
 NAME		= libftprintf.a
-TEST_NAME 	= test_ft_printf
 CC			= gcc
 FLAG		= -Wall -Wextra -Werror
 
@@ -44,14 +43,6 @@ $(NAME): $(OBJS) ft_printf.h
 
 %.o: %.c  $(HEADER)
 	$(CC) -c $(CFLAGS) -I ./ $< -o $@
-
-test: $(NAME) test_main.c
-	$(CC) $(CFLAGS) test_main.c -L. -lftprintf -o $(TEST_NAME)
-	@@echo "$(YELLOW)/////START/////libftprintf.a/////TEST/////\n$(RESET)"
-	./test_ft_printf
-	@echo
-	@echo "$(YELLOW)/////END//////libftprintf.a/////TEST/////$(RESET)"
-	@echo
 
 fclean: clean
 	@rm -f $(NAME)
