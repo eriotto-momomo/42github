@@ -14,7 +14,7 @@
 
 int	puthex_ptr(void *ptr, char spec, size_t *cnt)
 {
-	unsigned long long	castptr; //garantit la portabilité de la variable
+	unsigned long long	castptr; //`long long` garantit la portabilité
 
 	castptr = (unsigned long long)ptr;
 	if (ptr == 0)

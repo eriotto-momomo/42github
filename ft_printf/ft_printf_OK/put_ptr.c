@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   printf_itoa.c                                      :+:      :+:    :+:   */
+/*   puthex_ptr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/26 10:28:26 by emonacho          #+#    #+#             */
-/*   Updated: 2024/11/26 11:36:44 by emonacho         ###   ########.fr       */
+/*   Created: 2024/11/26 10:28:52 by emonacho          #+#    #+#             */
+/*   Updated: 2024/11/26 12:55:03 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	printf_itoa(int n, size_t *cnt)
+int	put_ptr(void *ptr, char spec, size_t *cnt)
 {
-	char	*str;
-	if (n == -2147483648)
-		printf_putstr("-2147483648", cnt);
-	else if (n < 0)
+	unsigned long long	castptr; //`long long` garantit la portabilité
+
+	castptr = (unsigned long long)ptr;
+	if (ptr == 0)
+		printf_putstr("0x0", cnt);
+	else
 	{
-		n = -n;
-		printf_putchar('-', cnt);
+		printf_putstr("0x", cnt);
+		puthex_ptr(castptr, spec, cnt);
 	}
-	str = itoa(n);
-	if (str != 0)
-		printf_putstr(str, cnt);
-	free(str);
+	return (0);
 }
