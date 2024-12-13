@@ -1,68 +1,29 @@
-# **************************************************************************** #
-#                                COLOURS			                           #
-# **************************************************************************** #
-RED    = $(shell printf "\33[31m")
-GREEN  = $(shell printf "\33[32m")
-WHITE  = $(shell printf "\33[37m")
-YELLOW = $(shell printf "\33[33m")
-RESET  = $(shell printf "\33[0m")
-BLUE = $(shell printf "\33[34m")
-PURPLE = $(shell printf "\33[35m")
-TITLE = $(shell printf "\33[32;40m")
-# **************************************************************************** #
-#                                DIRECTORIES                                   #
-# **************************************************************************** #
-HEADER 	= ft_printf.h
-SRC	= ft_printf.c \
-printf_itoa_unsigned.c \
-printf_itoa.c \
-printf_utils.c \
-put_ptr.c \
+HEADER	=	ft_printf.h
+SRC		=	ft_printf.c \
+			printf_itoa_unsigned.c \
+			printf_itoa.c \
+			printf_utils.c \
+			put_ptr.c
+OBJS	=	$(SRC:.c=.o)
 
-OBJS	= $(SRC:.c=.o)
-
-# **************************************************************************** #
-#                                  VARIABLES                                   #
-# **************************************************************************** #
-
-NAME		= libftprintf.a
-CC			= gcc
-FLAG		= -Wall -Wextra -Werror
-
-# **************************************************************************** #
-#                                   TARGETS                                    #
-# **************************************************************************** #
+NAME	= libftprintf.a
+CC		= gcc
+FLAG	= -Wall -Wextra -Werror
 
 all: $(NAME)
 
-$(NAME): $(OBJS) ft_printf.h
-	ar -rcs $(NAME) $(OBJS)
-	@echo
-	@echo "$(GREEN)Successfully COMPILED libftprintf.a$(RESET)"
-	@echo
+$(NAME): $(OBJS)
+	@ar -rcs $(NAME) $(OBJS)
 
-%.o: %.c  $(HEADER)
-	$(CC) -c $(CFLAGS) -I ./ $< -o $@
+%.o: %.c $(HEADER)
+	$(CC) -c $(FLAG) -I ./ $< -o $@
+
+clean:
+	@rm -f *.o
 
 fclean: clean
 	@rm -f $(NAME)
-	@clear
-	@echo
-	@echo "$(RED)┏┓┓ ┏┓┏┓┳┓┏┓┳┓"
-	@echo "┃ ┃ ┣ ┣┫┃┃┣ ┃┃"
-	@echo "┗┛┗┛┗┛┛┗┛┗┗┛┻┛"
-	@echo
-
-clean:
-	@rm -rf *.o
-	@clear
-	@echo
-	@echo "$(RED)┏┓┓ ┏┓┏┓┳┓┏┓┳┓"
-	@echo "┃ ┃ ┣ ┣┫┃┃┣ ┃┃"
-	@echo "┗┛┗┛┗┛┛┗┛┗┗┛┻┛"
-	@echo
 
 re: fclean all
 
-$(V).SILENT:
 .PHONY: all clean fclean re

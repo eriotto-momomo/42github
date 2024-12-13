@@ -1,0 +1,48 @@
+# **************************************************************************** #
+#                                COLOURS                                       #
+# **************************************************************************** #
+RED    = $(shell printf "\33[31m")
+GREEN  = $(shell printf "\33[32m")
+RESET  = $(shell printf "\33[0m")
+
+# **************************************************************************** #
+#                                DIRECTORIES                                   #
+# **************************************************************************** #
+HEADER	=	ft_printf.h
+SRC		=	ft_printf.c \
+			printf_itoa_unsigned.c \
+			printf_itoa.c \
+			printf_utils.c \
+			put_ptr.c
+OBJS	=	$(SRC:.c=.o)
+
+# **************************************************************************** #
+#                                  VARIABLES                                   #
+# **************************************************************************** #
+NAME	= libftprintf.a
+CC		= gcc
+FLAG	= -Wall -Wextra -Werror
+
+# **************************************************************************** #
+#                                   TARGETS                                    #
+# **************************************************************************** #
+all: $(NAME)
+
+$(NAME): $(OBJS)
+	@ar -rcs $(NAME) $(OBJS)
+	@echo "$(GREEN)Successfully COMPILED libftprintf.a$(RESET)"
+
+%.o: %.c $(HEADER)
+	$(CC) -c $(FLAG) -I ./ $< -o $@
+
+clean:
+	@rm -f *.o
+	@echo "$(RED)Cleaned object files$(RESET)"
+
+fclean: clean
+	@rm -f $(NAME)
+	@echo "$(RED)Removed $(NAME)$(RESET)"
+
+re: fclean all
+
+.PHONY: all clean fclean re
