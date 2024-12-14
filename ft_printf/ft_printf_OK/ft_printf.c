@@ -46,16 +46,14 @@ int	specifier_check(char c)
 	return (0);
 }
 
-void	percent_check(va_list args, const char *format, size_t *i, size_t *cnt)
+void	percent_check(va_list args, char c, size_t *cnt)
 {
-	if (format[*i] == '\0')
-		return ;
-	if (specifier_check(format[*i]))
-		put_args(args, format[*i], cnt);
+	if (specifier_check(c))
+		put_args(args, c, cnt);
 	else
 	{
 		printf_putchar('%', cnt);
-		printf_putchar(format[*i], cnt);
+		printf_putchar(c, cnt);
 	}
 }
 
@@ -73,7 +71,8 @@ int	ft_printf(const char *format, ...)
 		if (format[i] == '%')
 		{
 			i++;
-			percent_check(args, format, &i, &cnt);
+			if (format[i] != '\0')
+				percent_check(args, format[i], &cnt);
 		}
 		else
 			printf_putchar(format[i], &cnt);
