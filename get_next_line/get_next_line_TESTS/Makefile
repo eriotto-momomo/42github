@@ -1,12 +1,9 @@
-HEADER	=	ft_printf.h
-SRC		=	ft_printf.c \
-			printf_itoa_unsigned.c \
-			printf_itoa.c \
-			printf_utils.c \
-			put_ptr.c
+HEADER	=	get_next_line.h
+SRC		=	get_next_line.c \
+			get_next_line_utils.c
 OBJS	=	$(SRC:.c=.o)
 
-NAME	= libftprintf.a
+NAME	= get_next_line.a
 CC		= gcc
 FLAG	= -Wall -Wextra -Werror
 

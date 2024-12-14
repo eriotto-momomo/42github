@@ -4,7 +4,7 @@ char	*get_next_line(int fd)
 {
 	static char *buffer;
 
-	buffer = (char*)calloc(BUFFER_SIZE + 1);
+	buffer = (char*)ft_calloc(BUFFER_SIZE + 1);
 	if (buffer == 0)
 		return (NULL);
 }
