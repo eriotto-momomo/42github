@@ -63,11 +63,6 @@ int main(void)
 	   ft_printf("-------------------------\n");
     ft_printf("FT_PRINTF: %z %y %w %123 %456 %.// \n");
         printf("---PRINTF: %z %y %w %123 %456 %.//  \n");
-		ft_printf("-------------------------\n");
-    ft_printf("FT_PRINTF: A%Zz%%fstt%1224%55%%%476 %yu6%.;%#$@%&)_@&!*(^#%%*&^@#(*&(_%$))) \n");
-	     printf("---PRINTF: A%Zz%%fstt%1224%55%%%476 %yu6%.;%#$@%&)_@&!*(^#%%*&^@#(*&(_%$))) \n");
-
-
 
     printf("\n****ALL & CNT OUTPUT***\n");
     int printed_chars_printf =      printf("---PRINTF:\nCHAR: %c\nSTR: Hello %s\nPTR: %p\nUNSIGNED NBR: %u\nNBR: %d\nLOWERHEX: %x\nUPPERHEX: %X\nPERCENT: %% \n", c, s1, ptr, unb1, nb1, nb2, nb2);
