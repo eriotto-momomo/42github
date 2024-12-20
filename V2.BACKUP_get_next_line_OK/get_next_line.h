@@ -3,9 +3,6 @@
 
 # include <unistd.h>
 # include <stdlib.h>
-# include <stdio.h> // TO DELETE!!!
-# include <fcntl.h> // TO DELETE!!!
-# include <string.h> // TO DELETE!!!
 
 #ifndef BUFFER_SIZE
 # define BUFFER_SIZE = 1

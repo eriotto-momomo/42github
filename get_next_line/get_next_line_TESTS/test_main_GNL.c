@@ -1,5 +1,6 @@
 #include "get_next_line.h"
 
+
 int main(void)
 {
 	int		fd;
@@ -13,15 +14,11 @@ int main(void)
 		printf("Error opening file");
 		return(1);
 	}
-	while (1)
+	else
 	{
 		next_line = get_next_line(fd);
-		if (next_line == NULL)
-			break;
-		count++;
 		printf("[%d]:%s\n", count, next_line); //count is to show you the line numbers
-		//free(next_line);
-		next_line = NULL;
+		//next_line = NULL;
 	}
 	/*while (1)
 	{
@@ -33,6 +30,6 @@ int main(void)
 		//free(next_line);
 		next_line = NULL;
 	}*/
-	close(fd);
+	//close(fd);
 	return (0);
 }

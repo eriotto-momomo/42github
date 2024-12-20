@@ -3,30 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: eliotmonachon <eliotmonachon@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:52:28 by emonacho          #+#    #+#             */
-/*   Updated: 2024/10/20 13:52:22 by emonacho         ###   ########.fr       */
+/*   Updated: 2024/12/20 18:20:36 by eliotmonach      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
-	char	*cat;
-	int		i;
-	int		j;
+	size_t		s1_len;
+	size_t		s2_len;
+	char		*new_s;
 
-	i = 0;
-	j = 0;
-	cat = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
-	if (cat == 0)
-		return (NULL);
-	while (s1[i])
-		cat[j++] = s1[i++];
-	i = 0;
-	while (s2[i])
-		cat[j++] = s2[i++];
-	cat[j] = '\0';
-	return (cat);
+	s1_len = ft_strlen (s1);
+	s2_len = ft_strlen (s2);
+	new_s = malloc(sizeof(char) * (s1_len + s2_len) + 1);
+	if (!new_s)
+		return (0);
+	ft_memcpy(new_s, s1, s1_len);
+	ft_memcpy((new_s + s1_len), s2, s2_len);
+	new_s[s1_len + s2_len] = '\0';
+	free(s1);
+	return (new_s);
 }
