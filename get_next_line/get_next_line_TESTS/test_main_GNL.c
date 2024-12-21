@@ -14,22 +14,23 @@ int main(void)
 		printf("Error opening file");
 		return(1);
 	}
-	else
+	/*else
 	{
 		next_line = get_next_line(fd);
 		printf("[%d]:%s\n", count, next_line); //count is to show you the line numbers
-		//next_line = NULL;
-	}
-	/*while (1)
+		free(next_line);
+	}*/
+	while (1)
 	{
 		next_line = get_next_line(fd);
 		if (next_line == NULL)
 			break;
 		count++;
 		printf("[%d]:%s\n", count, next_line); //count is to show you the line numbers
-		//free(next_line);
+		free(next_line);
 		next_line = NULL;
-	}*/
-	//close(fd);
+	}
+	free(next_line);
+	close(fd);
 	return (0);
 }

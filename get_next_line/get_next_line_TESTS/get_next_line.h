@@ -11,10 +11,6 @@
 # define BUFFER_SIZE = 1
 #endif
 
-#ifndef MAX_FD
-# define MAX_FD 256
-#endif
-
 char 	*get_next_line(int fd);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
 char	*ft_strdup(const char *s1);

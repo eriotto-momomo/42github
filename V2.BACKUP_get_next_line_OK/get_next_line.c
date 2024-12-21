@@ -1,6 +1,5 @@
-#include "get_next_line.h"
 
-char *get_next_line(int fd);
+#include "get_next_line.h"
 
 int	check_for_next_line(char *str)
 {
@@ -16,9 +15,9 @@ int	check_for_next_line(char *str)
 	return (1);
 }
 
-char	*save_remainder(char *remainder)
+char	*save_leftovers(char *remainder)
 {
-	char	*str;
+	char	*leftovers;
 	int		i;
 	int		j;
 
@@ -26,22 +25,22 @@ char	*save_remainder(char *remainder)
 	while (remainder[i] != '\0' && remainder[i] != '\n')
 		i++;
 	if (remainder[i] == 0)
-		{
-			free(remainder);
-			return (NULL);
-		}
-	str = malloc((ft_strlen(remainder) - i) * sizeof(char));
-	if (str == 0)
+	{
+		free(remainder);
+		return (NULL);
+	}
+	leftovers = malloc((ft_strlen(remainder) - i) * sizeof(char));
+	if (leftovers == 0)
 		return (NULL);
 	j = 0;
 	while (remainder[i] != '\0')
 	{
-		str[j] = remainder[i + 1];
+		leftovers[j] = remainder[i + 1];
 		i++;
 		j++;
 	}
 	free(remainder);
-	return (str);
+	return (leftovers);
 }
 
 char	*is_current_line(char *remainder)
@@ -91,9 +90,9 @@ static char	*read_and_store_fd(int fd, char *remainder)
 	return (remainder);
 }
 
-char *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-	static char *remainder;
+	static char	*remainder;
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
@@ -104,6 +103,6 @@ char *get_next_line(int fd)
 	if (remainder == 0)
 		return (NULL);
 	line = is_current_line(remainder);
-	remainder = save_remainder(remainder);
+	remainder = save_leftovers(remainder);
 	return (line);
 }

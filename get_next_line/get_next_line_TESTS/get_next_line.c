@@ -1,6 +1,5 @@
-#include "get_next_line.h"
 
-char *get_next_line(int fd);
+#include "get_next_line.h"
 
 int	check_for_next_line(char *str)
 {
@@ -16,9 +15,17 @@ int	check_for_next_line(char *str)
 	return (1);
 }
 
-char	*save_remainder(char *remainder)
+// Difference between 'remainder' and 'leftovers':
+// - remainder: until a full new 'line'('\n' or '\0' -terminated) is found,
+// it contains all the 'read' calls stored in the buffer.
+// - leftovers: take the remaining 'bytes' after truncating a full new 'line'
+// and store them in 'remainder'.
+// As 'read' could read past '\n', (depending 'fd' content and 'BUFFER_SIZE')
+// we need to store the 'leftovers' to preserve what has already been 'read'
+// for the next line in future function calls.
+char	*save_leftovers(char *remainder)
 {
-	char	*str;
+	char	*leftovers;
 	int		i;
 	int		j;
 
@@ -26,24 +33,27 @@ char	*save_remainder(char *remainder)
 	while (remainder[i] != '\0' && remainder[i] != '\n')
 		i++;
 	if (remainder[i] == 0)
-		{
-			free(remainder);
-			return (NULL);
-		}
-	str = malloc((ft_strlen(remainder) - i) * sizeof(char));
-	if (str == 0)
+	{
+		free(remainder);
+		return (NULL);
+	}
+	leftovers = malloc((ft_strlen(remainder) - i) * sizeof(char));
+	if (leftovers == 0)
 		return (NULL);
 	j = 0;
 	while (remainder[i] != '\0')
 	{
-		str[j] = remainder[i + 1];
+		leftovers[j] = remainder[i + 1];
 		i++;
 		j++;
 	}
 	free(remainder);
-	return (str);
+	return (leftovers);
 }
 
+// When allocating 'current_line' (i + 2), 'i' represents the last character
+// before '\n', '+1' accounts for the '\n', and the final '+1' reserves space
+// for the '\0'.
 char	*is_current_line(char *remainder)
 {
 	char	*current_line;
@@ -64,6 +74,12 @@ char	*is_current_line(char *remainder)
 	return (current_line);
 }
 
+// The result of 'read' is stored in 'buffer' and saved in 'remainder',
+// and then joined together to form the next complete 'line' as long as:
+// - 'fd' contains bytes left to read
+// - 'remainder' doesn't contain a '\n' or '\0'
+// If an error occurs during 'read', 'bytes_read' becomes negative. In that case
+// all the dynamically allocated memory will be freed and 'NULL' returned.
 static char	*read_and_store_fd(int fd, char *remainder)
 {
 	int		bytes_read;
@@ -91,9 +107,19 @@ static char	*read_and_store_fd(int fd, char *remainder)
 	return (remainder);
 }
 
-char *get_next_line(int fd)
+// 'get_next_line' read a file from 'fd' and return a full up to '\n' or '\0'.
+// 1. read(fd, 0, 0) < 0: Check if the file is readable. If an error occurs
+// or if the file is open in write-only mode, read will return -1.
+// 2. If 'remainder' isn't already used, it's initialised with 'ft_strdup'
+// 3. The result of 'read(fd, buffer, BUFFER_SIZE)' is stored into 'remainder'
+// until the 'fd' is fully read (no bytes left), or if a '\n' or '\0' is found.
+// 4. The 'line' to return is extracted from 'remainder' up to the first '\n' or
+// '\0' encountered.
+// 5. The extra bytes left into 'remainder' are stored in the static variable,
+// and will be reused at next function call to constitue the next 'line'.
+char	*get_next_line(int fd)
 {
-	static char *remainder;
+	static char	*remainder;
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
@@ -104,6 +130,6 @@ char *get_next_line(int fd)
 	if (remainder == 0)
 		return (NULL);
 	line = is_current_line(remainder);
-	remainder = save_remainder(remainder);
+	remainder = save_leftovers(remainder);
 	return (line);
 }
