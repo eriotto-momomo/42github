@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 16:50:29 by emonacho          #+#    #+#             */
-/*   Updated: 2024/12/21 16:50:39 by emonacho         ###   ########.fr       */
+/*   Updated: 2024/12/21 17:25:56 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	check_for_next_line(char *str)
 
 // Difference between 'remainder' and 'leftovers':
 // - remainder: until a full new 'line'('\n' or '\0' -terminated) is found,
-// it contains all the 'read' calls stored in the buffer.
+// contains all the 'read' calls stored in the buffer.
 // - leftovers: take the remaining 'bytes' after truncating a full new 'line'
 // and store them in 'remainder'.
 // As 'read' could read past '\n', (depending 'fd' content and 'BUFFER_SIZE')
@@ -118,22 +118,20 @@ static char	*read_and_store_fd(int fd, char *remainder)
 	return (remainder);
 }
 
-// 'get_next_line' read a file from 'fd' and return a full up to '\n' or '\0'.
-// 1. read(fd, 0, 0) < 0: Check if the file is readable. If an error occurs
-// or if the file is open in write-only mode, read will return -1.
-// 2. If 'remainder' isn't already used, it's initialised with 'ft_strdup'
-// 3. The result of 'read(fd, buffer, BUFFER_SIZE)' is stored into 'remainder'
+//This function reads a file from 'fd' and return a full line up to '\n' or '\0'
+// 1. If 'remainder' isn't already used, it's initialised with 'ft_strdup'
+// 2. The result of 'read(fd, buffer, BUFFER_SIZE)' is stored into 'remainder'
 // until the 'fd' is fully read (no bytes left), or if a '\n' or '\0' is found.
-// 4. The 'line' to return is extracted from 'remainder' up to the first '\n' or
+// 3. The 'line' to return is extracted from 'remainder' up to the first '\n' or
 // '\0' encountered.
-// 5. The extra bytes left into 'remainder' are stored in the static variable,
+// 4. The extra bytes left into 'remainder' are stored in the static variable,
 // and will be reused at next function call to constitue the next 'line'.
 char	*get_next_line(int fd)
 {
 	static char	*remainder;
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	if (remainder == 0)
 		remainder = ft_strdup("");
