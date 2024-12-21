@@ -106,7 +106,6 @@ static char	*read_and_store_fd(int fd, char *remainder)
 	return (remainder);
 }
 
-//This function reads a file from 'fd' and return a full line up to '\n' or '\0'
 char	*get_next_line(int fd)
 {
 	static char	*remainder;
