@@ -6,10 +6,11 @@
 /*   By: eliotmonachon <eliotmonachon@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:50:00 by emonacho          #+#    #+#             */
-/*   Updated: 2024/12/15 19:44:34 by eliotmonach      ###   ########.fr       */
+/*   Updated: 2025/01/11 17:43:15 by eliotmonach      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 
 char	*ft_strdup(const char *s1)
 {

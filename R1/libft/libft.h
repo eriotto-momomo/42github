@@ -6,15 +6,17 @@
 /*   By: eliotmonachon <eliotmonachon@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:08:29 by emonacho          #+#    #+#             */
-/*   Updated: 2024/12/20 18:19:09 by eliotmonach      ###   ########.fr       */
+/*   Updated: 2025/01/11 17:43:03 by eliotmonach      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef LIBFT_H
 # define LIBFT_H
 
+# include <limits.h>
+# include <stddef.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <limits.h>
 
 int		ft_atoi(const char *str);
 void	ft_bzero(void *s, size_t n);

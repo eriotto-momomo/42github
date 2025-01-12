@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+         #
+#    By: eliotmonachon <eliotmonachon@student.42    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/19 12:30:17 by emonacho          #+#    #+#              #
-#    Updated: 2024/11/14 20:00:58 by emonacho         ###   ########.fr        #
+#    Updated: 2025/01/12 12:40:51 by eliotmonach      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,7 @@ FLAG	= -Wall -Wextra -Werror
 all:	$(NAME)
 
 $(NAME): $(OBJS)
-	@ar rc $(NAME) $(OBJS)
+	ar rc $(NAME) $(OBJS)
 
 clean:
 	rm -f $(OBJS)

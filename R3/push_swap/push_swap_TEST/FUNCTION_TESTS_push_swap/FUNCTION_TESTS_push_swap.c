@@ -2,45 +2,174 @@
 #include <stdlib.h>
 #include <string.h>
 
-int check_duplicates(int argc, int int_array[argc - 1])
+// Every elements go down in the stack, the last
+// element becomes the first. "go down" means
+// (horizontally speaking): that elements
+// are going from left to right in the string.
+// 'DOWN' = '->' = '--'
+void reverse_rotate(int *stack, int stack_size)
 {
+	int	tmp_stack;
 	int	i;
-	int j;
 
-	i = 0;
-	while (i < argc - 1)
+	if (stack == NULL || stack_size <= 2)
+		return;
+	tmp_stack = stack[stack_size - 1];
+	i = stack_size;
+	while (i > 0)
 	{
-		j = i + 1;
-		while (j < argc)
-		{
-			if (int_array[i] == int_array[j])
-				return (-1);
-			j++;
-		}
+		stack[i] = stack[i - 1];
+		i--;
+	}
+	stack[0] = tmp_stack;
+}
+
+// Every elements go up in the stack, the first
+// element becomes the last. "go up" means
+// (horizontally speaking): that elements
+// are going from right to left in the string.
+// 'UP' = '<-' = '++'
+void rotate(int *stack, int stack_size)
+{
+	int	tmp_stack;
+	int	i;
+
+	if (stack == NULL || stack_size <= 2)
+		return;
+	tmp_stack = stack[0];
+	i = 0;
+	while (i < stack_size)
+	{
+		stack[i] = stack[i + 1];
 		i++;
 	}
-	return (1);
+	stack[stack_size - 1] = tmp_stack;
+}
+
+void push(int *src_stack, int *dst_stack, int stack_size)
+{
+	int	i;
+
+	if (src_stack == NULL || dst_stack == NULL || stack_size <= 2)
+		return;
+	i = stack_size;
+	while (i > 0)
+	{
+
+		dst_stack[i] = dst_stack[i - 1];
+		i--;
+	}
+	dst_stack[0] = src_stack[0];
+	while (i < stack_size)
+	{
+		src_stack[i] = src_stack[i + 1];
+		i++;
+	}
+	src_stack[stack_size - 1] = 0;
 }
 
 int main(void)
 {
 	int i = 0;
-	int argc = 5;
-	int	int_array[4] = {
-		32,
-		2147483647,
-		-32,
-		-2147483648
+	int stack_size = 3;
+	int a_stack [3] = {
+		1,
+		0,
+		0
 	};
-	char *str_array[5] = {
-		"/a.out",
-		"-1  +2   3 04 05",
-		"2147483647",
-		"32",
-		"-2147483648"
+	int b_stack [3] = {
+		2,
+		3,
+		0
 	};
 
-	i = check_duplicates(argc, int_array);
-	printf("check_duplicates returned = %i\n", i);
+	printf("........................\n|||| ORIGINAL STACK ||||\n");
+	i = 0;
+	while (i < stack_size)
+	{
+		printf("a_stack[%i] = %d\n", i, a_stack[i]);
+		i++;
+	}
+	printf("\n");
+	i = 0;
+	while (i < stack_size)
+	{
+		printf("b_stack[%i] = %d\n", i, b_stack[i]);
+		i++;
+	}
+
+	printf("........................\n||||||||| PUSH |||||||||\n");
+	i = 0;
+	push (a_stack, b_stack, stack_size);
+	while (i < stack_size)
+	{
+		printf("a_stack[%i] = %d\n", i, a_stack[i]);
+		i++;
+	}
+	printf("\n");
+	i = 0;
+	while (i < stack_size)
+	{
+		printf("b_stack[%i] = %d\n", i, b_stack[i]);
+		i++;
+	}
+
+	printf("........................\n|||||||| ROTATE ||||||||\n");
+	printf("| 1 |\n");
+	i = 0;
+	rotate(b_stack, stack_size);
+	while (i < stack_size)
+	{
+		printf("b_stack[%i] = %d\n", i, b_stack[i]);
+		i++;
+	}
+	printf("\n");
+	printf("| 2 |\n");
+	i = 0;
+	rotate(b_stack, stack_size);
+	while (i < stack_size)
+	{
+		printf("b_stack[%i] = %d\n", i, b_stack[i]);
+		i++;
+	}
+	printf("\n");
+	printf("| 3 |\n");
+	i = 0;
+	rotate(b_stack, stack_size);
+	while (i < stack_size)
+	{
+		printf("b_stack[%i] = %d\n", i, b_stack[i]);
+		i++;
+	}
+	printf("\n");
+
+	printf("........................\n|||| REVERSE ROTATE ||||\n");
+	printf("| 1 |\n");
+	i = 0;
+	reverse_rotate(b_stack, stack_size);
+	while (i < stack_size)
+	{
+		printf("b_stack[%i] = %d\n", i, b_stack[i]);
+		i++;
+	}
+	printf("\n");
+	printf("| 2 |\n");
+	i = 0;
+	reverse_rotate(b_stack, stack_size);
+	while (i < stack_size)
+	{
+		printf("b_stack[%i] = %d\n", i, b_stack[i]);
+		i++;
+	}
+	printf("\n");
+	printf("| 3 |\n");
+	i = 0;
+	reverse_rotate(b_stack, stack_size);
+	while (i < stack_size)
+	{
+		printf("b_stack[%i] = %d\n", i, b_stack[i]);
+		i++;
+	}
+	printf("\n");
 	return (0);
 }
