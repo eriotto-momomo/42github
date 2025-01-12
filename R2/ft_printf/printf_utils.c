@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   printf_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 14:09:12 by emonacho          #+#    #+#             */
-/*   Updated: 2024/12/12 14:34:36 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/01/12 16:11:08 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
 int		cntdigits(unsigned int nbr);
-char	*itoa(unsigned int n);
+char	*ft_itoa_unsigned(unsigned int n);
 void	printf_putchar(char c, size_t *cnt);
 void	printf_putstr(char *s, size_t *cnt);
 void	puthex_dec(unsigned int to_convert, char spec, size_t *cnt);
@@ -72,7 +72,7 @@ int	cntdigits(unsigned int nbr)
 	return (digits);
 }
 
-char	*itoa(unsigned int n)
+char	*ft_itoa_unsigned(unsigned int n)
 {
 	char			*str;
 	unsigned int	nbr;

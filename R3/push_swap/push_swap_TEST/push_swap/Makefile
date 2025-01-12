@@ -64,7 +64,7 @@ $(TEST_NAME): $(TEST_OBJS) $(LIBFT) $(FT_PRINTF)
 
 # Cleaning
 clean:
-	rm -rf $(OBJS)
+	rm -rf $(OBJS) $(TEST_OBJS)
 	$(MAKE) -C $(LIBFT_DIR) clean
 	$(MAKE) -C $(FT_PRINTF_DIR) clean
 
