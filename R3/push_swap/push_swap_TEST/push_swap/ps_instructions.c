@@ -10,16 +10,16 @@
 // All the following functions are instructions
 // that takes a_stack or b_stack as argument,
 // in order to execute the sorting algorithm.
-void compare_two_elements(int *stack, int stack_size);
-void reverse_rotate(int *stack, int stack_size);
-void rotate(int *stack, int stack_size);
-void push(int *src_stack, int *dst_stack, int stack_size);
-void swap(int *stack);
+void	compare_two_elements(int *stack, int stack_size);
+void	reverse_rotate(int *stack, int stack_size);
+void	rotate(int *stack, int stack_size);
+void	push(int *src_stack, int *dst_stack, int *src_size, int *dst_size);
+void	swap(int *stack);
 
 // Interverts the first two elements in a stack.
-void swap(int *stack)
+void	swap(int *stack)
 {
-	int tmp_stack;
+	int	tmp_stack;
 
 	if (stack == NULL)
 		return;
@@ -38,26 +38,27 @@ void swap(int *stack)
 // "go up" means (horizontally speaking): that
 // elements are going from right to left in the string.
 // 'UP' = '<-' = '++'
-void push(int *src_stack, int *dst_stack, int stack_size)
+void	push(int *src_stack, int *dst_stack, int *src_size, int *dst_size)
 {
 	int	i;
 
-	if (src_stack == NULL || dst_stack == NULL || stack_size <= 0)
+	if (src_stack == NULL || dst_stack == NULL || *src_size <= 0)
 		return;
-	i = stack_size;
+	i = *dst_size;
 	while (i > 0)
 	{
-
 		dst_stack[i] = dst_stack[i - 1];
 		i--;
 	}
 	dst_stack[0] = src_stack[0];
-	while (i < stack_size)
+	i = 0;
+	while (i < *src_size - 1)
 	{
 		src_stack[i] = src_stack[i + 1];
 		i++;
 	}
-	src_stack [stack_size - 1] = 0;
+	(*src_size)--;
+	(*dst_size)++;
 }
 
 // Every elements go up in the stack, the first
@@ -65,16 +66,16 @@ void push(int *src_stack, int *dst_stack, int stack_size)
 // (horizontally speaking): that elements
 // are going from right to left in the string.
 // 'UP' = '<-' = '++'
-void rotate(int *stack, int stack_size)
+void	rotate(int *stack, int stack_size)
 {
 	int	tmp_stack;
 	int	i;
 
-	if (stack == NULL || stack_size <= 2)
+	if (stack == NULL || stack_size < 2)
 		return;
 	tmp_stack = stack[0];
 	i = 0;
-	while (i < stack_size)
+	while (i < stack_size - 1)
 	{
 		stack[i] = stack[i + 1];
 		i++;
@@ -87,15 +88,15 @@ void rotate(int *stack, int stack_size)
 // (horizontally speaking): that elements
 // are going from left to right in the string.
 // 'DOWN' = '->' = '--'
-void reverse_rotate(int *stack, int stack_size)
+void	reverse_rotate(int *stack, int stack_size)
 {
 	int	tmp_stack;
 	int	i;
 
-	if (stack == NULL || stack_size <= 2)
+	if (stack == NULL || stack_size < 2)
 		return;
 	tmp_stack = stack[stack_size - 1];
-	i = stack_size;
+	i = stack_size - 1;
 	while (i > 0)
 	{
 		stack[i] = stack[i - 1];
@@ -107,7 +108,7 @@ void reverse_rotate(int *stack, int stack_size)
 // If there's is only two elements in the stack check if the
 // first element is greater than the second. If it's not the
 // case the first element is "swapped" with the second.
-void compare_two_elements(int *stack, int stack_size)
+void	compare_two_elements(int *stack, int stack_size)
 {
 	if (stack == NULL || stack_size != 2 || stack[0] > stack[1])
 		return;

@@ -9,6 +9,16 @@
 
 int	main(int argc, char *argv[])
 {
-	check_and_convert(argc, argv);
+	//int	i = 0;
+	int	*a_stack;
+	int	size;
+
+	a_stack = check_and_convert(argc, argv, &size);
+	push_swap(a_stack, &size);
+	//while (a_stack[i])
+	//{
+	//	ft_printf("SORTED a_stack[%i] is: %d\n", i, a_stack[i]);
+	//	i++;
+	//}
 	return (0);
 }

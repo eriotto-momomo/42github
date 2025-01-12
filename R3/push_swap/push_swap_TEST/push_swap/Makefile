@@ -2,7 +2,8 @@
 #                                DIRECTORIES                                   #
 # **************************************************************************** #
 HEADER	= push_swap.h
-SRCS	=	ps_check_and_convert.c \
+SRCS	=	ps_algorithm.c \
+			ps_check_and_convert.c \
 			ps_instructions.c \
 			ps_main.c \
 			ps_utils.c

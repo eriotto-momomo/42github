@@ -7,19 +7,19 @@
 // NE PAS OUBLIER DE SUPPRIMER LIBRAIRIE INUTILES !!!!!!!!!
 // UTILISER LIBFT ET SUPPRIMER FONCTIONS EN TROP DANS UTILS
 
-int	*check_and_convert(int argc, char *argv[]);
+int	*check_and_convert(int argc, char *argv[], int *stack_size);
 int	format_check(char **array, int i);
-int array_conversion(int size, int start, char **str_array, int *int_array);
+int	array_conversion(int size, int start, char **str_array, int *int_array);
 int	arg_is_valid(int size, char **str_array);
-void *free_int_or_str_array(void *array, int type, int size);
+void	*free_int_or_str_array(void *array, int type, int size);
 
 // Type 1 = int_array
 // Type 2 = str_array
-void *free_int_or_str_array(void *array, int type, int size)
+void	*free_int_or_str_array(void *array, int type, int size)
 {
 	int		i;
-	int 	*int_array;
-	char 	**str_array;
+	int		*int_array;
+	char	**str_array;
 
 	i = 0;
 	if (type == 1)
@@ -50,7 +50,7 @@ void *free_int_or_str_array(void *array, int type, int size)
 int	arg_is_valid(int size, char **str_array)
 {
 	int	i;
-	int error_check;
+	int	error_check;
 
 	i = 1;
 	error_check = 0;
@@ -78,7 +78,7 @@ int	arg_is_valid(int size, char **str_array)
 
 // Converts str_array to int_array and check if int_array:
 // outpasses limits, contains duplicates or is NULL
-int array_conversion(int size, int start, char **str_array, int *int_array)
+int	array_conversion(int size, int start, char **str_array, int *int_array)
 {
 	int	i;
 	int	j;
@@ -136,6 +136,40 @@ int	format_check(char **array, int i)
 	return (count);
 }
 
+// stack_size initialisé à l'aide d'un pointeur dans le main
+////////////////////////////////////////////////////////////
+// 1. If argc is at leat 2 elements and the second one is a valid
+// string, argv[1] is split and converted into an int array.
+// 2. If argc is more than 2 elements, each elements are converted
+// into an int array starting from argv[1].
+int	*check_and_convert(int argc, char *argv[], int *stack_size)
+{
+	char	**tmp_stack;
+	int		*a_stack;
+
+	tmp_stack = NULL;
+	if ((argc == 2) && format_check(argv, 1) >= 2)
+	{
+		tmp_stack = ft_split(argv[1], ' ');
+		*stack_size = format_check(argv, 1);
+		a_stack = malloc(sizeof(int) * *stack_size);
+		array_conversion(*stack_size, 0, tmp_stack, a_stack);
+		if (tmp_stack != NULL)
+			free(tmp_stack);
+		return (a_stack);
+	}
+	else if (tmp_stack == NULL && arg_is_valid(argc, argv) == 1)
+	{
+		*stack_size = argc - 1;
+		a_stack = malloc(sizeof(int) * (argc - 1));
+		array_conversion((argc - 1), 1, argv, a_stack);
+		return (a_stack);
+	}
+	return (0);
+}
+/*
+// stack_size initialisé avec une variable interne
+//////////////////////////////////////////////////
 int	*check_and_convert(int argc, char *argv[])
 {
 	char	**tmp_stack;
@@ -161,3 +195,4 @@ int	*check_and_convert(int argc, char *argv[])
 	}
 	return (0);
 }
+*/
