@@ -7,81 +7,54 @@
 // NE PAS OUBLIER DE SUPPRIMER LIBRAIRIE INUTILES !!!!!!!!!
 // UTILISER LIBFT ET SUPPRIMER FONCTIONS EN TROP DANS UTILS
 
-void	sort(int *a_stack, int *b_stack, int *a_size, int *b_size)
+int	newgap(int gap)
 {
-    // Vérifier que la pile a_stack contient 4 éléments
-    if (*a_size != 4)
-    {
-        printf("Error: This function only handles stacks of size 4.\n");
-        return;
-    }
 
-    // Étape 1 : Pousser les deux plus petits éléments dans b_stack
-    for (int i = 0; i < 2; i++)
-    {
-        // Trouver le plus petit élément
-        int min_index = 0;
-        for (int j = 1; j < *a_size; j++)
-        {
-            if (a_stack[j] < a_stack[min_index])
-                min_index = j;
-        }
+    gap = (gap * 10) / 13;
+    if (gap == 9 || gap == 10)
+        gap = 11;
+    if (gap < 1)
+        gap = 1;
+    return gap;
+}
 
-        // Placer le plus petit élément en haut de a_stack
-        if (min_index <= *a_size / 2)
+void combsort(int *a, int *size)
+{
+    int gap = *size;
+    int temp, i;
+
+    for (;;)
+    {
+        gap = newgap(gap);
+        int swapped = 0;
+
+        for (i = 0; i < *size - gap; i++)
         {
-            while (min_index > 0)
+            int j = i + gap;
+
+            if (a[i] > a[j])
             {
-                rotate(a_stack, *a_size);
-                min_index--;
+                temp = a[i];
+                a[i] = a[j];
+                a[j] = temp;
+                swapped  =  1;
             }
         }
-        else
-        {
-            while (min_index < *a_size)
-            {
-                reverse_rotate(a_stack, *a_size);
-                min_index++;
-            }
-        }
-
-        // Pousser l'élément le plus petit vers b_stack
-        push(a_stack, b_stack, a_size, b_size);
+        if (gap  ==  1 && !swapped)
+            break;
     }
-
-    // Étape 2 : Trier les deux éléments restants dans a_stack
-    if (a_stack[0] > a_stack[1])
-        swap(a_stack);
-
-    // Étape 3 : Remettre les éléments de b_stack dans a_stack
-    while (*b_size > 0)
-    {
-        push(b_stack, a_stack, b_size, a_size);
-    }
-
-    // Vérification finale
-    printf("a_stack après tri : ");
-    for (int i = 0; i < *a_size; i++)
-    {
-        printf("%d ", a_stack[i]);
-    }
-    printf("\n");
 }
 
 void	*push_swap(int *a_stack, int *stack_size)
 {
 	int	*b_stack;
-	int	a_size;
-	int	b_size;
 	int	i;
 
-	b_stack = malloc(sizeof(int) * *stack_size);
+	b_stack = malloc(sizeof(int *) * *stack_size);
 	if (b_stack == NULL)
 		return (0);
-	a_size = *stack_size;
-	b_size = *stack_size;
-	printf("a_size[%d] / b_size[%d]\n", a_size, b_size);
-	sort(a_stack, b_stack, &a_size, &b_size);
+	combsort(a_stack, stack_size);
+	//reinitialise b_stack to zero & free
 	i = 0;
 	while (i < *stack_size)
 	{
@@ -95,5 +68,6 @@ void	*push_swap(int *a_stack, int *stack_size)
 		printf("SORTED b_stack[%i] is: %d\n", i, b_stack[i]);
 		i++;
 	}
+	free(b_stack);
 	return(0);
 }

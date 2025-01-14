@@ -25,22 +25,23 @@ void	*free_int_or_str_array(void *array, int type, int size)
 	if (type == 1)
 	{
 		int_array = (int *)array;
-		while (int_array[i++] < size)
-			int_array[i] = 0;
 		free(int_array);
 	}
-	else if (type == 2)
+	else if(type == 2)
 	{
 		str_array = (char **)array;
 		while (i < size)
 		{
 			if (str_array[i] != NULL)
-				free(str_array);
+			{
+				free(str_array[i]);
+				str_array[i] = NULL;
+			}
 			i++;
 		}
 		free(str_array);
 	}
-	return (0);
+	return (NULL);
 }
 
 // Check if arguments are valid and will display "Error" if:
@@ -60,16 +61,10 @@ int	arg_is_valid(int size, char **str_array)
 	while (error_check != -1 && str_array[i] && i < size)
 	{
 		error_check = format_check(str_array, i);
-		if (size > 2 && error_check > 1)
-		{
-			error_check = -1;
-			break;
-		}
 		i++;
 	}
 	if (error_check == -1)
 	{
-		str_array = free_int_or_str_array(str_array, 2, size);
 		ft_printf("Error\n");
 		exit(1);
 	}
@@ -148,51 +143,25 @@ int	*check_and_convert(int argc, char *argv[], int *stack_size)
 	int		*a_stack;
 
 	tmp_stack = NULL;
-	if ((argc == 2) && format_check(argv, 1) >= 2)
+	if ((argc == 2) && arg_is_valid(argc, argv) == 1)
 	{
 		tmp_stack = ft_split(argv[1], ' ');
 		*stack_size = format_check(argv, 1);
-		a_stack = malloc(sizeof(int) * *stack_size);
+		a_stack = malloc(sizeof(int *) * *stack_size);
+		if (a_stack == NULL)
+			return (NULL);
 		array_conversion(*stack_size, 0, tmp_stack, a_stack);
-		if (tmp_stack != NULL)
-			free(tmp_stack);
+		free_int_or_str_array(tmp_stack, 2, *stack_size);
 		return (a_stack);
 	}
-	else if (tmp_stack == NULL && arg_is_valid(argc, argv) == 1)
+	else if (argc > 2 && arg_is_valid(argc, argv) == 1)
 	{
 		*stack_size = argc - 1;
-		a_stack = malloc(sizeof(int) * (argc - 1));
+		a_stack = malloc(sizeof(int *) * (argc - 1));
+		if (a_stack == NULL)
+			return (NULL);
 		array_conversion((argc - 1), 1, argv, a_stack);
 		return (a_stack);
 	}
 	return (0);
 }
-/*
-// stack_size initialisé avec une variable interne
-//////////////////////////////////////////////////
-int	*check_and_convert(int argc, char *argv[])
-{
-	char	**tmp_stack;
-	int		*a_stack;
-	int		stack_size;
-
-	tmp_stack = NULL;
-	if ((argc == 2) && format_check(argv, 1) >= 2)
-	{
-		tmp_stack = ft_split(argv[1], ' ');
-		stack_size = format_check(argv, 1);
-		a_stack = malloc(sizeof(int) * stack_size);
-		array_conversion(stack_size, 0, tmp_stack, a_stack);
-		if (tmp_stack != NULL)
-			free(tmp_stack);
-		return (a_stack);
-	}
-	else if (tmp_stack == NULL && arg_is_valid(argc, argv) == 1)
-	{
-		a_stack = malloc(sizeof(int) * (argc - 1));
-		array_conversion((argc - 1), 1, argv, a_stack);
-		return (a_stack);
-	}
-	return (0);
-}
-*/

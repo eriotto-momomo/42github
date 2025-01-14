@@ -2,6 +2,66 @@
 #include <stdlib.h>
 #include <string.h>
 
+void	free_int_or_str_array(void *array, int type, int size)
+{
+	int		i;
+	int		*int_array;
+	char	**str_array;
+
+	i = 0;
+	if (type == 1)
+	{
+		int_array = (int *)array;
+		free(int_array);
+	}
+	else if(type == 2)
+	{
+		str_array = (char **)array;
+		while (i < size)
+		{
+			if (str_array[i] != NULL)
+			{
+				free(str_array[i]);
+				str_array[i] = NULL;
+			}
+			i++;
+		}
+		free(str_array);
+	}
+}
+
+int main(void)
+{
+	int *int_array;
+	char **str_array;
+	int size = 3;
+
+	int_array = malloc(sizeof(int) * size);
+	str_array = malloc(sizeof(char *) * size);
+
+	int_array[0] = 1;
+	int_array[1] = 2;
+	int_array[2] = 3;
+	str_array[0] = strdup("one");
+	str_array[1] = strdup("two");
+	str_array[2] = strdup("three");
+
+	int i;
+	for(i = 0; i < 3; i++)
+		printf("int_array[%i] before cleaning: %i\n", i, int_array[i]);
+	for(i = 0; i < 3; i++)
+		printf("str_array[%i] before cleaning: %s\n", i, str_array[i]);
+	free_int_or_str_array(int_array, 1, size);
+	//printf("Burp!\n");
+	free_int_or_str_array(str_array, 2, size);
+	//printf("Burp!\n");
+	for(i = 0; i < 3; i++)
+		printf("int_array[%i] after cleaning: %i\n", i, int_array[i]);
+	for(i = 0; i < 3; i++)
+		printf("str_array[%i] after cleaning: %s\n", i, str_array[i]);
+}
+
+/*
 // Every elements go down in the stack, the last
 // element becomes the first. "go down" means
 // (horizontally speaking): that elements
@@ -173,3 +233,4 @@ int main(void)
 	printf("\n");
 	return (0);
 }
+*/

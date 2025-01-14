@@ -13,7 +13,8 @@
 void	compare_two_elements(int *stack, int stack_size);
 void	reverse_rotate(int *stack, int stack_size);
 void	rotate(int *stack, int stack_size);
-void	push(int *src_stack, int *dst_stack, int *src_size, int *dst_size);
+//void	push(int *src_stack, int *dst_stack, int *src_size, int *dst_size);
+void	push(int *src_stack, int *dst_stack, int *size);
 void	swap(int *stack);
 
 // Interverts the first two elements in a stack.
@@ -38,7 +39,7 @@ void	swap(int *stack)
 // "go up" means (horizontally speaking): that
 // elements are going from right to left in the string.
 // 'UP' = '<-' = '++'
-void	push(int *src_stack, int *dst_stack, int *src_size, int *dst_size)
+/*void	push(int *src_stack, int *dst_stack, int *src_size, int *dst_size)
 {
 	int	i;
 
@@ -59,6 +60,27 @@ void	push(int *src_stack, int *dst_stack, int *src_size, int *dst_size)
 	}
 	(*src_size)--;
 	(*dst_size)++;
+}*/
+
+void	push(int *src_stack, int *dst_stack, int *size)
+{
+	int	i;
+
+	if (src_stack == NULL || dst_stack == NULL || *size <= 0)
+		return;
+	i = *size;
+	while (i > 0)
+	{
+		dst_stack[i] = dst_stack[i - 1];
+		i--;
+	}
+	dst_stack[0] = src_stack[0];
+	i = 0;
+	while (i < *size - 1)
+	{
+		src_stack[i] = src_stack[i + 1];
+		i++;
+	}
 }
 
 // Every elements go up in the stack, the first

@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eliotmonachon <eliotmonachon@student.42    +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:25:21 by emonacho          #+#    #+#             */
-/*   Updated: 2025/01/12 12:41:15 by eliotmonach      ###   ########.fr       */
+/*   Updated: 2025/01/14 20:21:41 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 
 void	*ft_calloc(size_t count, size_t size)
 {

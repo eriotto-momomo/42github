@@ -1,16 +1,5 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: eliotmonachon <eliotmonachon@student.42    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/10/19 12:30:17 by emonacho          #+#    #+#              #
-#    Updated: 2025/01/12 12:40:51 by eliotmonach      ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
-NAME = libftprintf.a
+HEADER	= ft_printf.h
+NAME	= libft.a
 
 SRCS	= ft_atoi.c \
 ft_bzero.c \

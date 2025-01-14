@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:42:41 by emonacho          #+#    #+#             */
-/*   Updated: 2025/01/12 13:03:56 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/01/14 20:23:41 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,11 +93,11 @@ char	**ft_split(char const *s, char c)
 	char			**s2;
 	unsigned int	num_word;
 
-	if (s == 0)
+	if (s == NULL)
 		return (NULL);
 	num_word = cnt_word(s, c);
 	s2 = (char **)malloc((num_word + 1) * sizeof(char *));
-	if (s2 == 0)
+	if (s2 == NULL)
 		return (NULL);
 	s2 = splitword(s, c, s2, num_word);
 	return (s2);

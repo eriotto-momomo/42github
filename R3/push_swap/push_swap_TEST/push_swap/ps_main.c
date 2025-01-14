@@ -14,6 +14,11 @@ int	main(int argc, char *argv[])
 	int	size;
 
 	a_stack = check_and_convert(argc, argv, &size);
+	if (a_stack == NULL)
+	{
+		ft_printf("Error\n");
+		exit(1);
+	}
 	push_swap(a_stack, &size);
 	//while (a_stack[i])
 	//{
