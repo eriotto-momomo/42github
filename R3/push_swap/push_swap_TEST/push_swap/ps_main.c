@@ -10,6 +10,7 @@
 void	comb_sort(int *stack, int size);
 void	rotate_combsort(int *stack, int size, int n, int rev);
 int	new_gap(int gap);
+int	main(int argc, char *argv[]);
 
 void	rotate_combsort(int *stack, int size, int n, int rev)
 {
@@ -99,7 +100,7 @@ int	main(int argc, char *argv[])
 	int	i = 0;
 	int	*a_stack;
 	int	size;
-	//int	disorder;
+	int	disorder;
 
 	a_stack = check_and_convert(argc, argv, &size);
 	if (a_stack == NULL)
@@ -107,12 +108,18 @@ int	main(int argc, char *argv[])
 		ft_printf("Error\n");
 		exit(1);
 	}
-	//disorder = check_disorder(a_stack, size);
-	comb_sort(a_stack, size);
+	else if (size == 2 && a_stack[0] > a_stack[1])
+		swap(a_stack);
+	disorder = check_disorder(a_stack, size);
+	ft_printf("disorder indice is: %d\n", disorder);
 	//if (size < 10 || ((size >= 10 && size <= 100) && disorder <= (size / 3)))
-	//	comb_sort(a_stack, &size);
-	//else
-	//	push_swap(a_stack, &size);
+	if (disorder < 1)
+	{
+		printf("////// CCCCCCCOMB_SORT! //////\n");
+		comb_sort(a_stack, size);
+	}
+	else
+		push_swap(a_stack, &size);
 	while (i < size)
 	{
 		printf("SORTED a_stack[%i] is: %d\n", i, a_stack[i]);

@@ -6,10 +6,13 @@
 // NE PAS OUBLIER DE SUPPRIMER LIBRAIRIE INUTILES !!!!!!!!!
 // UTILISER LIBFT ET SUPPRIMER FONCTIONS EN TROP DANS UTILS
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h>
 # include <fcntl.h>
+# include <limits.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+
+
 
 //ps_check_and_convert.c
 int	*check_and_convert(int argc, char *argv[], int *stack_size);
@@ -22,16 +25,22 @@ void	*free_int_or_str_array(void *array, int type, int size);
 int	ft_safe_atoi(const char *str, int *error);
 
 //ps_instructions.c
-//void	compare_two_elements(int *stack, int size);
 void	reverse_rotate(int *stack, int size);
 void	rotate(int *stack, int size);
 void	push(int *src_stack, int *dst_stack, int *src_size, int *dst_size);
 void	swap(int *stack);
 
 //ps_main.c
+void	comb_sort(int *stack, int size);
+void	rotate_combsort(int *stack, int size, int n, int rev);
+int	new_gap(int gap);
 int	main(int argc, char *argv[]);
 
 //ps_algorithm.c
+int	is_sorted(int size, int *stack);
+int	get_average_median(int size, int *stack, int *min, int *max);
+int	get_closest_median(int size, int *stack, int *min, int *max);
+void quicksort(int *a_stack, int *b_stack, int *b_size, int *a_size);
 void	*push_swap(int *a_stack, int *size);
 
 #endif

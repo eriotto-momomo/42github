@@ -105,14 +105,3 @@ void	reverse_rotate(int *stack, int size)
 	}
 	stack[0] = tmp_stack;
 }
-
-// If there's is only two elements in the stack check if the
-// first element is greater than the second. If it's not the
-// case the first element is "swapped" with the second.
-/*void	compare_two_elements(int *stack, int size)
-{
-	if (stack == NULL || size != 2 || stack[0] > stack[1])
-		return;
-	if (stack[0] < stack[1])
-		swap(stack);
-}*/

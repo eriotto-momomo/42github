@@ -3,27 +3,55 @@
 #include <string.h>
 #include <limits.h>
 
-int	get_min_med_max(int size, int *array);
-
-// Used to determine if the stack is almost sorted
-// by checking the number of inversions.
-int	check_disorder(int *stack, int size)
+int	get_average_median(int size, int *stack, int *min, int *max)
 {
 	int	i;
-	int	j;
-	int	inversions;
+	int	median;
 
 	i = 0;
-	j = 1;
-	inversions = 0;
-	while (i < size && j < size)
+	median = 0;
+	while (i < size)
 	{
-		if (stack[i] > stack[j])
-			inversions++;
+		if (stack[i] > *max)
+			*max = stack[i];
 		i++;
-		j++;
 	}
-	return (inversions);
+	while (i > 0)
+	{
+		if (stack[i] < *min)
+			*min = stack[i];
+		i--;
+	}
+	median = (*min + *max) / 2;
+	return (median);
+}
+
+int	get_closest_median(int size, int *stack, int *min, int *max)
+{
+	int	i;
+	int closest_to_median;
+	int median_value;
+	int closest_diff;
+	int diff;
+
+	i = 0;
+	closest_to_median = 0;
+	median_value = get_average_median(size, stack, min, max);
+	closest_diff = INT_MAX;
+	diff = 0;
+	while (i < size)
+	{
+		diff = stack[i] - median_value;
+		if (diff < 0)
+			diff = -diff;
+		if (diff < closest_diff)
+		{
+			closest_diff = diff;
+			closest_to_median = stack[i];
+		}
+		i++;
+	}
+	return closest_to_median;
 }
 
 int main(void)
@@ -37,16 +65,13 @@ int main(void)
 	int_array[3] = 690;
 	int_array[4] = 543;
 
-	//int min_value = 0;
-	//int max_value = 0;
-	//int median_value;
-	//median_value = get_closest_median(size, int_array);
-	//printf("median_value: %d\n", median_value);
-	int inversions = 0;
-	inversions = check_disorder(int_array, size);
-	printf("inversions: %d\n", inversions);
-	//printf("max_value: %d\n", max_value);
-	//printf("min_value: %d\n", min_value);
+	int min_value = 0;
+	int max_value = 0;
+	int median_value;
+	median_value = get_closest_median(size, int_array, &min_value, &max_value);
+	printf("median_value: %d\n", median_value);
+	printf("max_value: %d\n", max_value);
+	printf("min_value: %d\n", min_value);
 
 	return (0);
 }

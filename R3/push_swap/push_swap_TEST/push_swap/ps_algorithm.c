@@ -1,22 +1,20 @@
 #include "push_swap.h"
 #include "libft/libft.h"
 #include "ft_printf/ft_printf.h"
+#include <limits.h>
 
 // NE PAS OUBLIER DE REMPLACER PRINTF PAR FT_PRINTF !!!!!!!
 // NE PAS OUBLIER DE REMPLACER AUTRES FONCTIONS PAR FT_* !!
 // NE PAS OUBLIER DE SUPPRIMER LIBRAIRIE INUTILES !!!!!!!!!
 // UTILISER LIBFT ET SUPPRIMER FONCTIONS EN TROP DANS UTILS
-/*int get_stack_size(int *stack)
-{
-	int	size
 
-	size = 0;
-	while (stack[size])
-		size++;
-	return size;
-}*/
+int	is_sorted(int size, int *stack);
+int	get_average_median(int size, int *stack, int *min, int *max);
+int	get_closest_median(int size, int *stack, int *min, int *max);
+void quicksort(int *a_stack, int *b_stack, int *b_size, int *a_size);
+void	*push_swap(int *a_stack, int *size);
 
-int is_sorted(int *stack, int size)
+int	is_sorted(int size, int *stack)
 {
 	int	i;
 
@@ -24,43 +22,38 @@ int is_sorted(int *stack, int size)
 	while (i < size)
 	{
 		if (stack[i] > stack[i + 1])
-		{
-			printf("stack[%i] is sorted!\n", i);
 			return (0);
-		}
 		i++;
 	}
 	return (1);
 }
 
-// Find minimal and maximal values in array and return
+// Find minimal and maximal values in stack and return
 // the approximative median value. Complexity O(1), great
-// and sufficient for balanced or partially sorted array.
-int	get_min_med_max(int size, int *array, int *min, int *max)
+// and sufficient for balanced or partially sorted stack.
+int	get_average_median(int size, int *stack, int *min, int *max)
 {
 	int	i;
-	//int	min;
 	int	median;
-	//int	max;
-
 	i = 0;
 	while (i < size)
 	{
-		if (array[i] > *max)
-			*max = array[i];
+		if (stack[i] > *max)
+			*max = stack[i];
 		i++;
 	}
-	while (i > 0)
+	i = 0;
+	while (i < size)
 	{
-		if (array[i] < *min)
-			*min = array[i];
-		i--;
+		if (stack[i] < *min)
+			*min = stack[i];
+		i++;
 	}
 	median = (*min + *max) / 2;
 	return (median);
 }
 
-int	get_closest_median(int size, int *array, int *min, int *max)
+int	get_closest_median(int size, int *stack, int *min, int *max)
 {
 	int	i;
 	int closest_to_median;
@@ -69,32 +62,41 @@ int	get_closest_median(int size, int *array, int *min, int *max)
 	int diff;
 
 	i = 0;
-	median_value = get_min_med_max(size, array, min, max);
+	closest_to_median = 0;
+	median_value = get_average_median(size, stack, min, max);
 	closest_diff = INT_MAX;
+	diff = 0;
 	while (i < size)
 	{
-		diff = array[i] - median_value;
+		diff = stack[i] - median_value;
 		if (diff < 0)
 			diff = -diff;
 		if (diff < closest_diff)
 		{
 			closest_diff = diff;
-			closest_to_median = array[i];
+			closest_to_median = stack[i];
 		}
 		i++;
 	}
-    return closest_to_median;
+	return closest_to_median;
 }
 
-void quicksort(int *a_stack, int *b_stack, int *b_size, int *a_size, int pivot)
+void quicksort(int *a_stack, int *b_stack, int *a_size, int *b_size)
 {
 	int	i;
+	int pivot;
 	int min;
 	int max;
 
+	min = INT_MAX;
+	max = INT_MIN;
 	i = 0;
-	pivot = get_min_med_max(*a_size, a_stack, &min, &max);
-	while (a_size > 0)
+	pivot = get_closest_median(*a_size, a_stack, &min, &max);
+	printf("med = %d\n", pivot);
+	printf("min = %d\n", min);
+	printf("max = %d\n", max);
+	return ;
+	while ((!is_sorted(*a_size, a_stack)) && b_size != 0)
 	{
 		while (i < *a_size)
 		{
@@ -120,44 +122,22 @@ void quicksort(int *a_stack, int *b_stack, int *b_size, int *a_size, int pivot)
 			push(b_stack, a_stack, b_size, a_size); //pa
 			printf("pa\n");
 		}
-		//if (b_size == 0 && is_sorted(a_stack, a_size) && a_size == size)
-		//	break;
 	}
 }
 
 void	*push_swap(int *a_stack, int *size)
 {
 	int	*b_stack;
-	//int	min_value;
-	//int	max_value;
-	//int median;
 	int a_size;
 	int	b_size;
-	//int	i;
 
 	a_size = *size;
 	b_size = 0;
 	b_stack = malloc(sizeof(int *) * *size);
 	if (b_stack == NULL)
 		return (0);
-	//median = get_min_med_max(*size, a_stack, &min_value, &max_value);
-	//quicksort(*size, a_stack, b_stack, &min_value, &max_value, median);
-	quicksort(a_stack, b_stack, &a_size, &b_size, 0);
-	//reinitialise b_stack to zero & free
-	/*i = 0;
-	while (i < *size)
-	{
-		printf("SORTED a_stack[%i] is: %d\n", i, a_stack[i]);
-		i++;
-	}
-	printf("------------------------------\n");
-	i = 0;
-	while (i < *size)
-	{
-		printf("SORTED b_stack[%i] is: %d\n", i, b_stack[i]);
-		i++;
-	}
-	free(b_stack);*/
+	quicksort(a_stack, b_stack, &a_size, &b_size);
+	free(b_stack);
 	return(0);
 }
 
