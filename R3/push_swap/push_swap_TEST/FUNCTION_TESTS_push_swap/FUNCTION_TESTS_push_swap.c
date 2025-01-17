@@ -1,36 +1,57 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <limits.h>
 
-void	free_int_or_str_array(void *array, int type, int size)
+int	get_min_med_max(int size, int *array);
+
+// Used to determine if the stack is almost sorted
+// by checking the number of inversions.
+int	check_disorder(int *stack, int size)
 {
-	int		i;
-	int		*int_array;
-	char	**str_array;
+	int	i;
+	int	j;
+	int	inversions;
 
 	i = 0;
-	if (type == 1)
+	j = 1;
+	inversions = 0;
+	while (i < size && j < size)
 	{
-		int_array = (int *)array;
-		free(int_array);
+		if (stack[i] > stack[j])
+			inversions++;
+		i++;
+		j++;
 	}
-	else if(type == 2)
-	{
-		str_array = (char **)array;
-		while (i < size)
-		{
-			if (str_array[i] != NULL)
-			{
-				free(str_array[i]);
-				str_array[i] = NULL;
-			}
-			i++;
-		}
-		free(str_array);
-	}
+	return (inversions);
 }
 
 int main(void)
+{
+	int *int_array;
+	int size = 5;
+	int_array = malloc(sizeof(int) * size);
+	int_array[0] = 433;
+	int_array[1] = -989;
+	int_array[2] = -1000;
+	int_array[3] = 690;
+	int_array[4] = 543;
+
+	//int min_value = 0;
+	//int max_value = 0;
+	//int median_value;
+	//median_value = get_closest_median(size, int_array);
+	//printf("median_value: %d\n", median_value);
+	int inversions = 0;
+	inversions = check_disorder(int_array, size);
+	printf("inversions: %d\n", inversions);
+	//printf("max_value: %d\n", max_value);
+	//printf("min_value: %d\n", min_value);
+
+	return (0);
+}
+
+/*int main(void)
 {
 	int *int_array;
 	char **str_array;
@@ -59,7 +80,7 @@ int main(void)
 		printf("int_array[%i] after cleaning: %i\n", i, int_array[i]);
 	for(i = 0; i < 3; i++)
 		printf("str_array[%i] after cleaning: %s\n", i, str_array[i]);
-}
+}*/
 
 /*
 // Every elements go down in the stack, the last
