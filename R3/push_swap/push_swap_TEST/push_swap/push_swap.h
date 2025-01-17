@@ -22,16 +22,16 @@ void	*free_int_or_str_array(void *array, int type, int size);
 int	ft_safe_atoi(const char *str, int *error);
 
 //ps_instructions.c
-void	compare_two_elements(int *stack, int stack_size);
-void	reverse_rotate(int *stack, int stack_size);
-void	rotate(int *stack, int stack_size);
-//void	push(int *src_stack, int *dst_stack, int *src_size, int *dst_size);
-void	push(int *src_stack, int *dst_stack, int *size);
+//void	compare_two_elements(int *stack, int size);
+void	reverse_rotate(int *stack, int size);
+void	rotate(int *stack, int size);
+void	push(int *src_stack, int *dst_stack, int *src_size, int *dst_size);
 void	swap(int *stack);
 
 //ps_main.c
-void	*push_swap(int *a_stack, int *stack_size);
-void comb_sort(int *a_stack, int *b_stack, int *size);
+int	main(int argc, char *argv[]);
 
+//ps_algorithm.c
+void	*push_swap(int *a_stack, int *size);
 
 #endif
