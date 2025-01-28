@@ -5,17 +5,41 @@
 // NE PAS OUBLIER DE REMPLACER PRINTF PAR FT_PRINTF !!!!!!!
 // NE PAS OUBLIER DE REMPLACER AUTRES FONCTIONS PAR FT_* !!
 // NE PAS OUBLIER DE SUPPRIMER LIBRAIRIE INUTILES !!!!!!!!!
+// FT_PRINTF CHAQUE INSTRUCTION !!!!!!!!!!!!!!!!!!!!!!!!!!!
 // UTILISER LIBFT ET SUPPRIMER FONCTIONS EN TROP DANS UTILS
 
 // All the following functions are instructions
 // that takes a_stack or b_stack as argument,
 // in order to execute the sorting algorithm.
 
-//void	compare_two_elements(int *stack, int size);
+void	call_instruction(int instruction, int *stack, int size, char c);
 void	reverse_rotate(int *stack, int size);
 void	rotate(int *stack, int size);
 void	push(int *src_stack, int *dst_stack, int *src_size, int *dst_size);
 void	swap(int *stack);
+
+// Instructions:
+// 1 = swap
+// 2 = rotate
+// 3 = reverse_rotate
+void	call_instruction(int instruction, int *stack, int size, char c)
+{
+	if (instruction == 1)
+	{
+		swap(stack);
+		ft_printf("s%c\n", c);
+	}
+	else if (instruction == 2)
+	{
+		rotate(stack, size);
+		ft_printf("r%c\n", c);
+	}
+	else if (instruction == 3)
+	{
+		reverse_rotate(stack, size);
+		ft_printf("rr%c\n", c);
+	}
+}
 
 // Interverts the first two elements in a stack.
 void	swap(int *stack)
@@ -58,6 +82,7 @@ void	push(int *src_stack, int *dst_stack, int *src_size, int *dst_size)
 		src_stack[i] = src_stack[i + 1];
 		i++;
 	}
+	src_stack[*src_size - 1] = 0;
 	(*src_size)--;
 	(*dst_size)++;
 }

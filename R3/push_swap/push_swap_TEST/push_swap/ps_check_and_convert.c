@@ -5,6 +5,7 @@
 // NE PAS OUBLIER DE REMPLACER PRINTF PAR FT_PRINTF !!!!!!!
 // NE PAS OUBLIER DE REMPLACER AUTRES FONCTIONS PAR FT_* !!
 // NE PAS OUBLIER DE SUPPRIMER LIBRAIRIE INUTILES !!!!!!!!!
+// FT_PRINTF CHAQUE INSTRUCTION !!!!!!!!!!!!!!!!!!!!!!!!!!!
 // UTILISER LIBFT ET SUPPRIMER FONCTIONS EN TROP DANS UTILS
 
 int	*check_and_convert(int argc, char *argv[], int *stack_size);
@@ -147,7 +148,7 @@ int	*check_and_convert(int argc, char *argv[], int *stack_size)
 	{
 		tmp_stack = ft_split(argv[1], ' ');
 		*stack_size = format_check(argv, 1);
-		a_stack = malloc(sizeof(int *) * *stack_size);
+		a_stack = malloc(sizeof(int) * *stack_size);
 		if (a_stack == NULL)
 			return (NULL);
 		array_conversion(*stack_size, 0, tmp_stack, a_stack);
@@ -157,7 +158,7 @@ int	*check_and_convert(int argc, char *argv[], int *stack_size)
 	else if (argc > 2 && arg_is_valid(argc, argv) == 1)
 	{
 		*stack_size = argc - 1;
-		a_stack = malloc(sizeof(int *) * (argc - 1));
+		a_stack = malloc(sizeof(int) * (argc - 1));
 		if (a_stack == NULL)
 			return (NULL);
 		array_conversion((argc - 1), 1, argv, a_stack);

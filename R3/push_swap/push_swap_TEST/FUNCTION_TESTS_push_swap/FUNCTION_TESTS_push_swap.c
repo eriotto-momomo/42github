@@ -3,55 +3,81 @@
 #include <string.h>
 #include <limits.h>
 
-int	get_average_median(int size, int *stack, int *min, int *max)
+void	count_elements(int *stack, int *med, int *lower_count, int *equal_count)
 {
 	int	i;
-	int	median;
+	int	size;
 
 	i = 0;
-	median = 0;
+	while (stack[i])
+	{
+		size = i;
+		i++;
+	}
+	i = 0;
+	while (i < size) // Compter les éléments
+		{
+			if (stack[i] < *med)
+				(*lower_count)++;
+			else if (stack[i] == *med)
+				(*equal_count)++;
+			i++;
+		}
+}
+
+int calculate_median(int size, int *stack, int *min, int *max)
+{
+	int	med;
+	int	lower_count;
+	int	equal_count;
+
+    while (*min < *max)
+	{
+        med = (*min + *max) / 2; // Recalculer la médiane à chaque itération
+        lower_count = 0;
+        equal_count = 0;
+		count_elements(stack, &med, &lower_count, &equal_count);
+		if (lower_count <= size / 2 && lower_count + equal_count > size / 2) // Vérifier si `med` est la médiane
+			return med;
+		if (lower_count > size / 2) // Rétrécir les bornes
+			*max = med - 1;
+		else
+			*min = med + 1;
+	}
+	return *min; // Retourner la valeur médiane exacte
+}
+
+void	get_min_max(int size, int *stack, int *min, int *max)
+{
+	int	i;
+
+	*min = INT_MAX;
+	*max = INT_MIN;
+	i = 0;
 	while (i < size)
 	{
 		if (stack[i] > *max)
 			*max = stack[i];
 		i++;
 	}
-	while (i > 0)
+	i = 0;
+	while (i < size)
 	{
 		if (stack[i] < *min)
 			*min = stack[i];
-		i--;
-	}
-	median = (*min + *max) / 2;
-	return (median);
-}
-
-int	get_closest_median(int size, int *stack, int *min, int *max)
-{
-	int	i;
-	int closest_to_median;
-	int median_value;
-	int closest_diff;
-	int diff;
-
-	i = 0;
-	closest_to_median = 0;
-	median_value = get_average_median(size, stack, min, max);
-	closest_diff = INT_MAX;
-	diff = 0;
-	while (i < size)
-	{
-		diff = stack[i] - median_value;
-		if (diff < 0)
-			diff = -diff;
-		if (diff < closest_diff)
-		{
-			closest_diff = diff;
-			closest_to_median = stack[i];
-		}
 		i++;
 	}
-	return closest_to_median;
+}
+
+int	find_median_math(int size, int *stack)
+{
+	int	min;
+	int	max;
+	int	median;
+
+	get_min_max(size, stack, &min, &max);
+	median = calculate_median(size, stack, &min, &max);
+	return (median);
 }
 
 int main(void)
@@ -65,13 +91,13 @@ int main(void)
 	int_array[3] = 690;
 	int_array[4] = 543;
 
-	int min_value = 0;
-	int max_value = 0;
+	//int min_value = 0;
+	//int max_value = 0;
 	int median_value;
-	median_value = get_closest_median(size, int_array, &min_value, &max_value);
+	median_value = find_median_math(size, int_array);
 	printf("median_value: %d\n", median_value);
-	printf("max_value: %d\n", max_value);
-	printf("min_value: %d\n", min_value);
+	//printf("max_value: %d\n", max_value);
+	//printf("min_value: %d\n", min_value);
 
 	return (0);
 }
