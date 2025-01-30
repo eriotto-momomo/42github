@@ -19,6 +19,7 @@ void	ss(int *a_stack, int *b_stack)
 	swap(b_stack);
 	ft_printf("ss\n");
 }
+
 // 'rotate' on A and B at the same time
 void	rr(int *a_stack, int *b_stack, int a_size, int b_size)
 {
@@ -26,6 +27,7 @@ void	rr(int *a_stack, int *b_stack, int a_size, int b_size)
 	rotate(b_stack, b_size);
 	ft_printf("rr\n");
 }
+
 // 'reverse_rotate' on A and B at the same time
 void	rrr(int *a_stack, int *b_stack, int a_size, int b_size)
 {

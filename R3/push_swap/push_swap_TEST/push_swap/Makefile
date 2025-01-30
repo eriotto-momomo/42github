@@ -4,13 +4,16 @@
 HEADER	= push_swap.h
 SRCS	=	ps_sort_largestack.c \
 			ps_sort_smallstack.c \
-			ps_check_and_convert.c \
+			ps_checks.c \
+			ps_conversion.c \
 			ps_sort_case.c \
 			ps_get_median.c \
 			ps_single_stack_instructions.c \
 			ps_simultaneous_instructions.c \
 			ps_main.c \
 			ps_utils.c
+
+#ps_check_and_convert.c
 
 TEST_SRCS = ps_check_and_convert.c \
 			ps_instructions.c \

@@ -16,10 +16,20 @@
 
 
 //ps_check_and_convert.c
+//int	*check_and_convert(int argc, char *argv[], int *stack_size);
+//int	validate_and_count(int size, char **array, int i, int j);
+//int	array_conversion(int size, int start, char **str_array, int *int_array);
+//int	arg_is_valid(int size, char **str_array);
+//void	*free_int_or_str_array(void *array, int type, int size);
+
+//ps_checks.c
 int	*check_and_convert(int argc, char *argv[], int *stack_size);
-int	format_check(char **array, int i);
+int	validate_and_count(int size, char **array, int i, int j);
+void	arg_is_valid(int size, char **str_array, int *stack_size, int **a_stack);
+void	error_and_exit();
+
+//ps_conversion.c
 int	array_conversion(int size, int start, char **str_array, int *int_array);
-int	arg_is_valid(int size, char **str_array);
 void	*free_int_or_str_array(void *array, int type, int size);
 
 //ps_combsort.c

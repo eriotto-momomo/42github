@@ -20,6 +20,8 @@ int	main(int argc, char *argv[])
 	//int	disorder;
 
 	a_stack = check_and_convert(argc, argv, &size);
+	if (a_stack == NULL)
+		error_and_exit();
 	a_size = size;
 	///////////////////////////////////////////////////////////////
 	print_array(a_stack, a_size, 'a');
