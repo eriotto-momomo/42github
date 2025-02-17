@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 12:57:50 by emonacho          #+#    #+#             */
-/*   Updated: 2025/02/17 10:21:23 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/02/17 18:16:21 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int		get_closest_chunk_part(int *stack, int size, int chunk)
 {
 	int i;
 	int	j;
-	//int	dist;
 
 	i = 0;
 	while (i < size)
@@ -55,12 +54,9 @@ int		get_closest_chunk_part(int *stack, int size, int chunk)
 			break;
 		j--;
 	}
-	//dist = size - j;
-	//if (i < dist)
-	//else if (i > dist)
-	if (i < size - j)
+	if (i < ((size - 1) - j))
 		return (stack[i]);
-	else if (i > size - j)
+	else if (i > ((size - 1) - j))
 		return (stack[j]);
 	return (stack[i]);
 }
@@ -108,51 +104,24 @@ void	push_chunks(t_stack *stack, t_size *size, t_chunk *c)
 			if (locate(stack->b, size->b, c->binp) > ((size->b + 1) / 2)
 			&& stack->a[0] != target && stack->b[0] != c->binp)
 				rrr(stack, *size);
+			else if (locate(stack->b, size->b, c->binp) <= ((size->b + 1) / 2)
+			&& stack->a[0] != target && stack->b[0] != c->binp)
+				rr(stack, *size);
 			else
 				optimize_rotation(stack, size, c->binp, 'b');
-		}
-	}
-	return ;
-}
-
-/// BACKUP V1 ///
-/*void	push_chunks(t_stack *stack, t_size *size, t_chunk *c)
-{
-	int	target;
-	int	perf_loc;
-
-	init_binp_and_sinp(stack, size, c);
-	while (left_to_sort(stack->a, size->a, c->chunk[c->i], 's'))
-	{
-		if (stack->a[0] <= c->chunk[c->i] && (stack->a[0] < c->sinp || stack->a[0] > c->binp))
-			update_binp_and_sinp(stack, size, c);
-		else if (stack->a[0] > c->sinp && stack->a[0] < c->binp)
-			place_in_between(stack, size);
-		else
-		{
-				target = get_next_chunk_part(stack->a, size->a, c->chunk[c->i]);
-				perf_loc = perfect_location(stack->b, size->b, target);
-				if (locate(stack->b, size->b, perf_loc) <= ((size->b + 1) / 2)
-				&& stack->a[0] != target && stack->b[0] != perf_loc)
-					rr(stack, *size);
-				else
-					rotate(stack->a, size->a, 'a', 1);
-		}
-	}
-	if (!left_to_sort(stack->a, size->a, c->chunk[c->i], 's'))
-	{
-		while (stack->b[0] != c->binp)
-		{
-			target = get_closest_chunk_part(stack->a, size->a, (c->chunk[c->i] + 1));
+			if (size->a > 300 && stack->a[0] > stack->a[1] && stack->b[0] < stack->b[1]
+			&& stack->b[0] != get_smallest(stack->b, size->b))
+				ss(stack, *size);
+			/*target = get_closest_chunk_part(stack->a, size->a, (c->chunk[c->i] + 1));
 			if (locate(stack->b, size->b, c->binp) > ((size->b + 1) / 2)
 			&& stack->a[0] != target && stack->b[0] != c->binp)
 				rrr(stack, *size);
 			else
-				optimize_rotation(stack, size, c->binp, 'b');
+				optimize_rotation(stack, size, c->binp, 'b');*/
 		}
 	}
 	return ;
-}*/
+}
 
 //print_array(stack->b, size->b, 'b');
 //print_array(stack->a, size->a, 'a');
