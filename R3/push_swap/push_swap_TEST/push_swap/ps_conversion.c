@@ -1,73 +1,103 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ps_conversion.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/10 10:59:14 by emonacho          #+#    #+#             */
+/*   Updated: 2025/02/16 20:12:34 by emonacho         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 #include "libft/libft.h"
 #include "ft_printf/ft_printf.h"
 
-// NE PAS OUBLIER DE REMPLACER PRINTF PAR FT_PRINTF !!!!!!!
-// NE PAS OUBLIER DE REMPLACER AUTRES FONCTIONS PAR FT_* !!
-// NE PAS OUBLIER DE SUPPRIMER LIBRAIRIE INUTILES !!!!!!!!!
-// FT_PRINTF CHAQUE INSTRUCTION !!!!!!!!!!!!!!!!!!!!!!!!!!!
-// UTILISER LIBFT ET SUPPRIMER FONCTIONS EN TROP DANS UTILS
+int		array_conversion(int argc, char **argv, int *int_array);
+int		conversion(int size, char **char_array, int *int_array);
+void	*free_int_or_char_array(void *array, int size, int mode);
+void	error_and_exit(void);
 
-int	array_conversion(int size, int start, char **str_array, int *int_array);
-void	*free_int_or_str_array(void *array, int type, int size);
+void	error_and_exit(void)
+{
+	ft_printf("Error\n");
+	exit(1);
+}
 
-// Type 1 = int_array
-// Type 2 = str_array
-void	*free_int_or_str_array(void *array, int type, int size)
+void	*free_int_or_char_array(void *array, int size, int mode)
+
 {
 	int		i;
 	int		*int_array;
-	char	**str_array;
+	char	**char_array;
 
 	i = 0;
-	if (type == 1)
+	if (mode == 1)
 	{
 		int_array = (int *)array;
 		free(int_array);
 	}
-	else if(type == 2)
+	else if (mode == 2)
 	{
-		str_array = (char **)array;
+		char_array = (char **)array;
 		while (i < size)
 		{
-			if (str_array[i] != NULL)
+			if (char_array[i] != NULL)
 			{
-				free(str_array[i]);
-				str_array[i] = NULL;
+				free(char_array[i]);
+				char_array[i] = NULL;
 			}
 			i++;
 		}
-		free(str_array);
+		free(char_array);
 	}
 	return (NULL);
 }
 
-// Converts str_array to int_array and check if int_array:
-// outpasses limits, contains duplicates or is NULL
-int	array_conversion(int size, int start, char **str_array, int *int_array)
+int	conversion(int size, char **char_array, int *int_array)
 {
 	int	i;
 	int	j;
-	int	error;
+	int	error_check;
 
+	error_check = 1;
 	i = 0;
-	error = 0;
+	j = 0;
 	while (i < size)
-		int_array[i++] = ft_safe_atoi(str_array[start++], &error);
-	i = 0;
-	while (i < size - 1)
 	{
-		j = i + 1;
-		while (j < size)
-		{
-			if (int_array[i] == int_array[j] || error == -1 || int_array == NULL)
-			{
-				int_array = free_int_or_str_array(int_array, 1, size);
-				error_and_exit();
-			}
-			j++;
-		}
+		int_array[i] = ft_atoi_safe(char_array[j], &error_check);
+		i++;
+		j++;
+	}
+	if (error_check == -1)
+		return (-1);
+	return (1);
+}
+
+int	array_conversion(int argc, char **argv, int *int_array)
+{
+	char	**char_array;
+	int		tmp_size;
+	int		count;
+	int		i;
+
+	tmp_size = 0;
+	i = 1;
+	while (i < argc)
+	{
+		char_array = ft_split(argv[i], ' ');
+		if (!char_array)
+			return (-1);
+		count = 0;
+		while (char_array[count])
+			count++;
+		if (conversion(count, char_array, &int_array[tmp_size]) == -1)
+			return (-1);
+		tmp_size += count;
+		free_int_or_char_array(char_array, count, 2);
 		i++;
 	}
+	char_array = NULL;
 	return (1);
 }

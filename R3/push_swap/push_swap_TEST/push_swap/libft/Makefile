@@ -2,6 +2,7 @@ HEADER	= ft_printf.h
 NAME	= libft.a
 
 SRCS	= ft_atoi.c \
+ft_atoi_safe.c \
 ft_bzero.c \
 ft_calloc.c \
 ft_isalnum.c \

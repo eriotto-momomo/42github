@@ -1,109 +1,207 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ps_sort_largestack.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/08 12:57:50 by emonacho          #+#    #+#             */
+/*   Updated: 2025/02/17 10:21:23 by emonacho         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 #include "libft/libft.h"
 #include "ft_printf/ft_printf.h"
 
-// NE PAS OUBLIER DE REMPLACER PRINTF PAR FT_PRINTF !!!!!!!
-// NE PAS OUBLIER DE REMPLACER AUTRES FONCTIONS PAR FT_* !!
-// NE PAS OUBLIER DE SUPPRIMER LIBRAIRIE INUTILES !!!!!!!!!
-// FT_PRINTF CHAQUE INSTRUCTION !!!!!!!!!!!!!!!!!!!!!!!!!!!
-// UTILISER LIBFT ET SUPPRIMER FONCTIONS EN TROP DANS UTILS
+void	sort_largestack(t_stack *stack, t_size *size);
+void	push_chunks(t_stack *stack, t_size *size, t_chunk *c);
+void	optimize_rotation(t_stack *stack, t_size *size, int target, char stack_name);
+int		get_closest_chunk_part(int *stack, int size, int chunk);
+int		get_next_chunk_part(int *stack, int size, int chunk);
 
-//void	sort(int *stack, int *size);
-int	sort_and_pushback(int *a_stack, int *b_stack, int *a_size, int *b_size);
-void	get_smallest(int *a_stack, int *b_stack, int *a_size, int *b_size);
-void	sort_large_stack(int *a_stack, int *b_stack, int *a_size, int *b_size);
-// À delete!
-void print_array(int *array, int size, char c);
-
-int	sort_and_pushback(int *a_stack, int *b_stack, int *a_size, int *b_size)
+int		get_next_chunk_part(int *stack, int size, int chunk)
 {
-	int	cnt;
+	int i;
 
-	sort_case_l(a_stack, b_stack, a_size, b_size);
-	//sort_descending(b_stack, b_size);
-	cnt = 0;
-	while (*b_size > 0)
-	{
-		push(b_stack, a_stack, b_size, a_size);// pa
-		ft_printf("pa\n");
-		cnt++;
-	}
-	return (cnt);
-}
-
-void	get_smallest(int *a_stack, int *b_stack, int *a_size, int *b_size)
-{
-	int b_pivot;
-	int	i;
-
-	while (*b_size > 3 && !is_sorted(b_stack, *b_size))
-	{
-		b_pivot = get_exact_median(*b_size, b_stack);
-		i = 0;
-		while (b_stack[i]) //push to A (pa) everything that's smaller than pivot
-		{
-			while (b_stack[0] < b_pivot)
-			{
-				push(b_stack, a_stack, b_size, a_size);
-				ft_printf("pa\n");
-				if (a_stack[0] < a_stack[1])
-					call_instruction(2, a_stack, *a_size, 'a'); //ra
-			}
-			call_instruction(2, b_stack, *b_size, 'b');
-			i++;
-		}
-	}
-}
-
-void sort_large_stack(int *a_stack, int *b_stack, int *a_size, int *b_size)
-{
-	int	i;
-	int	j;
-	int	a_pivot;
-	int	cnt;
-
-	cnt = 0;
-	while (!is_sorted(a_stack, *a_size))
-	{
-		a_pivot = get_average_median((*a_size - cnt), a_stack);
-		i = 0;
-		while (i < (*a_size - cnt))
-		{//push to B (pb) everything that's bigger than pivot
-			if (a_stack[0] >= a_pivot)
-			{
-				push(a_stack, b_stack, a_size, b_size);
-				ft_printf("pb\n");
-			}
-			else if (a_stack[0] < a_pivot)
-			{
-				call_instruction(2, a_stack, *a_size, 'a');
-				i++;
-			}
-		}
-		get_smallest(a_stack, b_stack, a_size, b_size);
-		cnt += sort_and_pushback(a_stack, b_stack, a_size, b_size);
-		j = 0;
-		while ((cnt != 0 && j++ < cnt) && (!is_sorted(a_stack, *a_size)))
-		{
-			call_instruction(2, a_stack, *a_size, 'a'); // ra
-			//print_array(a_stack, *a_size, 'a');
-			//print_array(b_stack, *b_size, 'b');
-		}
-	}
-}
-
-	//print_array(a_stack, *a_size, 'a');
-	//print_array(b_stack, *b_size, 'b');
-
-void print_array(int *array, int size, char c)
-{
-	int i = 0;
-
-	printf("------------------------------\n");
+	i = 1;
 	while (i < size)
 	{
-		printf("%c_stack[%i] is: %d\n", c, i, array[i]);
+		if (stack[i] <= chunk)
+			break ;
 		i++;
 	}
-	printf("------------------------------\n");
+	return (stack[i]);
+}
+
+//printf("stack[i] = %d\nstack[j] = %d\nsize - j = %d\ni = %d\n", stack[i], stack[j], ((size) - j), i);
+int		get_closest_chunk_part(int *stack, int size, int chunk)
+{
+	int i;
+	int	j;
+	//int	dist;
+
+	i = 0;
+	while (i < size)
+	{
+		if (stack[i] <= chunk)
+			break;
+		i++;
+	}
+	j = size - 1;
+	while (j >= 0 )
+	{
+		if (stack[j] <= chunk)
+			break;
+		j--;
+	}
+	//dist = size - j;
+	//if (i < dist)
+	//else if (i > dist)
+	if (i < size - j)
+		return (stack[i]);
+	else if (i < size - j)
+		return (stack[j]);
+	return (stack[i]);
+}
+
+void	optimize_rotation(t_stack *stack, t_size *size, int target, char stack_name)
+{
+	if (stack_name == 'a')
+	{
+		if (locate(stack->a, size->a, target) <= ((size->a + 1)/ 2))
+			rotate(stack->a, size->a, stack_name, 1);
+		else if (locate(stack->a, size->a, target) > ((size->a + 1) / 2))
+			reverse_rotate(stack->a, size->a, stack_name, 1);
+	}
+	else if (stack_name == 'b')
+	{
+		if (locate(stack->b, size->b, target) <= ((size->b + 1) / 2))
+			rotate(stack->b, size->b, stack_name, 1);
+		else if (locate(stack->b, size->b, target) > ((size->b + 1) / 2))
+			reverse_rotate(stack->b, size->b, stack_name, 1);
+	}
+}
+
+//printf("[binp_and_sinp] BINP[%d] SINP[%d]\n", c->binp, c->sinp);
+//printf("BINP[%d] back at top!\n", c->binp);
+//printf("c->chunk[%d][%d]\nleft_to_sort = %d\n", c->i, c->chunk[c->i], left_to_sort(stack->a, size->a, c->chunk[c->i], 's'));
+void	push_chunks(t_stack *stack, t_size *size, t_chunk *c)
+{
+	int	target;
+
+	init_binp_and_sinp(stack, size, c);
+	while (left_to_sort(stack->a, size->a, c->chunk[c->i], 's'))
+	{
+		if (stack->a[0] <= c->chunk[c->i] && (stack->a[0] < c->sinp || stack->a[0] > c->binp))
+			update_binp_and_sinp(stack, size, c);
+		else if (stack->a[0] > c->sinp && stack->a[0] < c->binp)
+			place_in_between(stack, size);
+		else
+			go_to_next_chunk_part(stack, size, c);
+	}
+	if (!left_to_sort(stack->a, size->a, c->chunk[c->i], 's'))
+	{
+		while (stack->b[0] != c->binp)
+		{
+			target = get_closest_chunk_part(stack->a, size->a, (c->chunk[c->i] + 1));
+			if (locate(stack->b, size->b, c->binp) > ((size->b + 1) / 2)
+			&& stack->a[0] != target && stack->b[0] != c->binp)
+				rrr(stack, *size);
+			else
+				optimize_rotation(stack, size, c->binp, 'b');
+		}
+	}
+	return ;
+}
+
+/// BACKUP V1 ///
+/*void	push_chunks(t_stack *stack, t_size *size, t_chunk *c)
+{
+	int	target;
+	int	perf_loc;
+
+	init_binp_and_sinp(stack, size, c);
+	while (left_to_sort(stack->a, size->a, c->chunk[c->i], 's'))
+	{
+		if (stack->a[0] <= c->chunk[c->i] && (stack->a[0] < c->sinp || stack->a[0] > c->binp))
+			update_binp_and_sinp(stack, size, c);
+		else if (stack->a[0] > c->sinp && stack->a[0] < c->binp)
+			place_in_between(stack, size);
+		else
+		{
+				target = get_next_chunk_part(stack->a, size->a, c->chunk[c->i]);
+				perf_loc = perfect_location(stack->b, size->b, target);
+				if (locate(stack->b, size->b, perf_loc) <= ((size->b + 1) / 2)
+				&& stack->a[0] != target && stack->b[0] != perf_loc)
+					rr(stack, *size);
+				else
+					rotate(stack->a, size->a, 'a', 1);
+		}
+	}
+	if (!left_to_sort(stack->a, size->a, c->chunk[c->i], 's'))
+	{
+		while (stack->b[0] != c->binp)
+		{
+			target = get_closest_chunk_part(stack->a, size->a, (c->chunk[c->i] + 1));
+			if (locate(stack->b, size->b, c->binp) > ((size->b + 1) / 2)
+			&& stack->a[0] != target && stack->b[0] != c->binp)
+				rrr(stack, *size);
+			else
+				optimize_rotation(stack, size, c->binp, 'b');
+		}
+	}
+	return ;
+}*/
+
+//print_array(stack->b, size->b, 'b');
+//print_array(stack->a, size->a, 'a');
+//int	cnt = 0;
+//printf("SORT_AROUND_MEDIAN\n");
+//sort_around_median(stack, size, cnt);
+//printf("INSERTION_SORT\n");
+//insertion_sort(stack, size);
+
+void	sort_largestack(t_stack *stack, t_size *size)
+{
+	int		n_chunk;
+	t_chunk	c;
+
+	n_chunk = 0;
+	if (size->a <= 40)
+		n_chunk = 2;
+	else if (size->a <= 150)
+		n_chunk = 6;
+	else if (size->a > 150)
+		n_chunk = 14;
+	c.i = 0;
+	get_chunks(stack, size->a, &c, n_chunk);
+
+	/*while (c.i < n_chunk)
+	{
+		printf("c.chunk[%d] = %d\n", c.i, c.chunk[c.i]);
+		c.i++;
+	}
+	ft_printf("---------------------------\n");*/
+	//push_chunks(stack, size, &c);
+
+	c.i = 0;
+	while (c.i < n_chunk)
+	{
+		push_chunks(stack, size, &c);
+		c.i++;
+	}
+	c.i = 0;
+	while (size->b > 0)
+		push(stack->b, stack->a, size, 'a');
+
+	/*ft_printf("---------------------------\n");
+	while (c.i < n_chunk)
+	{
+		printf("c.chunk[%d] = %d\n", c.i, c.chunk[c.i]);
+		c.i++;
+	}*/
+
+	free(c.chunk);
+	return ;
 }

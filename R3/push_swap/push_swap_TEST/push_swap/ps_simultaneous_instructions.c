@@ -1,37 +1,40 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ps_simultaneous_instructions.c                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/09 15:24:59 by emonacho          #+#    #+#             */
+/*   Updated: 2025/02/15 23:45:55 by emonacho         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 #include "libft/libft.h"
 #include "ft_printf/ft_printf.h"
 
-// NE PAS OUBLIER DE REMPLACER PRINTF PAR FT_PRINTF !!!!!!!
-// NE PAS OUBLIER DE REMPLACER AUTRES FONCTIONS PAR FT_* !!
-// NE PAS OUBLIER DE SUPPRIMER LIBRAIRIE INUTILES !!!!!!!!!
-// FT_PRINTF CHAQUE INSTRUCTION !!!!!!!!!!!!!!!!!!!!!!!!!!!
-// UTILISER LIBFT ET SUPPRIMER FONCTIONS EN TROP DANS UTILS
+void	rrr(t_stack *stack, t_size size);
+void	rr(t_stack *stack, t_size size);
+void	ss(t_stack *stack, t_size size);
 
-void	rrr(int *a_stack, int *b_stack, int a_size, int b_size);
-void	rr(int *a_stack, int *b_stack, int a_size, int b_size);
-void	ss(int *a_stack, int *b_stack);
-
-// 'swap' on A and B at the same time
-void	ss(int *a_stack, int *b_stack)
+void	ss(t_stack *stack, t_size size)
 {
-	swap(a_stack);
-	swap(b_stack);
+	swap(stack->a, size.a, 'a', 0);
+	swap(stack->b, size.b, 'b', 0);
 	ft_printf("ss\n");
 }
 
-// 'rotate' on A and B at the same time
-void	rr(int *a_stack, int *b_stack, int a_size, int b_size)
+void	rr(t_stack *stack, t_size size)
 {
-	rotate(a_stack, a_size);
-	rotate(b_stack, b_size);
+	rotate(stack->a, size.a, 'a', 0);
+	rotate(stack->b, size.b, 'b', 0);
 	ft_printf("rr\n");
 }
 
-// 'reverse_rotate' on A and B at the same time
-void	rrr(int *a_stack, int *b_stack, int a_size, int b_size)
+void	rrr(t_stack *stack, t_size size)
 {
-	reverse_rotate(a_stack, a_size);
-	reverse_rotate(b_stack, b_size);
+	reverse_rotate(stack->a, size.a, 'a', 0);
+	reverse_rotate(stack->b, size.b, 'b', 0);
 	ft_printf("rrr\n");
 }

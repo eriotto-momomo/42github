@@ -1,91 +1,104 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/09 11:16:45 by emonacho          #+#    #+#             */
+/*   Updated: 2025/02/17 10:13:58 by emonacho         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-// NE PAS OUBLIER DE REMPLACER PRINTF PAR FT_PRINTF !!!!!!!
-// NE PAS OUBLIER DE REMPLACER AUTRES FONCTIONS PAR FT_* !!
-// NE PAS OUBLIER DE SUPPRIMER LIBRAIRIE INUTILES !!!!!!!!!
-// FT_PRINTF CHAQUE INSTRUCTION !!!!!!!!!!!!!!!!!!!!!!!!!!!
-// UTILISER LIBFT ET SUPPRIMER FONCTIONS EN TROP DANS UTILS
-
-# include <fcntl.h>
-# include <limits.h>
-# include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 
+typedef struct s_size
+{
+	int	a;
+	int	b;
+}	t_size;
+
+typedef struct s_stack
+{
+	int	*a;
+	int	*b;
+}	t_stack;
+
+typedef struct s_chunk
+{
+	int	*chunk;
+	int	i;
+	int	sinp;
+	int	binp;
+}	t_chunk;
 
 
-//ps_check_and_convert.c
-//int	*check_and_convert(int argc, char *argv[], int *stack_size);
-//int	validate_and_count(int size, char **array, int i, int j);
-//int	array_conversion(int size, int start, char **str_array, int *int_array);
-//int	arg_is_valid(int size, char **str_array);
-//void	*free_int_or_str_array(void *array, int type, int size);
-
-//ps_checks.c
-int	*check_and_convert(int argc, char *argv[], int *stack_size);
-int	validate_and_count(int size, char **array, int i, int j);
-void	arg_is_valid(int size, char **str_array, int *stack_size, int **a_stack);
-void	error_and_exit();
-
-//ps_conversion.c
-int	array_conversion(int size, int start, char **str_array, int *int_array);
-void	*free_int_or_str_array(void *array, int type, int size);
-
-//ps_combsort.c
-//void	comb_sort(int *stack, int size);
-//int	new_gap(int gap);
-//void	rotate_combsort(int *stack, int size, int n, int rev);
-
-//ps_sort_smallstack.c
-void	sort_case_s(int *a_stack, int *b_stack, int *a_size, int *b_size);
-void	sort_small_stack(int *a_stack, int *b_stack, int *a_size, int *b_size);
-void	adjust_sort_s(int *a_stack, int *b_stack, int *a_size, int *b_size);
-void	sort_six_int(int *a_stack, int *b_stack, int *a_size, int *b_size);
-void	sort_push_s(int *a_stack, int *b_stack, int *a_size, int *b_size);
-
-//ps_sort_largestack.c
-int	sort_and_pushback(int *a_stack, int *b_stack, int *a_size, int *b_size);
-void	get_smallest(int *a_stack, int *b_stack, int *a_size, int *b_size);
-void	sort_large_stack(int *a_stack, int *b_stack, int *a_size, int *b_size);
-
-//ps_sort_case.c
-void	sort_case_l(int *a_stack, int *b_stack, int *a_size, int *b_size);
-void	sort_ascending(int *stack, int *size);
-void	sort_descending(int *stack, int *size);
-
-//ps_get_median.c
-int	get_exact_median(int size, int *stack);
-int	get_average_median(int size, int *stack);
-int	calculate_median(int size, int *stack, int *min, int *max);
-void	get_min_max(int size, int *stack, int *min, int *max);
-void	count_elements(int *stack, int *med, int *lower_count, int *equal_count);
-
-//ps_utils.c
-int	ft_safe_atoi(const char *str, int *error);
-int	check_disorder(int *stack, int size);
-int	is_sorted(int *stack, int size);
-int	locate_int(int *stack, int n);
-int calculate_rot_dir(int *stack, int size, int pivot);
-
-//ps_single_stack_instructions.c
-void	call_instruction(int instruction, int *stack, int size, char c);
-void	reverse_rotate(int *stack, int size);
-void	rotate(int *stack, int size);
-void	push(int *src_stack, int *dst_stack, int *src_size, int *dst_size);
-void	swap(int *stack);
-
-//ps_simultaneous_instructions.c
-void	rrr(int *a_stack, int *b_stack, int a_size, int b_size);
-void	rr(int *a_stack, int *b_stack, int a_size, int b_size);
-void	ss(int *a_stack, int *b_stack);
-
-//ps_main.c
-int	main(int argc, char *argv[]);
-
-// À delete!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#include <stdio.h>
+//////////////////////////
 void	print_array(int *array, int size, char c);
-// À delete!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+/////////////////////////
 
+// ps_checks.c
+int		*check_and_convert(int argc, char *argv[], int *stack_size);
+int		validate_and_count(int size, char **array, int i, int j);
+int		check_dupplicates(int *int_array, int size);
+int		check_conditions(char **array, int *i, int *j);
+void	arg_is_valid(int argc, char **argv, int *stack_size, int **stack);
+
+// ps_conversion.c
+int		array_conversion(int argc, char **argv, int *int_array);
+int		conversion(int size, char **char_array, int *int_array);
+void	*free_int_or_char_array(void *array, int size, int mode);
+void	error_and_exit(void);
+
+// ps_main.c
+int		main(int argc, char *argv[]);
+
+//ps_median_calculation.c
+int		ft_quickselect(int *stack, int left, int right, int k);
+int		ft_quickselect_partition(int *stack, int left, int right);
+void	ft_quickselect_swap(int *a, int *b);
+void	get_chunks(t_stack *stack, int size, t_chunk *c, int n_chunk);
+
+// ps_simultaneous_instructions.c
+void	rrr(t_stack *stack, t_size size);
+void	rr(t_stack *stack, t_size size);
+void	ss(t_stack *stack, t_size size);
+
+// ps_single_instructions.c
+int		rotate(int *stack, int size, char stack_name, int mode);
+void	reverse_rotate(int *stack, int size, char stack_name, int mode);
+void	push(int *src_stack, int *dst_stack, t_size *size, char stack_name);
+void	swap(int *stack, int size, char stack_name, int mode);
+
+//ps_sort_l_insertion.c
+void	init_binp_and_sinp(t_stack *stack, t_size *size, t_chunk *c);
+void	update_binp_and_sinp(t_stack *stack, t_size *size, t_chunk *c);
+void	place_in_between(t_stack *stack, t_size *size);
+void	go_to_next_chunk_part(t_stack *stack, t_size *size, t_chunk *c);
+
+// ps_sort_largestack.c
+void	sort_largestack(t_stack *stack, t_size *size);
+void	push_chunks(t_stack *stack, t_size *size, t_chunk *c);
+void	optimize_rotation(t_stack *stack, t_size *size, int target, char stack_name);
+int		get_closest_chunk_part(int *stack, int size, int chunk);
+int		get_next_chunk_part(int *stack, int size, int chunk);
+
+// ps_sort_smallstack.c
+void	sort_s_ascending(int *stack, int size, char c);
+void	sort_smallstack(t_stack *stack, t_size *size);
+void	sort_small(t_stack *stack, t_size *size);
+int		get_smallest(int *stack, int size);
+
+// ps_utils.c
+void	error_and_exit(void);
+int		to_sort(int *stack, int size);
+int		left_to_sort(int *stack, int size, int pivot, int mode);
+int		perfect_location(int *stack, int size, int target);
+int		locate(int *stack, int size, int target);
 
 #endif
