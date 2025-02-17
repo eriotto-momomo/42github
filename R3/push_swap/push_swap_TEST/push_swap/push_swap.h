@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 11:16:45 by emonacho          #+#    #+#             */
-/*   Updated: 2025/02/17 10:13:58 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/02/17 22:59:45 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	init_binp_and_sinp(t_stack *stack, t_size *size, t_chunk *c);
 void	update_binp_and_sinp(t_stack *stack, t_size *size, t_chunk *c);
 void	place_in_between(t_stack *stack, t_size *size);
 void	go_to_next_chunk_part(t_stack *stack, t_size *size, t_chunk *c);
+void	go_to_binp(t_stack *stack, t_size *size, t_chunk *c);
 
 // ps_sort_largestack.c
 void	sort_largestack(t_stack *stack, t_size *size);
@@ -97,7 +98,6 @@ void	sort_small(t_stack *stack, t_size *size);
 int		get_smallest(int *stack, int size);
 
 // ps_utils.c
-void	error_and_exit(void);
 int		to_sort(int *stack, int size);
 int		left_to_sort(int *stack, int size, int pivot, int mode);
 int		perfect_location(int *stack, int size, int target);

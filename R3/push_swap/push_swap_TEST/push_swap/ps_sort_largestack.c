@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 12:57:50 by emonacho          #+#    #+#             */
-/*   Updated: 2025/02/17 18:16:21 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/02/17 23:03:18 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,28 +99,8 @@ void	push_chunks(t_stack *stack, t_size *size, t_chunk *c)
 	if (!left_to_sort(stack->a, size->a, c->chunk[c->i], 's'))
 	{
 		while (stack->b[0] != c->binp)
-		{
-			target = get_closest_chunk_part(stack->a, size->a, (c->chunk[c->i] + 1));
-			if (locate(stack->b, size->b, c->binp) > ((size->b + 1) / 2)
-			&& stack->a[0] != target && stack->b[0] != c->binp)
-				rrr(stack, *size);
-			else if (locate(stack->b, size->b, c->binp) <= ((size->b + 1) / 2)
-			&& stack->a[0] != target && stack->b[0] != c->binp)
-				rr(stack, *size);
-			else
-				optimize_rotation(stack, size, c->binp, 'b');
-			if (size->a > 300 && stack->a[0] > stack->a[1] && stack->b[0] < stack->b[1]
-			&& stack->b[0] != get_smallest(stack->b, size->b))
-				ss(stack, *size);
-			/*target = get_closest_chunk_part(stack->a, size->a, (c->chunk[c->i] + 1));
-			if (locate(stack->b, size->b, c->binp) > ((size->b + 1) / 2)
-			&& stack->a[0] != target && stack->b[0] != c->binp)
-				rrr(stack, *size);
-			else
-				optimize_rotation(stack, size, c->binp, 'b');*/
-		}
+			go_to_binp(stack, size, c);
 	}
-	return ;
 }
 
 //print_array(stack->b, size->b, 'b');
@@ -137,12 +117,14 @@ void	sort_largestack(t_stack *stack, t_size *size)
 	t_chunk	c;
 
 	n_chunk = 0;
-	if (size->a <= 40)
+	if (size->a < 40)
+		n_chunk = 1;
+	else if (size->a <= 40)
 		n_chunk = 2;
 	else if (size->a <= 150)
 		n_chunk = 6;
 	else if (size->a > 150)
-		n_chunk = 14;
+		n_chunk = 14; //14
 	c.i = 0;
 	get_chunks(stack, size->a, &c, n_chunk);
 
@@ -172,5 +154,4 @@ void	sort_largestack(t_stack *stack, t_size *size)
 	}*/
 
 	free(c.chunk);
-	return ;
 }

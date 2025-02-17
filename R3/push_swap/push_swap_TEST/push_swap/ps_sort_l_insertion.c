@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:37:25 by emonacho          #+#    #+#             */
-/*   Updated: 2025/02/17 18:15:01 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/02/17 22:59:51 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,22 @@ void	init_binp_and_sinp(t_stack *stack, t_size *size, t_chunk *c);
 void	update_binp_and_sinp(t_stack *stack, t_size *size, t_chunk *c);
 void	place_in_between(t_stack *stack, t_size *size);
 void	go_to_next_chunk_part(t_stack *stack, t_size *size, t_chunk *c);
+void	go_to_binp(t_stack *stack, t_size *size, t_chunk *c);
+
+void	go_to_binp(t_stack *stack, t_size *size, t_chunk *c)
+{
+	int	target;
+
+	target = get_closest_chunk_part(stack->a, size->a, (c->chunk[c->i] + 1));
+	if (locate(stack->b, size->b, c->binp) <= ((size->b + 1) / 2)
+	&& stack->a[0] != target && stack->b[0] != c->binp)
+		rr(stack, *size);
+	else if (locate(stack->b, size->b, c->binp) > ((size->b + 1) / 2)
+	&& stack->a[0] != target && stack->b[0] != c->binp)
+		rrr(stack, *size);
+	else
+		optimize_rotation(stack, size, c->binp, 'b');
+}
 
 void	go_to_next_chunk_part(t_stack *stack, t_size *size, t_chunk *c)
 {
@@ -66,9 +82,17 @@ void	update_binp_and_sinp(t_stack *stack, t_size *size, t_chunk *c)
 	}
 	else if (stack->a[0] < c->sinp)
 	{
-		while (stack->b[0] != c->sinp)
-			optimize_rotation(stack, size, c->sinp, 'b');
-		rotate(stack->b, size->b, 'b', 1);
+		if ((c->i - 1) > 0)
+		{
+			while (stack->b[0] != c->chunk[c->i - 1])
+				optimize_rotation(stack, size, c->chunk[c->i - 1], 'b');
+		}
+		else
+		{
+			while (stack->b[0] != c->sinp)
+				optimize_rotation(stack, size, c->sinp, 'b');
+			rotate(stack->b, size->b, 'b', 1);
+		}
 		c->sinp = stack->a[0];
 	}
 	push(stack->a, stack->b, size, 'b');
