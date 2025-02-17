@@ -22,7 +22,7 @@ void	error_and_exit(void);
 
 void	error_and_exit(void)
 {
-	ft_printf("Error\n");
+	write(2, "Error\n", 6);
 	exit(1);
 }
 
