@@ -15,7 +15,7 @@
 #include "ft_printf/ft_printf.h"
 
 int		*check_and_convert(int argc, char *argv[], int *stack_size);
-int		validate_and_count(int size, char **array, int i, int j);
+int		validate_and_count(int size, char **array, int i);
 int		check_dupplicates(int *int_array, int size);
 int		check_conditions(char **array, int *i, int *j);
 void	arg_is_valid(int argc, char **argv, int *stack_size, int **stack);
@@ -30,7 +30,7 @@ int	check_conditions(char **array, int *i, int *j)
 		return (-1);
 	else if ((array[*i][*j] == '-' || array[*i][*j] == '+')
 	&& (!(array[*i][*j + 1] >= '0' && array[*i][*j + 1] <= '9')
-	|| (j > 0 && array[*i][*j - 1] >= '0' && array[*i][*j - 1] <= '9')))
+	|| (*j > 0 && array[*i][*j - 1] >= '0' && array[*i][*j - 1] <= '9')))
 		return (-1);
 	else
 		return (1);
@@ -60,9 +60,10 @@ int	check_dupplicates(int *int_array, int size)
 	return (1);
 }
 
-int	validate_and_count(int size, char **array, int i, int j)
+int	validate_and_count(int size, char **array, int i)
 {
 	int	count;
+	int	j;
 
 	count = 0;
 	while (i < size)
@@ -93,19 +94,17 @@ void	arg_is_valid(int argc, char **argv, int *stack_size, int **stack)
 
 	error_check = 1;
 	i = 1;
-	if (validate_and_count(argc, argv, 1, 0) == 1)
-		exit(1);
 	while (error_check == 1)
 	{
 		if (argv == NULL || argv[0] == NULL || argc < 2
-			|| (argc == 2 && validate_and_count(argc, argv, 1, 0) < 2))
+			|| (argc == 2 && validate_and_count(argc, argv, 1) < 2))
 			error_check = -1;
 		while (error_check == 1 && argv[i] && i < argc)
 		{
-			error_check = validate_and_count(argc, argv, i, 0);
+			error_check = validate_and_count(argc, argv, i);
 			i++;
 		}
-		*stack_size = validate_and_count(argc, argv, 1, 0);
+		*stack_size = validate_and_count(argc, argv, 1);
 		*stack = malloc(sizeof(int) * (*stack_size));
 		if (!*stack)
 			error_and_exit();
@@ -119,8 +118,6 @@ int	*check_and_convert(int argc, char *argv[], int *stack_size)
 	int	*stack;
 
 	stack = NULL;
-	if (argc == 1)
-		exit(1);
 	arg_is_valid(argc, argv, stack_size, &stack);
 	if (array_conversion(argc, argv, stack) == -1)
 	{

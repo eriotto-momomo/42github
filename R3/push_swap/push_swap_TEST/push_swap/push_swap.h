@@ -44,7 +44,8 @@ void	print_array(int *array, int size, char c);
 
 // ps_checks.c
 int		*check_and_convert(int argc, char *argv[], int *stack_size);
-int		validate_and_count(int size, char **array, int i, int j);
+//int		validate_and_count(int size, char **array, int i, int j);
+int		validate_and_count(int size, char **array, int i);
 int		check_dupplicates(int *int_array, int size);
 int		check_conditions(char **array, int *i, int *j);
 void	arg_is_valid(int argc, char **argv, int *stack_size, int **stack);
@@ -53,6 +54,7 @@ void	arg_is_valid(int argc, char **argv, int *stack_size, int **stack);
 int		array_conversion(int argc, char **argv, int *int_array);
 int		conversion(int size, char **char_array, int *int_array);
 void	*free_int_or_char_array(void *array, int size, int mode);
+void	handle_arg(int argc, char *argv[]);
 void	error_and_exit(void);
 
 // ps_main.c

@@ -17,12 +17,34 @@
 int		array_conversion(int argc, char **argv, int *int_array);
 int		conversion(int size, char **char_array, int *int_array);
 void	*free_int_or_char_array(void *array, int size, int mode);
+void	handle_arg(int argc, char *argv[]);
 void	error_and_exit(void);
 
 void	error_and_exit(void)
 {
 	ft_printf("Error\n");
 	exit(1);
+}
+
+void	handle_arg(int argc, char *argv[])
+{
+	int	num;
+	int	error_check;
+
+	if (argv == NULL || argv[0] == NULL)
+		error_and_exit();
+	else if (argc == 1)
+		exit(1);
+	else if (argc == 2 && validate_and_count(argc, argv, 1) == 1)
+	{
+		num = ft_atoi_safe(argv[1], &error_check);
+		if (error_check == -1)
+			error_and_exit();
+		else if(num)
+			exit(1);
+	}
+	else
+		return ;
 }
 
 void	*free_int_or_char_array(void *array, int size, int mode)

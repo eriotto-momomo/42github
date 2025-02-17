@@ -20,6 +20,7 @@ int	main(int argc, char *argv[])
 	t_stack	stack;
 	t_size	size;
 
+	handle_arg(argc, argv);
 	stack.a = check_and_convert(argc, argv, &tmp_size);
 	if (stack.a == NULL)
 		error_and_exit();
