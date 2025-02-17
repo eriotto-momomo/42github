@@ -60,7 +60,7 @@ int		get_closest_chunk_part(int *stack, int size, int chunk)
 	//else if (i > dist)
 	if (i < size - j)
 		return (stack[i]);
-	else if (i < size - j)
+	else if (i > size - j)
 		return (stack[j]);
 	return (stack[i]);
 }
