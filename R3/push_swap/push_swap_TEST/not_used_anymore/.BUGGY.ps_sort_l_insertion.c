@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:37:25 by emonacho          #+#    #+#             */
-/*   Updated: 2025/02/17 10:14:00 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/02/15 18:14:53 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,7 @@
 void	init_binp_and_sinp(t_stack *stack, t_size *size, t_chunk *c);
 void	update_binp_and_sinp(t_stack *stack, t_size *size, t_chunk *c);
 void	place_in_between(t_stack *stack, t_size *size);
-void	go_to_next_chunk_part(t_stack *stack, t_size *size, t_chunk *c);
 
-void	go_to_next_chunk_part(t_stack *stack, t_size *size, t_chunk *c)
-{
-	int	target;
-	int	perf_loc;
-
-	target = get_next_chunk_part(stack->a, size->a, c->chunk[c->i]);
-	perf_loc = perfect_location(stack->b, size->b, target);
-	if (locate(stack->b, size->b, perf_loc) <= ((size->b + 1) / 2)
-	&& stack->a[0] != target && stack->b[0] != perf_loc)
-		rr(stack, *size);
-	else
-		rotate(stack->a, size->a, 'a', 1);
-}
-
-//ft_printf("[perf_loc] for stack->a[0][%d] is: %d\n", stack->a[0], perf_loc);
-//// PAS OPTIMIZABLE ////
-// Dès qu'un élément du chunk à trier est trouvé, stack->b est
-// repositionné pour l'accueillir.
 void	place_in_between(t_stack *stack, t_size *size)
 {
 	int	perf_loc;
@@ -46,18 +27,17 @@ void	place_in_between(t_stack *stack, t_size *size)
 	else
 	{
 		perf_loc = perfect_location(stack->b, size->b, stack->a[0]);
+		printf("[perf_loc] for stack->a[0][%d] is: %d\n", stack->a[0], perf_loc);
+		//printf("stack->a[0][%d]\nstack->b[0][%d]\n", stack->a[0], stack->b[0]);
 		while (stack->b[0] != perf_loc)
 			optimize_rotation(stack, size, perf_loc, 'b');
 		push(stack->a, stack->b, size, 'b');
 	}
 }
 
-//ft_printf("[update_sinp_and_binp]\nBINP[%d] SINP[%d]\n", c->binp, c->sinp);
-//// PAS OPTIMIZABLE ////
-// Dès qu'un élément plus grand que binp ou plus petit que sinp est
-// trouvé, stack->b est repositionné pour l'accueillir.
 void	update_binp_and_sinp(t_stack *stack, t_size *size, t_chunk *c)
 {
+
 	if (stack->a[0] > c->binp)
 	{
 		while (stack->b[0] != c->binp)
@@ -72,17 +52,12 @@ void	update_binp_and_sinp(t_stack *stack, t_size *size, t_chunk *c)
 		c->sinp = stack->a[0];
 	}
 	push(stack->a, stack->b, size, 'b');
+	//printf("[update_sinp_and_binp]\nBINP[%d] SINP[%d]\n", c->binp, c->sinp);
 }
 
-//printf("[init_binp_and_sinp]\nBINP[%d] SINP[%d]\n", c->binp, c->sinp);
-//printf("c->chunk[%d][%d]\nleft_to_sort = %d\n", c->i, c->chunk[c->i], left_to_sort(stack->a, size->a, c->chunk[c->i], 's'));
-//// PAS OPTIMIZABLE ////
-// Push dans stack->b les deux premiers éléments trouvées inférieurs à la
-// chunk actuelle, binp est initialisé avec le plus grand et sinp le petit.
 void	init_binp_and_sinp(t_stack *stack, t_size *size, t_chunk *c)
 {
 	int	cnt;
-	int	target;
 
 	cnt = 0;
 	while (cnt != 2 && left_to_sort(stack->a, size->a, c->chunk[c->i], 's'))
@@ -93,17 +68,14 @@ void	init_binp_and_sinp(t_stack *stack, t_size *size, t_chunk *c)
 			cnt++;
 		}
 		else
-		{
-			target = get_closest_chunk_part(stack->a, size->a, c->chunk[c->i]);
-			optimize_rotation(stack, size, target, 'a');
-		}
-		//else
-		//	rotate(stack->a, size->a, 'a', 1);
+			rotate(stack->a, size->a, 'a', 1);
 	}
 	if (stack->b[0] < stack->b[1] && stack->a[0] > stack->a[1]) // ATTENTION
 		ss(stack, *size);										// ATTENTION
-	else if (stack->b[0] < stack->b[1] && stack->a[0] < stack->a[1])
+	else if (stack->b[0] < stack->b[1])
 		swap(stack->b, size->b, 'b', 1);
 	c->binp = stack->b[0];
 	c->sinp = stack->b[1];
+	//printf("[init_binp_and_sinp]\nBINP[%d] SINP[%d]\n", c->binp, c->sinp);
+	//printf("c->chunk[%d][%d]\nleft_to_sort = %d\n", c->i, c->chunk[c->i], left_to_sort(stack->a, size->a, c->chunk[c->i], 's'));
 }

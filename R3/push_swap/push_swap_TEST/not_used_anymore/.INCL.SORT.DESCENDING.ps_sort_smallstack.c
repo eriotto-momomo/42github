@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 13:11:35 by emonacho          #+#    #+#             */
-/*   Updated: 2025/02/15 23:50:21 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/02/14 16:26:45 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "libft/libft.h"
 #include "ft_printf/ft_printf.h"
 
+void	sort_s_descending(int *stack, int size, char c);
 void	sort_s_ascending(int *stack, int size, char c);
 void	sort_smallstack(t_stack *stack, t_size *size);
 void	sort_small(t_stack *stack, t_size *size);
@@ -51,7 +52,7 @@ void	sort_small(t_stack *stack, t_size *size)
 		}
 		push(stack->a, stack->b, size, 'b');
 	}
-	sort_s_ascending(stack->a, size->a, 'a');
+	sort_case(stack, *size);
 	while (size->b > 0)
 		push(stack->b, stack->a, size, 'a');
 }
@@ -93,6 +94,40 @@ void	sort_s_ascending(int *stack, int size, char c)
 			reverse_rotate(stack, size, c, 1);
 		}
 		else if (stack[0] < stack[1] && stack[0] < stack[2] && stack[1] > stack[2])
+		{
+			reverse_rotate(stack, size, c, 1);
+			swap(stack, size, c, 1);
+		}
+	}
+}
+
+// Sort in descending order the following cases:
+// [1, 2] -> s
+// [2, 3, 1] -> s
+// [1, 3, 2] -> r
+// [2, 1, 3] -> rr
+// [3, 1, 2] -> rr/s
+// [1, 2, 3] -> s/rr
+void	sort_s_descending(int *stack, int size, char c)
+{
+	if (size == 1)
+		return ;
+	else if ((size == 2) && (stack[0] < stack[1]))
+		swap(stack, size, c, 1);
+	else if (size == 3)
+	{
+		if (stack[0] < stack[1] && stack[0] > stack[2] && stack[1] > stack[2])
+			swap(stack, size, c, 1);
+		else if (stack[0] < stack[1] && stack[0] < stack[2] && stack[1] > stack[2])
+			rotate(stack, size, c, 1);
+		else if (stack[0] > stack[1] && stack[0] < stack[2] && stack[1] < stack[2])
+			reverse_rotate(stack, size, c, 1);
+		else if (stack[0] < stack[1] && stack[0] < stack[2] && stack[1] < stack[2])
+		{
+			swap(stack, size, c, 1);
+			reverse_rotate(stack, size, c, 1);
+		}
+		else if (stack[0] > stack[1] && stack[0] > stack[2] && stack[1] < stack[2])
 		{
 			reverse_rotate(stack, size, c, 1);
 			swap(stack, size, c, 1);
