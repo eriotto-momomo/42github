@@ -22,7 +22,7 @@ void	puthex_ptr(unsigned long long to_convert, char spec, size_t *cnt)
 	printf_putchar(hex[to_convert % 16], cnt);
 }
 
-int		printf_put_ptr(void *ptr, char spec, size_t *cnt)
+int	printf_put_ptr(void *ptr, char spec, size_t *cnt)
 {
 	unsigned long long	castptr;
 
