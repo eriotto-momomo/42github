@@ -17,7 +17,10 @@
 # include <stddef.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include "ft_printf/ft_printf.h"
+# include "libft/ft_printf/ft_printf.h"
+
+// libcustom
+int		ft_atoi_safe(const char *str, int *error);
 
 // libft vanilla
 int		ft_atoi(const char *str);
@@ -54,8 +57,5 @@ char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		ft_tolower(int c);
 int		ft_toupper(int c);
-
-// libft custom
-int	ft_atoi_safe(const char *str, int *error);
 
 #endif
