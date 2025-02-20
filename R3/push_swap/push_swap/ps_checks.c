@@ -12,7 +12,6 @@
 
 #include "push_swap.h"
 #include "libft/libft.h"
-#include "ft_printf/ft_printf.h"
 
 int		*check_and_convert(int argc, char *argv[], int *stack_size);
 int		validate_and_count(int size, char **array, int i);

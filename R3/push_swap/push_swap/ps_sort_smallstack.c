@@ -12,7 +12,6 @@
 
 #include "push_swap.h"
 #include "libft/libft.h"
-#include "ft_printf/ft_printf.h"
 
 void	sort_s_ascending(int *stack, int size, char c);
 void	sort_smallstack(t_stack *stack, t_size *size);

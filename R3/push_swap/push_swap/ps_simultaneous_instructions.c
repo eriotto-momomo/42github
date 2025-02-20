@@ -12,7 +12,6 @@
 
 #include "push_swap.h"
 #include "libft/libft.h"
-#include "ft_printf/ft_printf.h"
 
 void	rrr(t_stack *stack, t_size size);
 void	rr(t_stack *stack, t_size size);

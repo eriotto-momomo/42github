@@ -12,7 +12,6 @@
 
 #include "push_swap.h"
 #include "libft/libft.h"
-#include "ft_printf/ft_printf.h"
 
 void	sort_largestack(t_stack *stack, t_size *size);
 void	push_chunks(t_stack *stack, t_size *size, t_chunk *c);

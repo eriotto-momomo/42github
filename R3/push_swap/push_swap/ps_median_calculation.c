@@ -12,7 +12,6 @@
 
 #include "push_swap.h"
 #include "libft/libft.h"
-#include "ft_printf/ft_printf.h"
 
 void	get_chunks(t_stack *stack, int size, t_chunk *c, int n_chunk);
 int		ft_quickselect(int *stack, int left, int right, int k);

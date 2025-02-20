@@ -12,7 +12,6 @@
 
 #include "push_swap.h"
 #include "libft/libft.h"
-#include "ft_printf/ft_printf.h"
 
 void	reverse_rotate(int *stack, int size, char stack_name, int mode);
 void	rotate(int *stack, int size, char stack_name, int mode);

@@ -12,7 +12,6 @@
 
 #include "push_swap.h"
 #include "libft/libft.h"
-#include "ft_printf/ft_printf.h"
 
 int		to_sort(int *stack, int size);
 int		left_to_sort(int *stack, int size, int pivot, int mode);

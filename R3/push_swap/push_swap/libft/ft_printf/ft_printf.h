@@ -17,7 +17,7 @@
 # include <unistd.h>
 # include <stdarg.h>
 
-int		cntdigits(unsigned int nbr);
+int		cnt_digits(unsigned int nbr);
 int		ft_printf(const char *format, ...);
 char	*ft_itoa_unsigned(unsigned int n);
 void	printf_itoa_unsigned(unsigned int n, size_t *cnt);

@@ -17,6 +17,7 @@
 # include <stddef.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include "ft_printf/ft_printf.h"
 
 int		ft_atoi(const char *str);
 int		ft_atoi_safe(const char *str, int *error);

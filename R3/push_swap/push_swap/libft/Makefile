@@ -1,4 +1,4 @@
-HEADER	= ft_printf.h
+HEADER	=	libft.h
 NAME	= libft.a
 
 SRCS	= ft_atoi.c \
@@ -42,16 +42,28 @@ OBJS	= $(SRCS:.c=.o)
 CC		= gcc
 FLAG	= -Wall -Wextra -Werror
 
+PRINTF_DIR = ft_printf
+PRINTF_LIB = $(PRINTF_DIR)/libftprintf.a
+
 all:	$(NAME)
 
-$(NAME): $(OBJS)
-	ar rc $(NAME) $(OBJS)
+$(NAME): $(OBJS) $(PRINTF_LIB)
+	cp $(PRINTF_LIB) .
+	ar x libftprintf.a
+	ar rc $(NAME) $(OBJS) *.o
+	rm -f libftprintf.a *.o
+	@echo "Successfully COMPILED $(NAME)$(RESET)"
+
+$(PRINTF_LIB):
+	$(MAKE) -C $(PRINTF_DIR)
 
 clean:
 	rm -f $(OBJS)
+	$(MAKE) -C $(PRINTF_DIR) clean
 
 fclean: clean
 	rm -f $(NAME)
+	$(MAKE) -C $(PRINTF_DIR) fclean
 
 re: fclean
 	$(MAKE) all

@@ -16,9 +16,6 @@ SRCS	=	ps_checks.c \
 LIBFT_DIR	=	./libft
 LIBFT		=	$(LIBFT_DIR)/libft.a
 
-FT_PRINTF_DIR	=	./ft_printf
-FT_PRINTF		=	$(FT_PRINTF_DIR)/libftprintf.a
-
 OBJS	= $(SRCS:.c=.o)
 
 # **************************************************************************** #
@@ -31,30 +28,25 @@ CFLAGS	=	-Wall -Wextra -Werror
 # **************************************************************************** #
 #                                   TARGETS                                    #
 # **************************************************************************** #
-all: $(LIBFT) $(FT_PRINTF) $(NAME)
+all: $(LIBFT) $(NAME)
 
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)
 
-$(FT_PRINTF):
-	$(MAKE) -C $(FT_PRINTF_DIR)
-
-$(NAME): $(OBJS) $(LIBFT) $(FT_PRINTF)
-	$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT_DIR) -lft -L$(FT_PRINTF_DIR) -lftprintf -o $(NAME)
+$(NAME): $(OBJS) $(LIBFT)
+	$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT_DIR) -lft -o $(NAME)
 	@echo "Successfully COMPILED $(NAME)$(RESET)"
 
 %.o: %.c $(HEADER)
-	$(CC) -c $(CFLAGS) -I. -I$(LIBFT_DIR) -I$(FT_PRINTF_DIR) $< -o $@
+	$(CC) -c $(CFLAGS) -I. -I$(LIBFT_DIR) $< -o $@
 
 clean:
 	rm -rf $(OBJS) $(TEST_OBJS)
 	$(MAKE) -C $(LIBFT_DIR) clean
-	$(MAKE) -C $(FT_PRINTF_DIR) clean
 
 fclean: clean
 	rm -f $(NAME) $(TEST_NAME)
 	$(MAKE) -C $(LIBFT_DIR) fclean
-	$(MAKE) -C $(FT_PRINTF_DIR) fclean
 
 re: fclean all
 

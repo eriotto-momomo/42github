@@ -12,7 +12,6 @@
 
 #include "push_swap.h"
 #include "libft/libft.h"
-#include "ft_printf/ft_printf.h"
 
 void	init_binp_and_sinp(t_stack *stack, t_size *size, t_chunk *c);
 void	update_binp_and_sinp(t_stack *stack, t_size *size, t_chunk *c);

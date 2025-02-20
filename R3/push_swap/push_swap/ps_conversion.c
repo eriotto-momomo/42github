@@ -12,7 +12,6 @@
 
 #include "push_swap.h"
 #include "libft/libft.h"
-#include "ft_printf/ft_printf.h"
 
 int		array_conversion(int argc, char **argv, int *int_array);
 int		conversion(int size, char **char_array, int *int_array);
