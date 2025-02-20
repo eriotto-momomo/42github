@@ -16,6 +16,11 @@ ft_memcmp.c \
 ft_memcpy.c \
 ft_memmove.c \
 ft_memset.c \
+ft_printf/ft_printf.c \
+ft_printf/printf_itoa_unsigned.c \
+ft_printf/printf_itoa.c \
+ft_printf/printf_put_ptr.c \
+ft_printf/printf_utils.c \
 ft_putchar_fd.c \
 ft_putendl_fd.c \
 ft_putnbr_fd.c \
@@ -40,32 +45,20 @@ ft_toupper.c \
 OBJS	= $(SRCS:.c=.o)
 
 CC		= gcc
-FLAG	= -Wall -Wextra -Werror
+CFLAGS	= -Wall -Wextra -Werror
 
-PRINTF_DIR = ft_printf
-PRINTF_LIB = $(PRINTF_DIR)/libftprintf.a
+all: $(NAME)
 
-all:	$(NAME)
-
-$(NAME): $(OBJS) $(PRINTF_LIB)
-	cp $(PRINTF_LIB) .
-	ar x libftprintf.a
-	ar rc $(NAME) $(OBJS) *.o
-	rm -f libftprintf.a *.o
+$(NAME): $(OBJS)
+	ar rc $(NAME) $(OBJS)
 	@echo "Successfully COMPILED $(NAME)$(RESET)"
-
-$(PRINTF_LIB):
-	$(MAKE) -C $(PRINTF_DIR)
 
 clean:
 	rm -f $(OBJS)
-	$(MAKE) -C $(PRINTF_DIR) clean
 
 fclean: clean
 	rm -f $(NAME)
-	$(MAKE) -C $(PRINTF_DIR) fclean
 
-re: fclean
-	$(MAKE) all
+re: fclean all
 
 .PHONY: all clean fclean re

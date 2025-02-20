@@ -19,8 +19,11 @@
 # include <unistd.h>
 # include "ft_printf/ft_printf.h"
 
-int		ft_atoi(const char *str);
+// libft custom
 int		ft_atoi_safe(const char *str, int *error);
+
+// libft vanilla
+int		ft_atoi(const char *str);
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t count, size_t size);
 int		ft_isalnum(int c);

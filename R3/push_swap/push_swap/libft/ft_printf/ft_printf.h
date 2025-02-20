@@ -25,6 +25,6 @@ void	printf_itoa(int n, size_t *cnt);
 void	printf_putchar(char c, size_t *cnt);
 void	printf_putstr(char *s, size_t *cnt);
 void	puthex_dec(unsigned int to_convert, char spec, size_t *cnt);
-int		put_ptr(void *ptr, char spec, size_t *cnt);
+int		printf_put_ptr(void *ptr, char spec, size_t *cnt);
 
 #endif
