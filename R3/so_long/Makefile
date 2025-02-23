@@ -3,7 +3,9 @@
 # **************************************************************************** #
 
 HEADER		=	so_long.h
-SRCS		=	src/main.c
+SRCS		=	src/main.c \
+				src/initialize.c \
+				src/inputs.c
 LIBFT_DIR	=	./libft
 LIBFT		=	$(LIBFT_DIR)/libft.a
 MLX_DIR		=	./minilibx
