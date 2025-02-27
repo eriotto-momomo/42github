@@ -8,7 +8,7 @@ int main(void)
 	int		count;
 
 	count = 0;
-	fd = open("sample.txt", O_RDONLY);
+	fd = open("txt.txt", O_RDONLY);
 	if (fd == -1)
 	{
 		printf("Error opening file");
