@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 15:46:16 by emonacho          #+#    #+#             */
-/*   Updated: 2025/02/23 19:42:30 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/02/25 17:33:58 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	deal_key(int keycode, void *param)
 
 int	deal_mouse(int button, int x, int y, void *param)
 {
-	t_sl	*sl;
+	t_sl	*sl; //casting de param en structure afin d'eviter de multiples casting
 
 	sl = (t_sl *)param;
 	(sl->mouse_cnt)++;

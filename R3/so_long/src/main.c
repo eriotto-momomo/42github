@@ -6,12 +6,11 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 14:51:21 by emonacho          #+#    #+#             */
-/*   Updated: 2025/02/23 19:41:50 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/02/27 13:34:08 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
-
 
 int	close_signal(t_sl *sl)
 {
@@ -29,6 +28,8 @@ int	close_and_quit(t_sl *sl)
 	//FREE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	//FREE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
+	//FREE sl->map_copy;
+	ft_free_array(sl->map, sl->map_height, 'c');
 	mlx_destroy_image(sl->init, sl->img_floor);
 	mlx_destroy_image(sl->init, sl->img_wall);
 	mlx_destroy_image(sl->init, sl->img_start);
@@ -41,17 +42,24 @@ int	close_and_quit(t_sl *sl)
 	exit(1);
 }
 
-int	main(void)
+int	main(int argc, char *argv[])
 {
 	t_sl	sl;
+
+	if (argc != 2)
+		exit (1);
+	// INVALID NUMBER OF ARGUMENTS
+
+	//MAP PARSING
+	//printf("argv[1] = %s | sl.map_fd = %d\n", argv[1], sl.map_fd);
+	initialize_map(&sl, argv[1]);
+	printf("-------------------------\nMAP INITIALIZED\n");
 
 	// MAP PARSING TO DEFINE MAP_WIDTH AND MAP_HEIGHT AND IF VALID,
 	// DEFINE WIDTH AND HEIGHT OF THE WINDOW
 	// ...
 	sl.img_width = 128;
 	sl.img_height = 128;
-	sl.map_width = 10;
-	sl.map_height = 3;
 
 	// INITIALIZE AND CREATE WINDOW
 	sl.init = mlx_init();

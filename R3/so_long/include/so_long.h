@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:40:44 by emonacho          #+#    #+#             */
-/*   Updated: 2025/02/23 19:07:45 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/02/27 11:53:19 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,9 @@ typedef struct	s_solong
 	int		img_width;
 	int		img_height;
 
+	char	**map; //used to print map
+	char	**map_copy; // used to parse map
+	int		map_fd;
 	int		map_width;
 	int		map_height;
 
@@ -64,15 +67,19 @@ typedef struct	s_solong
 	int		y;
 }			t_sl;
 
-// sl_main.c
-int		main(void);
-int		close_and_quit(t_sl *sl);
-int		close_signal(t_sl *sl);
-
-// initialize.c
+// init_assets.c
 int		initialize_assets(t_sl *sl);
+
+// init_map.c
+void	initialize_map(t_sl *sl, char *argv);
+
 
 // inputs.c
 int		key_and_mouse_inputs(t_sl *sl);
+
+// sl_main.c
+int		main(int argc, char *argv[]);
+int		close_and_quit(t_sl *sl);
+int		close_signal(t_sl *sl);
 
 #endif

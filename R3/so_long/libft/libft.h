@@ -6,21 +6,25 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:08:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/02/20 17:45:41 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/02/27 12:43:19 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
+# include "libft/ft_printf/ft_printf.h"
+
+# include <fcntl.h>
 # include <limits.h>
+# include <stdarg.h>
 # include <stddef.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include "libft/ft_printf/ft_printf.h"
 
 // libcustom
 int		ft_atoi_safe(const char *str, int *error);
+void	*ft_free_array(void *array, int size, char mode);
 
 // libft vanilla
 int		ft_atoi(const char *str);
@@ -32,6 +36,7 @@ int		ft_isascii(int c);
 int		ft_isdigit(int c);
 int		ft_isprint(int c);
 char	*ft_itoa(int n);
+char	*get_next_line(int fd);
 void	*ft_memchr(const void *s, int c, size_t n);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
