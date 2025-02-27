@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:08:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/02/27 12:43:19 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/02/27 19:46:01 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 // libcustom
 int		ft_atoi_safe(const char *str, int *error);
 void	*ft_free_array(void *array, int size, char mode);
+void	ft_free_gnl(char *buffer);
 
 // libft vanilla
 int		ft_atoi(const char *str);

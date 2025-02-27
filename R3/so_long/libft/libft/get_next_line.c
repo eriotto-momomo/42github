@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 16:50:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/02/25 17:24:34 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/02/27 19:59:15 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,65 @@ char	*is_current_line(char *remainder)
 	return (current_line);
 }
 
-static char	*read_and_store_fd(int fd, char *remainder, int buf_size)
+static char	*read_and_store_fd(int fd, char *remainder, int buf_size, char *buffer)
+{
+	int		bytes_read;
+
+	bytes_read = 1;
+	buffer = (char *)malloc((buf_size + 1) * sizeof(char));
+	if (buffer == 0)
+		return (NULL);
+	while (bytes_read > 0 && check_for_next_line(remainder))
+	{
+		bytes_read = read(fd, buffer, buf_size);
+		if (bytes_read == 0 && *remainder != 0)
+			break ;
+		else if (bytes_read <= 0)
+		{
+			//free(buffer);
+			ft_free_gnl(buffer); //added 27.02.25
+			free(remainder);
+			return (NULL);
+		}
+		buffer[bytes_read] = '\0';
+		remainder = ft_strjoin(remainder, buffer);
+	}
+	free(buffer);
+	return (remainder);
+}
+
+char	*get_next_line(int fd)
+{
+	static char	*remainder;
+	char		*line;
+	int			buf_size;
+	static char	*buffer;
+
+	buf_size = 100;
+	if (fd == -1)//added 27.02.25
+	{//added 27.02.25
+		ft_free_gnl(buffer);//added 27.02.25
+		free(remainder);//added 27.02.25
+		return (NULL);//added 27.02.25
+	}//added 27.02.25
+	if (fd < 0 || buf_size <= 0)
+		return (NULL);
+	if (remainder == 0)
+		remainder = ft_strdup("");
+	remainder = read_and_store_fd(fd, remainder, buf_size, buffer);
+	if (remainder == 0)
+	{
+		free(remainder); // added this 27.02.25
+		return (NULL);
+	}
+	line = is_current_line(remainder);
+	remainder = save_leftovers(remainder);
+	return (line);
+}
+
+
+// BACKUP V1
+/*static char	*read_and_store_fd(int fd, char *remainder, int buf_size)
 {
 	int		bytes_read;
 	char	*buffer;
@@ -119,8 +177,11 @@ char	*get_next_line(int fd)
 		remainder = ft_strdup("");
 	remainder = read_and_store_fd(fd, remainder, buf_size);
 	if (remainder == 0)
+	{
+		free(remainder); // added this 27.02.25
 		return (NULL);
+	}
 	line = is_current_line(remainder);
 	remainder = save_leftovers(remainder);
 	return (line);
-}
+}*/

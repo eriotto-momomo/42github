@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:40:44 by emonacho          #+#    #+#             */
-/*   Updated: 2025/02/27 11:53:19 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/02/27 20:29:50 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,11 @@ void	initialize_map(t_sl *sl, char *argv);
 // inputs.c
 int		key_and_mouse_inputs(t_sl *sl);
 
-// sl_main.c
+// main.c
 int		main(int argc, char *argv[]);
 int		close_and_quit(t_sl *sl);
 int		close_signal(t_sl *sl);
 
+// parse_map.c
+void	map_parsing(t_sl *sl, char *line, int row, int *error);
 #endif

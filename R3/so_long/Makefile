@@ -6,7 +6,8 @@ HEADER		=	so_long.h
 SRCS		=	src/main.c \
 				src/init_assets.c \
 				src/init_map.c \
-				src/inputs.c
+				src/inputs.c \
+				src/parse_map.c
 
 LIBFT_DIR	=	./libft
 LIBFT		=	$(LIBFT_DIR)/libft.a

@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   ft_free_gnl.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/10 19:00:57 by emonacho          #+#    #+#             */
-/*   Updated: 2025/02/27 16:45:13 by emonacho         ###   ########.fr       */
+/*   Created: 2025/02/27 19:33:45 by emonacho          #+#    #+#             */
+/*   Updated: 2025/02/27 19:45:55 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+void	ft_free_gnl(char *buffer)
 {
-	size_t	src_len;
-
-	src_len = ft_strlen(src);
-	if (src_len + 1 < dstsize)
-		ft_memcpy(dst, src, src_len + 1);
-	else if (dstsize != 0)
+	if (buffer)
 	{
-		ft_memcpy(dst, src, dstsize - 1);
-		dst[dstsize - 1] = 0;
+		free(buffer);
+		buffer = NULL;
 	}
-	return (src_len);
 }

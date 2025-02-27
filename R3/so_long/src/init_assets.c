@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 14:31:05 by emonacho          #+#    #+#             */
-/*   Updated: 2025/02/27 13:32:35 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/02/27 18:04:24 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	initialize_assets(t_sl *sl)
 	sl->img_path = "assets/end.xpm";
 	sl->img_end = mlx_xpm_file_to_image(sl->init, sl->img_path,
 		&sl->img_width, &sl->img_height);
+	//sl->img_path = NULL;
 
 	//printf("texture ptr = %p\n", sl->floor);
 	if (!(sl->img_floor || sl->img_wall || sl->img_start || sl->img_end))
