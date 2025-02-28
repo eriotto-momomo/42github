@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:40:44 by emonacho          #+#    #+#             */
-/*   Updated: 2025/02/27 21:58:57 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/02/28 15:23:23 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,19 @@ typedef struct	s_solong
 
 	char	**map; //used to print map
 	char	**map_copy; // used to parse map
+	char	*map_line; // used to read with GNL
 	int		map_fd;
 	int		map_width;
 	int		map_height;
+	int		map_c_cnt;
+	int		map_e_cnt;
+	int		map_p_cnt;
 
 	int		bits_per_pixel; //img
 	int		line_length; //img
 	int		endian; // img
 
+	int		i;
 	int		x;
 	int		y;
 }			t_sl;
@@ -83,7 +88,6 @@ int		close_and_quit(t_sl *sl);
 int		close_signal(t_sl *sl);
 
 // parse_map.c
-//void	map_parsing(t_sl *sl, char *line, int *error);
-void	map_parsing(t_sl *sl, char *line, int row, int *error);
-
+//void	map_parsing(t_sl *sl, char *line, int row, int *error);
+void	map_parsing(t_sl *sl, int row, int *error);
 #endif

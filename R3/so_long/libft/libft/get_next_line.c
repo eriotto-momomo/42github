@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 16:50:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/02/27 19:59:15 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/02/28 15:56:33 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,8 @@ static char	*read_and_store_fd(int fd, char *remainder, int buf_size, char *buff
 			break ;
 		else if (bytes_read <= 0)
 		{
-			//free(buffer);
-			ft_free_gnl(buffer); //added 27.02.25
+			free(buffer);
+			//ft_free_gnl(buffer); //added 27.02.25
 			free(remainder);
 			return (NULL);
 		}
@@ -114,12 +114,12 @@ char	*get_next_line(int fd)
 	static char	*buffer;
 
 	buf_size = 100;
-	if (fd == -1)//added 27.02.25
+	/*if (fd == -1)//added 27.02.25
 	{//added 27.02.25
 		ft_free_gnl(buffer);//added 27.02.25
-		free(remainder);//added 27.02.25
+		//free(remainder);//added 27.02.25
 		return (NULL);//added 27.02.25
-	}//added 27.02.25
+	}//added 27.02.25*/
 	if (fd < 0 || buf_size <= 0)
 		return (NULL);
 	if (remainder == 0)
@@ -132,6 +132,7 @@ char	*get_next_line(int fd)
 	}
 	line = is_current_line(remainder);
 	remainder = save_leftovers(remainder);
+	free(buffer);// added this 28.02.25
 	return (line);
 }
 

@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 14:51:21 by emonacho          #+#    #+#             */
-/*   Updated: 2025/02/27 19:50:53 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/02/28 16:01:08 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int	close_and_quit(t_sl *sl)
 	ft_free_array(sl->map_copy, sl->map_height, 'c');
 	sl->map = NULL;
 	sl->map_copy = NULL;
+	sl->map_line = NULL;
+	//free(sl->map_line); // INVALID FREE
 
 	mlx_destroy_image(sl->init, sl->img_floor);
 	mlx_destroy_image(sl->init, sl->img_wall);
@@ -61,7 +63,7 @@ int	main(int argc, char *argv[])
 
 	//MAP PARSING
 	initialize_map(&sl, argv[1]);
-	printf("-------------------------\nMAP INITIALIZED\n");
+	printf("-------------------------\n-----MAP INITIALIZED-----\n");
 
 	// INITIALIZE AND CREATE WINDOW
 	sl.img_width = 128;

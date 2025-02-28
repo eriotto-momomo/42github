@@ -12,69 +12,47 @@
 
 #include "../include/so_long.h"
 
-void	map_count_characters(char *line, int *error)
+void	map_count_characters(t_sl *sl, char c, int row, int *error)
 {
-	int	i;
-	static int	c_count; // STATIC POUR PARCOURIR TOUTE LA CARTE
-	static int	e_count;
-	static int	p_count;
-
-	c_count = 0;
-	e_count = 0;
-	p_count = 0;
-	i = 0;
-	while (line[i] != '\0')
-	{
-		if (line[i] == 'C')
-			c_count++;
-		if (line[i] == 'E')
-			e_count++;
-		if (line[i] == 'P')
-			p_count++;
-		i++;
-	}
-	if (c_count < 1 || e_count != 1 || p_count != 1)
+	if (c == 'C')
+		sl->map_c_cnt++;
+	if (c == 'E')
+		sl->map_e_cnt++;
+	if (c == 'P')
+		sl->map_p_cnt++;
+	//printf("row = %d\nsl->map_height = %d\nsl->i = %d\nsl->map_width = %d\n", row, sl->map_height, sl->i, sl->map_width);
+	if ((row == sl->map_height - 1 && sl->i == sl->map_width - 1)
+		&& (sl->map_c_cnt < 1 || sl->map_e_cnt != 1 || sl->map_p_cnt != 1))
 	{
 			*error = 1;
 			return ;
 	}
 }
 
-void	map_check_characters(t_sl *sl, char *line, int row, int *error)
+void	map_parsing(t_sl *sl, int row, int *error)
 {
-	int	i;
-
-	i = 0;
-	while (line[i] != '\0')
+	sl->i = 0;
+	while (sl->i < sl->map_width)
 	{
-		if (line[i] != '0' || line[i] != '1' || line[i] != 'C' || line[i] != 'E' || line[i] != 'P')
+		if ((row == 0 || row == sl->map_height - 1) && sl->map_line[sl->i] != '1')
 		{
 			*error = 1;
 			break;
 		}
-		if (((row == 0 || row == sl->map_height) && line[i] != '1') || (line[i] != '0'
-		|| line[i] != '1' || line[i] != 'C' || line[i] != 'E' || line[i] != 'P'))
+		if (sl->map_line[sl->i] != '0' && sl->map_line[sl->i] != '1'
+			&& sl->map_line[sl->i] != 'C' && sl->map_line[sl->i] != 'E'
+				&& sl->map_line[sl->i] != 'P')
 		{
 			*error = 1;
 			break;
 		}
-		if ((row > 0 || row < sl->map_height) && (line[0] != '1'
-		&& line[sl->map_width] != '1'))
+		if ((row > 0 && row < sl->map_height - 1) && (sl->map_line[0] != '1'
+		|| sl->map_line[sl->map_width - 1] != '1'))
 		{
 			*error = 1;
 			break;
 		}
-		i++;
+		map_count_characters(sl, sl->map_line[sl->i], row, error);
+		sl->i++;
 	}
-}
-
-// map parsing, check if:
-// - first and last string in arr contain only '1'
-// - first and last char in string is only '1'
-// - there's only one 'start' and 'end'
-// - there's at least one 'collectible'
-void	map_parsing(t_sl *sl, char *line, int row, int *error)
-{
-	map_check_characters(sl, line, row, error);
-	map_count_characters(line, error); // MAKE IT STATIC BABYYYYY
 }
