@@ -48,8 +48,7 @@ SRCS_LIBFT	= \
 
 SRCS_LIBCUSTOM	= \
 	$(LIBCUSTOM_DIR)/ft_atoi_safe.c \
-	$(LIBCUSTOM_DIR)/ft_free_array.c \
-	$(LIBCUSTOM_DIR)/ft_free_gnl.c
+	$(LIBCUSTOM_DIR)/ft_free_array.c
 
 OBJS_LIBFT		= $(SRCS_LIBFT:%.c=$(LIBFT_DIR)/%.o)
 OBJS_LIBCUSTOM	= $(SRCS_LIBCUSTOM:.c=.o)
