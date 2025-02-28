@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:40:44 by emonacho          #+#    #+#             */
-/*   Updated: 2025/02/27 20:29:50 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/02/27 21:58:57 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,7 @@ int		close_and_quit(t_sl *sl);
 int		close_signal(t_sl *sl);
 
 // parse_map.c
+//void	map_parsing(t_sl *sl, char *line, int *error);
 void	map_parsing(t_sl *sl, char *line, int row, int *error);
+
 #endif

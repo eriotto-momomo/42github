@@ -12,7 +12,71 @@
 
 #include "../include/so_long.h"
 
-void	map_count_characters(char *line, int *error)
+void	map_count_characters(t_sl *sl, char c, int row, int *error)
+{
+	static int	c_count; // STATIC POUR PARCOURIR TOUTE LA CARTE
+	static int	e_count;
+	static int	p_count;
+
+	c_count = 0;
+	e_count = 0;
+	p_count = 0;
+	if (c == 'C')
+		c_count++;
+	if (c == 'E')
+		e_count++;
+	if (c == 'P')
+		p_count++;
+	if ((row == sl->map_height) && (c_count < 1 || e_count != 1 || p_count != 1))
+	//if ((row == sl->map_height + 1) && (c_count < 1 || e_count != 1 || p_count != 1)) ????
+	{
+			*error = 1;
+			return ;
+	}
+}
+
+void	map_check_characters(t_sl *sl, char *line, int row, int *error)
+{
+	int	i;
+
+	i = 0;
+	while (line[i] != '\0')
+	{
+		if (line[i] != '0' || line[i] != '1' || line[i] != 'C' || line[i] != 'E' || line[i] != 'P')
+		{
+			*error = 1;
+			break;
+		}
+		//if (((row == 0 || row == sl->map_height) && line[i] != '1') || (line[i] != '0'
+		//|| line[i] != '1' || line[i] != 'C' || line[i] != 'E' || line[i] != 'P'))
+		//if ((row == 0 || row == sl->map_height) && line[i] != '1') ????
+		if ((row == 0 || row == sl->map_height) && line[i] != '1')
+		{
+			*error = 1;
+			break;
+		}
+		if ((row > 0 || row < sl->map_height) && (line[0] != '1'
+		&& line[sl->map_width] != '1'))
+		{
+			*error = 1;
+			break;
+		}
+		i++;
+	}
+}
+
+// map parsing, check if:
+// - first and last string in arr contain only '1'
+// - first and last char in string is only '1'
+// - there's only one 'start' and 'end'
+// - there's at least one 'collectible'
+void	map_parsing(t_sl *sl, char *line, int row, int *error)
+{
+	map_check_characters(sl, line, row, error);
+	map_count_characters(sl, line, row, error); // MAKE IT STATIC BABYYYYY
+}
+
+/*void	map_count_characters(t_sl *sl, char *line, int row, int *error)
 {
 	int	i;
 	static int	c_count; // STATIC POUR PARCOURIR TOUTE LA CARTE
@@ -33,7 +97,7 @@ void	map_count_characters(char *line, int *error)
 			p_count++;
 		i++;
 	}
-	if (c_count < 1 || e_count != 1 || p_count != 1)
+	if ((row == sl->map_height) && (c_count < 1 || e_count != 1 || p_count != 1))
 	{
 			*error = 1;
 			return ;
@@ -76,5 +140,5 @@ void	map_check_characters(t_sl *sl, char *line, int row, int *error)
 void	map_parsing(t_sl *sl, char *line, int row, int *error)
 {
 	map_check_characters(sl, line, row, error);
-	map_count_characters(line, error); // MAKE IT STATIC BABYYYYY
-}
+	map_count_characters(sl, line, row, error); // MAKE IT STATIC BABYYYYY
+}*/

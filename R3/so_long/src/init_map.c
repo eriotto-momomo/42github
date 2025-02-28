@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 20:03:26 by emonacho          #+#    #+#             */
-/*   Updated: 2025/02/27 20:48:43 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/02/27 21:58:11 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ void	get_map_width(t_sl *sl, int *error)
 	while (row < sl->map_height)
 	{
 		line = get_next_line(sl->map_fd);
+		//////////////////////////////////////	Controle la validite de chaque ligne et compte le nombre de CEP
+		map_parsing(sl, line, row, error);	//	ligne et compte le nombre de CEP.
 		sl->map_width = ft_strlen(line) - 1;
 		if (last_len == -1)
 			last_len = sl->map_width;
@@ -137,7 +139,9 @@ void	initialize_map(t_sl *sl, char *argv)
 	sl->map_fd = open(argv, O_RDONLY);
 	get_map_width(sl, &error);
 	close(sl->map_fd);
-	map_parsing(sl, line, row, error); // A AJUSTER!!!!!!
+	////////////////////////////////
+	//map_parsing(sl, line, row, error); // A AJUSTER!!!!!!
+	// check dans get_map_height
 	if (error == 1 || sl->map_width <= sl->map_height)
 	{
 		ft_printf("Error! Map is invalid.\n");
