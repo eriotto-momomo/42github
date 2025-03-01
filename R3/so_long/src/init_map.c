@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 20:03:26 by emonacho          #+#    #+#             */
-/*   Updated: 2025/02/28 18:34:02 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/01 12:14:52 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,12 @@ void	get_map_width(t_sl *sl, int *error)
 		sl->map_line = get_next_line(sl->map_fd);
 		sl->map_width = ft_strlen(sl->map_line) - 1;
 		map_parsing(sl, row, error);
+		free(sl->map_line);
 		if (last_len == -1)
 			last_len = sl->map_width;
 		if (sl->map_width < 5 || last_len != sl->map_width || *error == 1)
 		{
-			printf("ERROR = %d\n", *error);
-			//sl->map_line = get_next_line(-1); // FREE GNL -> fonctionne seulement si GNL l'autorise
+			sl->map_line = get_next_line(-1);
 			free(sl->map_line);
 			*error = 1;
 			return ;
@@ -59,7 +59,6 @@ void	get_map_width(t_sl *sl, int *error)
 		else
 			last_len = sl->map_width;
 		row++;
-		free(sl->map_line);
 	}
 }
 
@@ -82,12 +81,6 @@ int	map_copying(t_sl *sl, char **str_arr)
 		ft_strlcpy(str_arr[i], sl->map_line, sl->map_width + 1);
 		free(sl->map_line);
 		sl->map_line = NULL;
-		/*if (str_arr[i] == NULL) // USELESS ?
-		{
-			free(sl->map_line);
-			return (0);
-		}*/
-		free(sl->map_line);
 		i++;
 	}
 	return (1);

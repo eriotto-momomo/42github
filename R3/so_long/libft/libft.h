@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:08:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/02/28 18:34:06 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/01 12:15:18 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,10 @@
 typedef struct	s_get_next_line
 {
 	char	*buffer;
-	char	*remainder;
 	char	*leftovers;
 	char	*current_line;
-	char	*line;
 	int		buf_size;
 	int		bytes_read;
-	int		i;
-	int		j;
 }			t_gnl;
 
 // libcustom
