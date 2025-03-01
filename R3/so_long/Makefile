@@ -7,7 +7,8 @@ SRCS		=	src/main.c \
 				src/init_assets.c \
 				src/init_map.c \
 				src/inputs.c \
-				src/parse_map.c
+				src/parse_map.c \
+				src/utils.c
 
 LIBFT_DIR	=	./libft
 LIBFT		=	$(LIBFT_DIR)/libft.a
@@ -56,5 +57,8 @@ fclean:		clean
 			make fclean -C $(LIBFT_DIR)
 
 re:			fclean all
+
+leaks:		all
+			valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME) maps/map.ber
 
 .PHONY:		all clean fclean re run

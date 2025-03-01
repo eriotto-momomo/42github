@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:40:44 by emonacho          #+#    #+#             */
-/*   Updated: 2025/02/28 15:23:23 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/01 18:06:29 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,10 @@
 # define LEFT -1
 # define RIGHT 1
 
-//check nombre de variable max dans une struct
 typedef struct	s_solong
 {
-	void	*init; //initialize connection
-	void	*win; //window
+	void	*init;
+	void	*win;
 	int		close_signal;
 	int		moves_cnt; //count WASD moves
 	int		mouse_cnt; //count mouse inputs
@@ -49,35 +48,38 @@ typedef struct	s_solong
 	void	*img_floor;
 	void	*img_wall;
 	void	*img_start;
-	void	*img_end;
+	void	*img_exit;
+	void	*img_collectible;
+	void	*img_player;
 	int		img_width;
 	int		img_height;
+	int		img_x;
+	int		img_y;
+	int		bits_per_pixel; // img USELESS?
+	int		line_length; // img USELESS?
+	int		endian; // img USELESS?
 
-	char	**map; //used to print map
-	char	**map_copy; // used to parse map
-	char	*map_line; // used to read with GNL
+	char	**map;
+	char	**map_copy;
+	char	*map_line;
+	int		map_error;
 	int		map_fd;
 	int		map_width;
 	int		map_height;
+	int		map_x;
+	int		map_y;
 	int		map_c_cnt;
 	int		map_e_cnt;
 	int		map_p_cnt;
 
-	int		bits_per_pixel; //img
-	int		line_length; //img
-	int		endian; // img
-
 	int		i;
-	int		x;
-	int		y;
 }			t_sl;
 
 // init_assets.c
-int		initialize_assets(t_sl *sl);
+void	initialize_assets(t_sl *sl);
 
 // init_map.c
 void	initialize_map(t_sl *sl, char *argv);
-
 
 // inputs.c
 int		key_and_mouse_inputs(t_sl *sl);
@@ -88,6 +90,10 @@ int		close_and_quit(t_sl *sl);
 int		close_signal(t_sl *sl);
 
 // parse_map.c
-//void	map_parsing(t_sl *sl, char *line, int row, int *error);
-void	map_parsing(t_sl *sl, int row, int *error);
+void	map_parsing(t_sl *sl, int row);
+void	map_backtracking(t_sl *sl);
+
+//utils.c
+void	print_map(t_sl *sl);
+
 #endif

@@ -6,14 +6,13 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 20:03:26 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/01 12:14:52 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/01 14:56:48 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
-// sl->map_height = axe Y
-void	get_map_height(t_sl *sl, int *error)
+void	get_map_height(t_sl *sl)
 {
 	sl->map_height = 0;
 	sl->map_line = get_next_line(sl->map_fd);
@@ -26,14 +25,13 @@ void	get_map_height(t_sl *sl, int *error)
 	if (sl->map_height < 3)
 	{
 		free(sl->map_line);
-		*error = 1;
+		sl->map_error = 1;
 		return ;
 	}
 	free(sl->map_line);
 }
 
-// sl->map_width = axe X
-void	get_map_width(t_sl *sl, int *error)
+void	get_map_width(t_sl *sl)
 {
 	int	row;
 	int	last_len;
@@ -45,15 +43,15 @@ void	get_map_width(t_sl *sl, int *error)
 	{
 		sl->map_line = get_next_line(sl->map_fd);
 		sl->map_width = ft_strlen(sl->map_line) - 1;
-		map_parsing(sl, row, error);
+		map_parsing(sl, row);
 		free(sl->map_line);
 		if (last_len == -1)
 			last_len = sl->map_width;
-		if (sl->map_width < 5 || last_len != sl->map_width || *error == 1)
+		if (sl->map_width < 5 || last_len != sl->map_width || sl->map_error == 1)
 		{
 			sl->map_line = get_next_line(-1);
 			free(sl->map_line);
-			*error = 1;
+			sl->map_error = 1;
 			return ;
 		}
 		else
@@ -114,68 +112,24 @@ void	map_to_matrix(t_sl *sl, char *argv)
 	close(sl->map_fd);
 }
 
-// FINAL
-/*void	initialize_map(t_sl *sl, char *argv)
-{
-	int	error;
-
-	error = 0;
-	sl->map_fd = open(argv, O_RDONLY);
-	get_map_height(sl, &error);
-	close(sl->map_fd);
-	sl->map_c_cnt = 0;
-	sl->map_e_cnt = 0;
-	sl->map_p_cnt = 0;
-	sl->map_fd = open(argv, O_RDONLY);
-	get_map_width(sl, &error);
-	close(sl->map_fd);
-	if (error == 1 || sl->map_width <= sl->map_height)
-	{
-		ft_printf("Error! Map is invalid.\n");
-		exit(1);
-	}
-	get_next_line(-1); //FREE GNL (marche pas pour le moment)
-	map_to_matrix(sl, argv);
-}*/
-
-//BACKUP WITH DEBUG
 void	initialize_map(t_sl *sl, char *argv)
 {
-	int	i;
-	int	error;
-
-	error = 0;
+	sl->map_error = 0;
 	sl->map_fd = open(argv, O_RDONLY);
-	get_map_height(sl, &error);
+	get_map_height(sl);
 	close(sl->map_fd);
 	sl->map_c_cnt = 0;
 	sl->map_e_cnt = 0;
 	sl->map_p_cnt = 0;
 	sl->map_fd = open(argv, O_RDONLY);
-	get_map_width(sl, &error);
+	get_map_width(sl);
 	close(sl->map_fd);
-	if (error == 1 || sl->map_width <= sl->map_height)
+	if (sl->map_error == 1 || sl->map_width <= sl->map_height)
 	{
 		ft_printf("Error! Map is invalid.\n");
 		exit(1);
 	}
-	get_next_line(-1); //FREE GNL (marche pas pour le moment)
-	printf("MAP DIMENSIONS SET\nsl->map_height(axe Y): %d\nsl->map_width (axe X): %d\n-------------------------\n", sl->map_height, sl->map_width);
-
 	map_to_matrix(sl, argv);
-	//FLOOD FILL
-
-	i = 0;
-	while (i < sl->map_height)
-	{
-		printf("sl->map     : %s\n", sl->map[i]);
-		i++;
-	}
-	printf("\n");
-	i = 0;
-	while (i < sl->map_height)
-	{
-		printf("sl->map_copy: %s\n", sl->map_copy[i]);
-		i++;
-	}
+	map_backtracking(sl);
+	print_map(sl);
 }
