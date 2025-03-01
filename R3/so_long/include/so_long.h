@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:40:44 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/01 18:06:29 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/01 18:50:39 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,27 +73,27 @@ typedef struct	s_solong
 	int		map_p_cnt;
 
 	int		i;
-}			t_sl;
+}			t_s;
 
 // init_assets.c
-void	initialize_assets(t_sl *sl);
+void	initialize_assets(t_s *s);
 
 // init_map.c
-void	initialize_map(t_sl *sl, char *argv);
+void	initialize_map(t_s *s, char *argv);
 
 // inputs.c
-int		key_and_mouse_inputs(t_sl *sl);
+int		key_and_mouse_inputs(t_s *s);
 
 // main.c
 int		main(int argc, char *argv[]);
-int		close_and_quit(t_sl *sl);
-int		close_signal(t_sl *sl);
+int		close_and_quit(t_s *s);
+int		close_signal(t_s *s);
 
 // parse_map.c
-void	map_parsing(t_sl *sl, int row);
-void	map_backtracking(t_sl *sl);
+void	map_parsing(t_s *s, int row);
+void	map_backtracking(t_s *s);
 
 //utils.c
-void	print_map(t_sl *sl);
+void	print_map(t_s *s);
 
 #endif

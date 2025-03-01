@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 15:46:16 by emonacho          #+#    #+#             */
-/*   Updated: 2025/02/25 17:33:58 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/01 18:51:12 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,44 +14,44 @@
 
 int	deal_key(int keycode, void *param)
 {
-	t_sl	*sl; //casting de param en structure afin d'eviter de multiples casting
+	t_s	*s; //casting de param en structure afin d'eviter de multiples casting
 
-	sl = (t_sl *)param;
+	s = (t_s *)param;
 	if (!(keycode == W || keycode == A || keycode == S || keycode == D))
 		printf("keyboard input: %d\n", keycode);
 	if (keycode == W || keycode == A || keycode == S || keycode == D)
 	{
-		(sl->moves_cnt)++;
-		printf("WASD moves = %d\n", sl->moves_cnt);
+		(s->moves_cnt)++;
+		printf("WASD moves = %d\n", s->moves_cnt);
 	}
 	if (keycode == Q || keycode == ESC)
 	{
-		sl->close_signal = 1;
-		//printf("close_signal = %d\n", sl->close_signal);
+		s->close_signal = 1;
+		//printf("close_signal = %d\n", s->close_signal);
 	}
 	return (0);
 }
 
 int	deal_mouse(int button, int x, int y, void *param)
 {
-	t_sl	*sl; //casting de param en structure afin d'eviter de multiples casting
+	t_s	*s; //casting de param en structure afin d'eviter de multiples casting
 
-	sl = (t_sl *)param;
-	(sl->mouse_cnt)++;
+	s = (t_s *)param;
+	(s->mouse_cnt)++;
 
 	printf("mouse input: %d\nx = %d\ny = %d\n", button, x, y);
 
 	return (0);
 }
 
-int	key_and_mouse_inputs(t_sl *sl)
+int	key_and_mouse_inputs(t_s *s)
 {
 	// KEYS & MOUSE INPUTS
-	mlx_key_hook(sl->win, deal_key, sl); // handle WASD and Q
-	mlx_mouse_hook(sl->win, deal_mouse, sl);
+	mlx_key_hook(s->win, deal_key, s); // handle WASD and Q
+	mlx_mouse_hook(s->win, deal_mouse, s);
 
 	// CLOSING WINDOW WITH CLOSING_SIGNAL OR [X]
-	mlx_loop_hook(sl->init, close_signal, sl); // closure with ESC or Q
-	mlx_hook(sl->win, 17, 0L, close_and_quit, sl); // closure with mouse
+	mlx_loop_hook(s->init, close_signal, s); // closure with ESC or Q
+	mlx_hook(s->win, 17, 0L, close_and_quit, s); // closure with mouse
 	return (0);
 }

@@ -12,18 +12,18 @@
 
 #include "../include/so_long.h"
 
-void	get_map_start(t_sl *sl, int *x, int *y)
+void	get_map_start(t_s *s, int *x, int *y)
 {
 	int	i;
 	int	j;
 
 	j = 0;
-	while (j < sl->map_height)
+	while (j < s->map_height)
 	{
 		i = 0;
-		while (sl->map_copy[j][i])
+		while (s->map_copy[j][i])
 		{
-			if (sl->map_copy[j][i] == 'P')
+			if (s->map_copy[j][i] == 'P')
 			{
 				*x = i;
 				*y = j;
@@ -38,42 +38,42 @@ void	get_map_start(t_sl *sl, int *x, int *y)
 // Flood Fill DFS (Depth-First Search)
 // 'V' stands for "VISITED", as the algorithm go throuh the map,
 // it'll mark locations of the matrix already visited.
-int	exit_is_reachable(t_sl *sl, int x, int y)
+int	exit_is_reachable(t_s *s, int x, int y)
 {
-	if (x < 0 || y < 0 || x >= sl->map_width || y >= sl->map_height)
+	if (x < 0 || y < 0 || x >= s->map_width || y >= s->map_height)
 		return (0);
-	if (sl->map_copy[y][x] != '0' && sl->map_copy[y][x] != 'C'
-		&& sl->map_copy[y][x] != 'E' && sl->map_copy[y][x] != 'P')
+	if (s->map_copy[y][x] != '0' && s->map_copy[y][x] != 'C'
+		&& s->map_copy[y][x] != 'E' && s->map_copy[y][x] != 'P')
 		return (0);
-	if (sl->map_copy[y][x] == 'V')
+	if (s->map_copy[y][x] == 'V')
 		return (0);
-	if (sl->map_copy[y][x] == 'E')
+	if (s->map_copy[y][x] == 'E')
 		return (1);
-	sl->map_copy[y][x] = 'V';
-	if (exit_is_reachable(sl, x + 1, y))
+	s->map_copy[y][x] = 'V';
+	if (exit_is_reachable(s, x + 1, y))
 		return (1);
-	if (exit_is_reachable(sl, x - 1, y))
+	if (exit_is_reachable(s, x - 1, y))
 		return (1);
-	if (exit_is_reachable(sl, x, y + 1))
+	if (exit_is_reachable(s, x, y + 1))
 		return (1);
-	if (exit_is_reachable(sl, x, y - 1))
+	if (exit_is_reachable(s, x, y - 1))
 		return (1);
 	else
 		return (0);
 }
 
-void	map_backtracking(t_sl *sl)
+void	map_backtracking(t_s *s)
 {
 	int	x;
 	int	y;
 
 	x = 0;
 	y = 0;
-	get_map_start(sl, &x, &y);
-	if (!exit_is_reachable(sl, x, y))
+	get_map_start(s, &x, &y);
+	if (!exit_is_reachable(s, x, y))
 	{
-		ft_free_array(sl->map, sl->map_height, 'c');
-		ft_free_array(sl->map_copy, sl->map_height, 'c');
+		ft_free_array(s->map, s->map_height, 'c');
+		ft_free_array(s->map_copy, s->map_height, 'c');
 		ft_printf("Error! Map exit is not reachable.\n");
 		exit(1);
 	}
@@ -81,46 +81,46 @@ void	map_backtracking(t_sl *sl)
 		ft_printf("Map is valid! Enjoy your game! :D\n");
 }
 
-void	get_map_info(t_sl *sl, char c, int row)
+void	get_map_info(t_s *s, char c, int row)
 {
 	if (c == 'C')
-		sl->map_c_cnt++;
+		s->map_c_cnt++;
 	if (c == 'E')
-		sl->map_e_cnt++;
+		s->map_e_cnt++;
 	if (c == 'P')
-		sl->map_p_cnt++;
-	if ((row == sl->map_height - 1 && sl->i == sl->map_width - 1)
-		&& (sl->map_c_cnt < 1 || sl->map_e_cnt != 1 || sl->map_p_cnt != 1))
+		s->map_p_cnt++;
+	if ((row == s->map_height - 1 && s->i == s->map_width - 1)
+		&& (s->map_c_cnt < 1 || s->map_e_cnt != 1 || s->map_p_cnt != 1))
 	{
-			sl->map_error = 1;
+			s->map_error = 1;
 			return ;
 	}
 }
 
-void	map_parsing(t_sl *sl, int row)
+void	map_parsing(t_s *s, int row)
 {
-	sl->i = 0;
-	while (sl->i < sl->map_width)
+	s->i = 0;
+	while (s->i < s->map_width)
 	{
-		if ((row == 0 || row == sl->map_height - 1) && sl->map_line[sl->i] != '1')
+		if ((row == 0 || row == s->map_height - 1) && s->map_line[s->i] != '1')
 		{
-			sl->map_error = 1;
+			s->map_error = 1;
 			break;
 		}
-		if (sl->map_line[sl->i] != '0' && sl->map_line[sl->i] != '1'
-			&& sl->map_line[sl->i] != 'C' && sl->map_line[sl->i] != 'E'
-				&& sl->map_line[sl->i] != 'P')
+		if (s->map_line[s->i] != '0' && s->map_line[s->i] != '1'
+			&& s->map_line[s->i] != 'C' && s->map_line[s->i] != 'E'
+				&& s->map_line[s->i] != 'P')
 		{
-			sl->map_error = 1;
+			s->map_error = 1;
 			break;
 		}
-		if ((row > 0 && row < sl->map_height - 1) && (sl->map_line[0] != '1'
-		|| sl->map_line[sl->map_width - 1] != '1'))
+		if ((row > 0 && row < s->map_height - 1) && (s->map_line[0] != '1'
+		|| s->map_line[s->map_width - 1] != '1'))
 		{
-			sl->map_error = 1;
+			s->map_error = 1;
 			break;
 		}
-		get_map_info(sl, sl->map_line[sl->i], row);
-		sl->i++;
+		get_map_info(s, s->map_line[s->i], row);
+		s->i++;
 	}
 }

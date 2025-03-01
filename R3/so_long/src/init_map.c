@@ -6,130 +6,130 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 20:03:26 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/01 14:56:48 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/01 18:51:11 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
-void	get_map_height(t_sl *sl)
+void	get_map_height(t_s *s)
 {
-	sl->map_height = 0;
-	sl->map_line = get_next_line(sl->map_fd);
-	while (sl->map_line)
+	s->map_height = 0;
+	s->map_line = get_next_line(s->map_fd);
+	while (s->map_line)
 	{
-		sl->map_height++;
-		free(sl->map_line);
-		sl->map_line = get_next_line(sl->map_fd);
+		s->map_height++;
+		free(s->map_line);
+		s->map_line = get_next_line(s->map_fd);
 	}
-	if (sl->map_height < 3)
+	if (s->map_height < 3)
 	{
-		free(sl->map_line);
-		sl->map_error = 1;
+		free(s->map_line);
+		s->map_error = 1;
 		return ;
 	}
-	free(sl->map_line);
+	free(s->map_line);
 }
 
-void	get_map_width(t_sl *sl)
+void	get_map_width(t_s *s)
 {
 	int	row;
 	int	last_len;
 
 	row = 0;
 	last_len = -1;
-	sl->map_width = 0;
-	while (row < sl->map_height)
+	s->map_width = 0;
+	while (row < s->map_height)
 	{
-		sl->map_line = get_next_line(sl->map_fd);
-		sl->map_width = ft_strlen(sl->map_line) - 1;
-		map_parsing(sl, row);
-		free(sl->map_line);
+		s->map_line = get_next_line(s->map_fd);
+		s->map_width = ft_strlen(s->map_line) - 1;
+		map_parsing(s, row);
+		free(s->map_line);
 		if (last_len == -1)
-			last_len = sl->map_width;
-		if (sl->map_width < 5 || last_len != sl->map_width || sl->map_error == 1)
+			last_len = s->map_width;
+		if (s->map_width < 5 || last_len != s->map_width || s->map_error == 1)
 		{
-			sl->map_line = get_next_line(-1);
-			free(sl->map_line);
-			sl->map_error = 1;
+			s->map_line = get_next_line(-1);
+			free(s->map_line);
+			s->map_error = 1;
 			return ;
 		}
 		else
-			last_len = sl->map_width;
+			last_len = s->map_width;
 		row++;
 	}
 }
 
-int	map_copying(t_sl *sl, char **str_arr)
+int	map_copying(t_s *s, char **str_arr)
 {
 	int	i;
 
 	i = 0;
-	while (i < sl->map_height)
+	while (i < s->map_height)
 	{
-		str_arr[i] = malloc(sizeof(char *) * sl->map_width);
+		str_arr[i] = malloc(sizeof(char *) * s->map_width);
 		if (str_arr[i] == NULL)
 			return (0);
 		i++;
 	}
 	i = 0;
-	while (i < sl->map_height)
+	while (i < s->map_height)
 	{
-		sl->map_line = get_next_line(sl->map_fd);
-		ft_strlcpy(str_arr[i], sl->map_line, sl->map_width + 1);
-		free(sl->map_line);
-		sl->map_line = NULL;
+		s->map_line = get_next_line(s->map_fd);
+		ft_strlcpy(str_arr[i], s->map_line, s->map_width + 1);
+		free(s->map_line);
+		s->map_line = NULL;
 		i++;
 	}
 	return (1);
 }
 
-void	map_to_matrix(t_sl *sl, char *argv)
+void	map_to_matrix(t_s *s, char *argv)
 {
-	sl->map = malloc(sizeof(char **) * sl->map_height);
-	if (sl->map == NULL)
+	s->map = malloc(sizeof(char **) * s->map_height);
+	if (s->map == NULL)
 		exit(1);
-	sl->map_copy = malloc(sizeof(char **) * sl->map_height);
-	if (sl->map_copy == NULL)
+	s->map_copy = malloc(sizeof(char **) * s->map_height);
+	if (s->map_copy == NULL)
 	{
-		free(sl->map);
+		free(s->map);
 		exit(1);
 	}
-	sl->map_fd = open(argv, O_RDONLY);
-	if (!map_copying(sl, sl->map))
+	s->map_fd = open(argv, O_RDONLY);
+	if (!map_copying(s, s->map))
 	{
-		ft_free_array(sl->map, sl->map_height, 'c');
+		ft_free_array(s->map, s->map_height, 'c');
 		exit(1);
 	}
-	close(sl->map_fd);
-	sl->map_fd = open(argv, O_RDONLY);
-	if (!map_copying(sl, sl->map_copy))
+	close(s->map_fd);
+	s->map_fd = open(argv, O_RDONLY);
+	if (!map_copying(s, s->map_copy))
 	{
-		ft_free_array(sl->map, sl->map_height, 'c');
-		ft_free_array(sl->map_copy, sl->map_height, 'c');
+		ft_free_array(s->map, s->map_height, 'c');
+		ft_free_array(s->map_copy, s->map_height, 'c');
 		exit(1);
 	}
-	close(sl->map_fd);
+	close(s->map_fd);
 }
 
-void	initialize_map(t_sl *sl, char *argv)
+void	initialize_map(t_s *s, char *argv)
 {
-	sl->map_error = 0;
-	sl->map_fd = open(argv, O_RDONLY);
-	get_map_height(sl);
-	close(sl->map_fd);
-	sl->map_c_cnt = 0;
-	sl->map_e_cnt = 0;
-	sl->map_p_cnt = 0;
-	sl->map_fd = open(argv, O_RDONLY);
-	get_map_width(sl);
-	close(sl->map_fd);
-	if (sl->map_error == 1 || sl->map_width <= sl->map_height)
+	s->map_error = 0;
+	s->map_fd = open(argv, O_RDONLY);
+	get_map_height(s);
+	close(s->map_fd);
+	s->map_c_cnt = 0;
+	s->map_e_cnt = 0;
+	s->map_p_cnt = 0;
+	s->map_fd = open(argv, O_RDONLY);
+	get_map_width(s);
+	close(s->map_fd);
+	if (s->map_error == 1 || s->map_width <= s->map_height)
 	{
 		ft_printf("Error! Map is invalid.\n");
 		exit(1);
 	}
-	map_to_matrix(sl, argv);
-	map_backtracking(sl);
-	print_map(sl);
+	map_to_matrix(s, argv);
+	map_backtracking(s);
+	print_map(s);
 }
