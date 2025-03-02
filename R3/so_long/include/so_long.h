@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:40:44 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/02 18:56:18 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/02 20:08:22 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,30 +19,19 @@
 # include <stdio.h>
 # include <unistd.h>
 
-//# define IMG_W 32
-//# define IMG_H 32
 # define ESC 65307
 # define Q 113
 # define W 119
 # define A 97
 # define S 115
 # define D 100
-# define UARROW 65362
-# define LARROW 65361
-# define DARROW 65364
-# define RARROW 65363
-# define UP -1
-# define DOWN 1
-# define LEFT -1
-# define RIGHT 1
 
 typedef struct	s_solong
 {
 	void	*init;
 	void	*win;
 	int		close_signal;
-	int		moves_cnt; //count WASD moves
-	int		mouse_cnt; //count mouse inputs
+	int		moves_cnt;
 
 	char	*img_path;
 	void	*img_floor;
@@ -55,9 +44,6 @@ typedef struct	s_solong
 	int		img_height;
 	int		img_x;
 	int		img_y;
-	int		bits_per_pixel; // img USELESS?
-	int		line_length; // img USELESS?
-	int		endian; // img USELESS?
 
 	char	**map;
 	char	**map_copy;
@@ -78,28 +64,44 @@ typedef struct	s_solong
 	int		i;
 }			t_s;
 
-// put_assets.c
-void	put_assets(t_s *s);
+// handle_moves.c
+void	handle_moves(t_s *s, int keycode);
+void	move_player(t_s *s, int keycode);
+int		check_collectibles(t_s *s, int keycode);
+int		check_exit(t_s *s, int keycode);
+void	refresh_matrix(t_s *s, int	*ptr, char c, char sign);
 
 // init_map.c
 void	initialize_map(t_s *s, char *argv);
+void	map_to_matrix(t_s *s, char *argv);
+int		map_copying(t_s *s, char **str_arr);
+void	get_map_width(t_s *s);
+void	get_map_height(t_s *s);
 
 // inputs.c
+int		deal_key(int keycode, void *param);
 int		key_and_mouse_inputs(t_s *s);
 
 // main.c
 int		main(int argc, char *argv[]);
-int		close_and_quit(t_s *s);
-int		close_signal(t_s *s);
-
-// handle_moves.c
-void	handle_moves(t_s *s, int keycode);
 
 // parse_map.c
-void	map_parsing(t_s *s, int row);
+void	get_map_start(t_s *s, int *x, int *y);
+int		exit_is_reachable(t_s *s, int x, int y);
 void	map_backtracking(t_s *s);
+void	get_map_info(t_s *s, char c, int row);
+void	map_parsing(t_s *s, int row);
+
+// put_assets.c
+void	choose_asset(t_s *s, char c);
+void	put_image(t_s *s);
+void	path_to_assets(t_s *s);
+void	put_assets(t_s *s);
 
 //utils.c
+void	check_args(int argc, char *argv[]);
+int		close_signal(t_s *s);
+int		close_and_quit(t_s *s);
 void	print_map(t_s *s);
 
 #endif

@@ -55,6 +55,7 @@ int	check_exit(t_s *s, int keycode)
 	ft_printf("Moves count: %d\n", s->moves_cnt);
 	ft_printf("----------------------------------------------------\n");
 	ft_printf("LEVEL COMPLETED! King Star King ate all the waffles!\n");
+	s->close_signal = 1;
 	return (1);
 }
 
