@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:40:44 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/02 17:18:56 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/02 18:24:45 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct	s_solong
 	int		map_c_cnt;
 	int		map_e_cnt;
 	int		map_p_cnt;
+	char	map_last_location;
 
 	int		player_x;
 	int		player_y;

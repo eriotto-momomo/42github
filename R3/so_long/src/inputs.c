@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 15:46:16 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/02 17:18:57 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/02 18:32:57 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,11 @@ int	deal_key(int keycode, void *param)
 
 	s = (t_s *)param;
 	if (!(keycode == W || keycode == A || keycode == S || keycode == D))
-		ft_printf("keyboard input: %d\n", keycode);
+		ft_printf("Keyboard input: %d\n", keycode);
 	if (keycode == W || keycode == A || keycode == S || keycode == D)
-	{
 		move_player(s, keycode);
-		(s->moves_cnt)++;
-		ft_printf("WASD moves = %d\n", s->moves_cnt);
-	}
 	if (keycode == Q || keycode == ESC)
-	{
 		s->close_signal = 1;
-		//printf("close_signal = %d\n", s->close_signal);
-	}
 	return (0);
 }
 
