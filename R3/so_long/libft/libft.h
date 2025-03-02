@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:08:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/01 12:15:18 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/02 20:11:43 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-typedef struct	s_get_next_line
+typedef struct s_get_next_line
 {
 	char	*buffer;
 	char	*leftovers;

@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 14:51:21 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/02 20:03:12 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/02 20:17:26 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,10 @@ int	main(int argc, char *argv[])
 	s.img_height = 128;
 	s.init = mlx_init();
 	s.win = mlx_new_window(s.init, (s.img_width * s.map_width),
-	(s.img_height * s.map_height), "so_long");
+			(s.img_height * s.map_height), "so_long");
 	s.close_signal = 0;
 	put_assets(&s);
 	s.moves_cnt = 0;
 	key_and_mouse_inputs(&s);
 	mlx_loop(s.init);
-
-	// FINAL CLEAN --->>> USELESS ???
-	/*mlx_destroy_window(s.init, s.win);
-	mlx_destroy_display(s.init);
-	free(s.win);
-	free(s.init);
-	free(s.map);
-	free(s.map_copy);*/
 }

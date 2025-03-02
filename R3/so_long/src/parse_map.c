@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_map.c                                         :+:      :+:    :+:   */
+/*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 20:03:26 by emonacho          #+#    #+#             */
-/*   Updated: 2025/02/27 20:10:57 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/02 20:17:25 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,8 @@ void	get_map_info(t_s *s, char c, int row)
 	if ((row == s->map_height - 1 && s->i == s->map_width - 1)
 		&& (s->map_c_cnt < 1 || s->map_e_cnt != 1 || s->map_p_cnt != 1))
 	{
-			s->map_error = 1;
-			return ;
+		s->map_error = 1;
+		return ;
 	}
 }
 
@@ -106,20 +106,20 @@ void	map_parsing(t_s *s, int row)
 		if ((row == 0 || row == s->map_height - 1) && s->map_line[s->i] != '1')
 		{
 			s->map_error = 1;
-			break;
+			break ;
 		}
 		if (s->map_line[s->i] != '0' && s->map_line[s->i] != '1'
 			&& s->map_line[s->i] != 'C' && s->map_line[s->i] != 'E'
-				&& s->map_line[s->i] != 'P')
+			&& s->map_line[s->i] != 'P')
 		{
 			s->map_error = 1;
-			break;
+			break ;
 		}
 		if ((row > 0 && row < s->map_height - 1) && (s->map_line[0] != '1'
-		|| s->map_line[s->map_width - 1] != '1'))
+				|| s->map_line[s->map_width - 1] != '1'))
 		{
 			s->map_error = 1;
-			break;
+			break ;
 		}
 		get_map_info(s, s->map_line[s->i], row);
 		s->i++;

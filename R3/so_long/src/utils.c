@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 14:25:42 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/02 20:03:07 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/02 20:17:22 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,11 @@ int	close_and_quit(t_s *s)
 {
 	ft_free_array(s->map, s->map_height, 'c');
 	ft_free_array(s->map_copy, s->map_height, 'c');
-
 	mlx_destroy_image(s->init, s->img_floor);
 	mlx_destroy_image(s->init, s->img_wall);
 	mlx_destroy_image(s->init, s->img_exit);
 	mlx_destroy_image(s->init, s->img_collectible);
 	mlx_destroy_image(s->init, s->img_player);
-
 	mlx_destroy_window(s->init, s->win);
 	mlx_destroy_display(s->init);
 	free(s->init);

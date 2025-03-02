@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:40:44 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/02 20:08:22 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/02 20:17:20 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # define S 115
 # define D 100
 
-typedef struct	s_solong
+typedef struct s_solong
 {
 	void	*init;
 	void	*win;

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_moves.c                                      :+:      :+:    :+:   */
+/*   handle_moves.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 16:43:06 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/02 18:51:14 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/02 20:18:52 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,16 @@ int	check_exit(t_s *s, int keycode)
 	else if (keycode == D && s->map[s->player_y][s->player_x + 1] != '1'
 		&& s->map[s->player_y][s->player_x + 1] == 'E' && s->map_c_cnt == 0)
 		refresh_matrix(s, &s->player_x, 'x', '+');
-	else if (s->map[s->player_y - 1][s->player_x] == 'E' || s->map[s->player_y + 1][s->player_x] == 'E'
-		|| s->map[s->player_y][s->player_x - 1] == 'E' || s->map[s->player_y][s->player_x + 1] == 'E')
+	else if (s->map[s->player_y - 1][s->player_x] == 'E'
+			|| s->map[s->player_y + 1][s->player_x] == 'E'
+				|| s->map[s->player_y][s->player_x - 1] == 'E'
+					|| s->map[s->player_y][s->player_x + 1] == 'E')
 	{
-		ft_printf("There's %d waffles left! HURRY! They're cooling!\n", s->map_c_cnt);
+		ft_printf("There's %d waffles left!\n", s->map_c_cnt);
 		return (0);
 	}
 	else
 		return (0);
-	(s->moves_cnt)++;
-	ft_printf("Moves count: %d\n", s->moves_cnt);
-	ft_printf("----------------------------------------------------\n");
 	ft_printf("LEVEL COMPLETED! King Star King ate all the waffles!\n");
 	s->close_signal = 1;
 	return (1);

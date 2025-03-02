@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 14:09:12 by emonacho          #+#    #+#             */
-/*   Updated: 2025/02/25 17:12:07 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/02 20:11:41 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	puthex_dec(unsigned int to_convert, char spec, size_t *cnt)
 	printf_putchar(hex[to_convert % 16], cnt);
 }
 
-int		printf_cnt_digits(unsigned int nbr)
+int	printf_cnt_digits(unsigned int nbr)
 {
 	size_t	digits;
 
