@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:40:44 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/01 18:50:39 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/02 17:18:56 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,14 @@ typedef struct	s_solong
 	int		map_e_cnt;
 	int		map_p_cnt;
 
+	int		player_x;
+	int		player_y;
+
 	int		i;
 }			t_s;
 
-// init_assets.c
-void	initialize_assets(t_s *s);
+// put_assets.c
+void	put_assets(t_s *s);
 
 // init_map.c
 void	initialize_map(t_s *s, char *argv);
@@ -88,6 +91,9 @@ int		key_and_mouse_inputs(t_s *s);
 int		main(int argc, char *argv[]);
 int		close_and_quit(t_s *s);
 int		close_signal(t_s *s);
+
+// move_player.c
+void	move_player(t_s *s, int keycode);
 
 // parse_map.c
 void	map_parsing(t_s *s, int row);

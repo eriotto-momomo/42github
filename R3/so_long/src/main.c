@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 14:51:21 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/01 18:51:13 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/02 16:39:30 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	check_args(int argc, char *argv[])
 
 	if (argc != 2)
 	{
-		printf("Error! Invalid arguments.\n");
+		ft_printf("Error! Invalid arguments.\n");
 		exit (1);
 	}
 	i = 0;
@@ -27,7 +27,7 @@ void	check_args(int argc, char *argv[])
 	if (argv[1][i - 4] == '.' && argv[1][i - 3] != 'b'
 		&& argv[1][i - 2] != 'e' && argv[1][i - 1] != 'r')
 	{
-		printf("Error! Invalid map format.\n");
+		ft_printf("Error! Invalid map format.\n");
 		exit (1);
 	}
 }
@@ -78,7 +78,7 @@ int	main(int argc, char *argv[])
 
 	//MAP PARSING
 	initialize_map(&s, argv[1]);
-	printf("-------------------------\n     MAP INITIALIZED     \n");
+	ft_printf("-------------------------\n     MAP INITIALIZED     \n");
 
 	// INITIALIZE AND CREATE WINDOW
 	s.img_width = 128;
@@ -89,7 +89,7 @@ int	main(int argc, char *argv[])
 	s.close_signal = 0;
 
 	// PUT XPM
-	initialize_assets(&s);
+	put_assets(&s);
 
 	// KEYS & MOUSE INPUTS
 	s.moves_cnt = 0;

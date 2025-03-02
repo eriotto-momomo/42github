@@ -70,6 +70,8 @@ void	map_backtracking(t_s *s)
 	x = 0;
 	y = 0;
 	get_map_start(s, &x, &y);
+	s->player_x = x;
+	s->player_y = y;
 	if (!exit_is_reachable(s, x, y))
 	{
 		ft_free_array(s->map, s->map_height, 'c');
