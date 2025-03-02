@@ -76,21 +76,20 @@ void	map_backtracking(t_s *s)
 	{
 		ft_free_array(s->map, s->map_height, 'c');
 		ft_free_array(s->map_copy, s->map_height, 'c');
-		ft_printf("Error! Map exit is not reachable.\n");
+		write(2, "Error\n", 6);
+		ft_printf("Map exit is not reachable!\n");
 		exit(1);
 	}
-	else
-		ft_printf("Map is valid! Enjoy your game! :D\n");
 }
 
 void	get_map_info(t_s *s, char c, int row)
 {
 	if (c == 'C')
-		s->map_c_cnt++;
+		(s->map_c_cnt)++;
 	if (c == 'E')
-		s->map_e_cnt++;
+		(s->map_e_cnt)++;
 	if (c == 'P')
-		s->map_p_cnt++;
+		(s->map_p_cnt)++;
 	if ((row == s->map_height - 1 && s->i == s->map_width - 1)
 		&& (s->map_c_cnt < 1 || s->map_e_cnt != 1 || s->map_p_cnt != 1))
 	{

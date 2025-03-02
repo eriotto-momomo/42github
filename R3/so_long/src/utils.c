@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 14:25:42 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/02 18:33:15 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/02 19:24:05 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,12 @@
 
 void	print_map(t_s *s)
 {
-	ft_printf("-------------------------\n");
-	ft_printf("MAP DIMENSIONS SET\ns->map_width (axe X): %d\n",s->map_width);
-	ft_printf("s->map_height(axe Y): %d\n-------------------------\n",
-	s->map_height);
-
+	ft_printf("---CURRENT MAP---\n");
 	s->i = 0;
 	while (s->i < s->map_height)
 	{
-		ft_printf("s->map_copy: %s\n", s->map_copy[s->i]);
+		ft_printf("| %s |\n", s->map[s->i]);
 		s->i++;
 	}
-	ft_printf("-------------------------\n");
-	s->i = 0;
-	while (s->i < s->map_height)
-	{
-		ft_printf("s->map: %s\n", s->map[s->i]);
-		s->i++;
-	}
+	ft_printf("-----------------\n");
 }

@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 20:03:26 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/02 16:40:06 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/02 19:25:14 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,8 @@ void	initialize_map(t_s *s, char *argv)
 	close(s->map_fd);
 	if (s->map_error == 1 || s->map_width <= s->map_height)
 	{
-		ft_printf("Error! Map is invalid.\n");
+		write(2, "Error\n", 6);
+		ft_printf("Map is invalid!\n");
 		exit(1);
 	}
 	map_to_matrix(s, argv);

@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 14:51:21 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/02 18:32:23 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/02 19:24:51 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	check_args(int argc, char *argv[])
 
 	if (argc != 2)
 	{
-		ft_printf("Error! Invalid arguments.\n");
+		write(2, "Error\n", 6);
+		ft_printf("Invalid number of arguments!\n");
 		exit (1);
 	}
 	i = 0;
@@ -27,7 +28,8 @@ void	check_args(int argc, char *argv[])
 	if (argv[1][i - 4] == '.' && argv[1][i - 3] != 'b'
 		&& argv[1][i - 2] != 'e' && argv[1][i - 1] != 'r')
 	{
-		ft_printf("Error! Invalid map format.\n");
+		write(2, "Error\n", 6);
+		ft_printf("Invalid map format!\n");
 		exit (1);
 	}
 }
@@ -78,7 +80,6 @@ int	main(int argc, char *argv[])
 
 	//MAP PARSING
 	initialize_map(&s, argv[1]);
-	ft_printf("-------------------------\n     MAP INITIALIZED     \n");
 
 	// INITIALIZE AND CREATE WINDOW
 	s.img_width = 128;

@@ -4,9 +4,9 @@
 
 HEADER		=	so_long.h
 SRCS		=	src/main.c \
+				src/handle_moves.c \
 				src/init_map.c \
 				src/inputs.c \
-				src/move_player.c \
 				src/parse_map.c \
 				src/put_assets.c \
 				src/utils.c
