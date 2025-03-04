@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 14:31:05 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/04 17:01:31 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/04 17:46:29 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,22 +79,16 @@ void	path_to_player_assets(t_s *s)
 
 void	path_to_assets(t_s *s)
 {
-	s->img_path = "assets/floor.xpm";
-	s->img_floor = mlx_xpm_file_to_image(s->init, s->img_path,
-			&s->img_width, &s->img_height);
-	s->img_path = "assets/wall.xpm";
-	s->img_wall = mlx_xpm_file_to_image(s->init, s->img_path,
-			&s->img_width, &s->img_height);
-	s->img_path = "assets/exit_open.xpm";
-	s->img_exit_open = mlx_xpm_file_to_image(s->init, s->img_path,
-			&s->img_width, &s->img_height);
-	s->img_path = "assets/exit_close.xpm";
-	s->img_exit_close = mlx_xpm_file_to_image(s->init, s->img_path,
-			&s->img_width, &s->img_height);
-	s->img_path = "assets/collectible.xpm";
-	s->img_collectible = mlx_xpm_file_to_image(s->init, s->img_path,
-			&s->img_width, &s->img_height);
-	s->img_path = NULL;
+	s->img_floor = mlx_xpm_file_to_image(s->init,
+			"assets/floor.xpm", &s->img_width, &s->img_height);
+	s->img_wall = mlx_xpm_file_to_image(s->init,
+			"assets/wall.xpm", &s->img_width, &s->img_height);
+	s->img_exit_open = mlx_xpm_file_to_image(s->init,
+			"assets/exit_open.xpm", &s->img_width, &s->img_height);
+	s->img_exit_close = mlx_xpm_file_to_image(s->init,
+			"assets/exit_close.xpm", &s->img_width, &s->img_height);
+	s->img_collectible = mlx_xpm_file_to_image(s->init,
+			"assets/collectible.xpm", &s->img_width, &s->img_height);
 	if (!(s->img_floor || s->img_wall || s->img_exit_open || s->img_exit_close
 			|| s->img_collectible))
 		s->close_signal = 1;

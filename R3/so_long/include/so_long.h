@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:40:44 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/04 16:55:45 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/04 17:46:27 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ typedef struct s_solong
 	int		close_signal;
 	int		moves_cnt;
 
-	char	*img_path;
 	void	*img_floor;
 	void	*img_wall;
 	void	*img_exit_open;
