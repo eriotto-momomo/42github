@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   inputs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 15:46:16 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/03 00:07:46 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/04 17:03:46 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
-// Passing a structure in 'param' needs casting to avoid multiples casts
 int	deal_key(int keycode, void *param)
 {
 	t_s	*s;

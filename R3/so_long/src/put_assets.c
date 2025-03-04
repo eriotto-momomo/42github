@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   put_assets.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 14:31:05 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/04 14:56:56 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/04 17:01:31 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
-// 	TRY TO IMPLEMENT PLAYER SPRITES
 void	choose_asset(t_s *s, char c, int keycode)
 {
 	char	*ptr;
@@ -26,38 +25,21 @@ void	choose_asset(t_s *s, char c, int keycode)
 	else if (c == 'P')
 	{
 		if (keycode == W)
-			ptr = s->img_player_up;
+			ptr = s->img_player_w;
 		else if (keycode == A)
-			ptr = s->img_player_left;
+			ptr = s->img_player_a;
 		else if (keycode == D)
-			ptr = s->img_player_right;
+			ptr = s->img_player_d;
 		else
-			ptr = s->img_player_down; // FRONT
+			ptr = s->img_player_s;
 	}
-	else if (c == 'E')
-		ptr = s->img_exit;
+	else if (c == 'E' && s->exit_status == 0)
+		ptr = s->img_exit_close;
+	else if (c == 'E' && s->exit_status == 1)
+		ptr = s->img_exit_open;
 	mlx_put_image_to_window(s->init, s->win, ptr, s->img_x, s->img_y);
 	s->img_x += s->img_width;
 }
-
-// WORKING BACKUP
-/*void	choose_asset(t_s *s, char c)
-{
-	char	*ptr;
-
-	if (c == '1')
-		ptr = s->img_wall;
-	else if (c == '0')
-		ptr = s->img_floor;
-	else if (c == 'C')
-		ptr = s->img_collectible;
-	else if (c == 'P')
-		ptr = s->img_player;
-	else if (c == 'E')
-		ptr = s->img_exit;
-	mlx_put_image_to_window(s->init, s->win, ptr, s->img_x, s->img_y);
-	s->img_x += s->img_width;
-}*/
 
 void	put_image(t_s *s, int keycode)
 {
@@ -80,38 +62,20 @@ void	put_image(t_s *s, int keycode)
 	}
 }
 
-// TRY POUR ECONOMISER DES LIGNES
 void	path_to_player_assets(t_s *s)
 {
-	s->img_player_up = mlx_xpm_file_to_image(s->init,
-			"assets/player_up.xpm", &s->img_width, &s->img_height);
-	s->img_player_down = mlx_xpm_file_to_image(s->init,
-			"assets/player_down.xpm", &s->img_width, &s->img_height);
-	s->img_player_left = mlx_xpm_file_to_image(s->init,
-			"assets/player_left.xpm", &s->img_width, &s->img_height);
-	s->img_player_right = mlx_xpm_file_to_image(s->init,
-			"assets/player_right.xpm", &s->img_width, &s->img_height);
-	if (!(s->img_player_up || s->img_player_down || s->img_player_left
-			|| s->img_player_right))
+	s->img_player_w = mlx_xpm_file_to_image(s->init,
+			"assets/player_w.xpm", &s->img_width, &s->img_height);
+	s->img_player_s = mlx_xpm_file_to_image(s->init,
+			"assets/player_s.xpm", &s->img_width, &s->img_height);
+	s->img_player_a = mlx_xpm_file_to_image(s->init,
+			"assets/player_a.xpm", &s->img_width, &s->img_height);
+	s->img_player_d = mlx_xpm_file_to_image(s->init,
+			"assets/player_d.xpm", &s->img_width, &s->img_height);
+	if (!(s->img_player_w || s->img_player_s || s->img_player_a
+			|| s->img_player_d))
 		s->close_signal = 1;
 }
-
-// BACKUP
-/*void	path_to_player_assets(t_s *s)
-{
-	s->img_path = "assets/player_up.xpm";
-	s->img_player_up = mlx_xpm_file_to_image(s->init, s->img_path,
-			&s->img_width, &s->img_height);
-	s->img_path = "assets/player_down.xpm";
-	s->img_player_down = mlx_xpm_file_to_image(s->init, s->img_path,
-			&s->img_width, &s->img_height);
-	s->img_path = "assets/player_left.xpm";
-	s->img_player_left = mlx_xpm_file_to_image(s->init, s->img_path,
-			&s->img_width, &s->img_height);
-	s->img_path = "assets/player_right.xpm";
-	s->img_player_right = mlx_xpm_file_to_image(s->init, s->img_path,
-			&s->img_width, &s->img_height);
-}*/
 
 void	path_to_assets(t_s *s)
 {

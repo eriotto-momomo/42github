@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 20:03:26 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/02 20:17:25 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/04 17:04:15 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void	get_map_info(t_s *s, char c, int row)
 		s->map_error = 1;
 		return ;
 	}
+	(s->exit_status) = 0;
 }
 
 void	map_parsing(t_s *s, int row)

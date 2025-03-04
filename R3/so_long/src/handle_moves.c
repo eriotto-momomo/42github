@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_moves.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 16:43:06 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/03 00:07:51 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/04 17:02:00 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ int	check_collectibles(t_s *s, int keycode)
 		return (0);
 	(s->moves_cnt)++;
 	(s->map_c_cnt)--;
+	if (s->map_c_cnt == 0)
+		(s->exit_status) = 1;
 	ft_printf("Moves count: %d\n", s->moves_cnt);
 	ft_printf("----------------------------\n");
 	ft_printf("King Star King ate a waffle!\n");
@@ -111,6 +113,5 @@ void	move_player(t_s *s, int keycode)
 void	handle_moves(t_s *s, int keycode)
 {
 	move_player(s, keycode);
-	put_assets(s, keycode); // TAKES KEYCODE AS PARAM
-	//put_assets(s);
+	put_assets(s, keycode);
 }

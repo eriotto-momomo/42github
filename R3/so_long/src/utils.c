@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 14:25:42 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/03 00:05:52 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/04 16:58:05 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ int	close_and_quit(t_s *s)
 	mlx_destroy_image(s->init, s->img_exit_open);
 	mlx_destroy_image(s->init, s->img_exit_close);
 	mlx_destroy_image(s->init, s->img_collectible);
-	mlx_destroy_image(s->init, s->img_player_up);
-	mlx_destroy_image(s->init, s->img_player_down);
-	mlx_destroy_image(s->init, s->img_player_left);
-	mlx_destroy_image(s->init, s->img_player_right);
+	mlx_destroy_image(s->init, s->img_player_w);
+	mlx_destroy_image(s->init, s->img_player_s);
+	mlx_destroy_image(s->init, s->img_player_a);
+	mlx_destroy_image(s->init, s->img_player_d);
 	mlx_destroy_window(s->init, s->win);
 	mlx_destroy_display(s->init);
 	free(s->init);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:40:44 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/03 00:07:04 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/04 16:55:45 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ typedef struct s_solong
 	void	*img_exit_open;
 	void	*img_exit_close;
 	void	*img_collectible;
-	void	*img_player_up;
-	void	*img_player_down;
-	void	*img_player_left;
-	void	*img_player_right;
+	void	*img_player_w;
+	void	*img_player_s;
+	void	*img_player_a;
+	void	*img_player_d;
 	int		img_width;
 	int		img_height;
 	int		img_x;
@@ -60,6 +60,7 @@ typedef struct s_solong
 	int		map_c_cnt;
 	int		map_e_cnt;
 	int		map_p_cnt;
+	int		exit_status;
 
 	int		player_x;
 	int		player_y;
