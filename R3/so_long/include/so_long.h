@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:40:44 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/02 20:17:20 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/03 00:07:04 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,13 @@ typedef struct s_solong
 	char	*img_path;
 	void	*img_floor;
 	void	*img_wall;
-	void	*img_start;
-	void	*img_exit;
+	void	*img_exit_open;
+	void	*img_exit_close;
 	void	*img_collectible;
-	void	*img_player;
+	void	*img_player_up;
+	void	*img_player_down;
+	void	*img_player_left;
+	void	*img_player_right;
 	int		img_width;
 	int		img_height;
 	int		img_x;
@@ -93,10 +96,11 @@ void	get_map_info(t_s *s, char c, int row);
 void	map_parsing(t_s *s, int row);
 
 // put_assets.c
-void	choose_asset(t_s *s, char c);
-void	put_image(t_s *s);
+void	choose_asset(t_s *s, char c, int keycode);
+void	put_image(t_s *s, int keycode);
 void	path_to_assets(t_s *s);
-void	put_assets(t_s *s);
+void	put_assets(t_s *s, int keycode);
+//void	put_assets(t_s *s);
 
 //utils.c
 void	check_args(int argc, char *argv[]);

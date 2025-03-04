@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_moves.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 16:43:06 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/02 20:18:52 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/03 00:07:51 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,5 +111,6 @@ void	move_player(t_s *s, int keycode)
 void	handle_moves(t_s *s, int keycode)
 {
 	move_player(s, keycode);
-	put_assets(s);
+	put_assets(s, keycode); // TAKES KEYCODE AS PARAM
+	//put_assets(s);
 }

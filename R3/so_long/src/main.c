@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 14:51:21 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/02 20:17:26 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/02 23:31:03 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int	main(int argc, char *argv[])
 	s.win = mlx_new_window(s.init, (s.img_width * s.map_width),
 			(s.img_height * s.map_height), "so_long");
 	s.close_signal = 0;
-	put_assets(&s);
+	//put_assets(&s);
+	put_assets(&s, 0); // TAKES KEYCODE AS PARAM
 	s.moves_cnt = 0;
 	key_and_mouse_inputs(&s);
 	mlx_loop(s.init);
