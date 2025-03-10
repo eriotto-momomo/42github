@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 16:18:18 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/08 16:22:02 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/10 19:54:47 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,15 @@
 # include <unistd.h>
 # include <signal.h>
 # include <stdbool.h>
-# include <stdlimits.h>
+# include <limits.h>
+
+/*typedef struct	s_sigaction
+{
+	int	sa;
+}	t_sigaction;*/
+
+void signal_wrap(int, void *, bool); // ..., int bool);???
+
 
 
 

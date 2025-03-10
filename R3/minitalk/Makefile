@@ -22,7 +22,7 @@ NAME_CLIENT	=	client
 NAME_SERVER	=	server
 
 CC		=	gcc
-CFLAGS	=	-Wall -Wextra -Werror
+#sCFLAGS	=	-Wall -Wextra -Werror
 
 # **************************************************************************** #
 #                                   TARGETS                                    #
