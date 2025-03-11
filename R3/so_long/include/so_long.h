@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:40:44 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/11 19:34:01 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/11 20:12:16 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,5 @@ void	check_args(int argc, char *argv[]);
 int		close_signal(t_s *s);
 int		close_and_quit(t_s *s);
 void	destroy_img(t_s *s, void *ptr);
-void	print_map(t_s *s);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 20:03:26 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/11 18:57:27 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/11 20:12:11 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,5 +134,4 @@ void	initialize_map(t_s *s, char *argv)
 	}
 	map_to_matrix(s, argv);
 	map_backtracking(s);
-	print_map(s);
 }

@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 14:25:42 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/11 18:59:21 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/11 20:12:34 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,16 +57,4 @@ int	close_and_quit(t_s *s)
 	mlx_destroy_display(s->init);
 	free(s->init);
 	exit(1);
-}
-
-void	print_map(t_s *s)
-{
-	ft_printf("---CURRENT MAP---\n");
-	s->i = 0;
-	while (s->i < s->map_height)
-	{
-		ft_printf("| %s |\n", s->map[s->i]);
-		s->i++;
-	}
-	ft_printf("-----------------\n");
 }

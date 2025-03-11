@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 16:43:06 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/11 19:12:58 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/11 20:13:07 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,6 @@ int	check_collectibles(t_s *s, int keycode)
 	if (s->map_c_cnt == 0)
 		(s->exit_status) = 1;
 	ft_printf("Moves: %d\n", s->moves_cnt);
-	ft_printf("----------------------------\n");
-	ft_printf("King Star King ate a waffle!\n");
-	ft_printf("%d waffles left!\n", s->map_c_cnt);
-	ft_printf("----------------------------\n");
 	return (1);
 }
 
