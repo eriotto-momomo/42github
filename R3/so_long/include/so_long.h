@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:40:44 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/11 19:23:48 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/11 19:34:01 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void	get_map_height(t_s *s);
 // inputs.c
 int		deal_key(int keycode, void *param);
 int		key_and_mouse_inputs(t_s *s);
+void	display_moves_and_collectibles(t_s *s);
 
 // main.c
 int		main(int argc, char *argv[]);
@@ -110,8 +111,5 @@ int		close_signal(t_s *s);
 int		close_and_quit(t_s *s);
 void	destroy_img(t_s *s, void *ptr);
 void	print_map(t_s *s);
-
-//bonus.c
-void	display_moves_and_collectibles(t_s *s);
 
 #endif
