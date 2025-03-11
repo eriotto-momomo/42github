@@ -14,7 +14,7 @@ SRCS		=	src/main.c \
 
 LIBFT_DIR	=	./libft
 LIBFT		=	$(LIBFT_DIR)/libft.a
-MLX_DIR		=	./minilibx
+MLX_DIR		=	./minilibx-linux
 MLX_LIB		=	$(MLX_DIR)/libmlx_Linux.a
 OBJS		=	$(SRCS:.c=.o)
 
