@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 20:03:26 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/11 17:33:03 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/11 18:53:32 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,14 @@ void	map_backtracking(t_s *s)
 	s->tmp_c_cnt = 0;
 	s->map_exit_reached = 0;
 	exit_is_reachable(s, x, y);
-	if (s->map_exit_reached == 0 && s->tmp_c_cnt == 0)
+	if (s->map_exit_reached == 0 || s->tmp_c_cnt != s->map_c_cnt)
 	{
 		ft_free_array(s->map, s->map_height, 'c');
 		ft_free_array(s->map_copy, s->map_height, 'c');
-		ft_putstr_fd("Error\nMap exit is not reachable!\n", 2);
+		if (s->tmp_c_cnt != s->map_c_cnt)
+			ft_putstr_fd("Error\nCollectibles are not all collectable!\n", 2);
+		else
+			ft_putstr_fd("Error\nMap exit is not reachable!\n", 2);
 		exit(1);
 	}
 }

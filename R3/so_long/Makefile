@@ -4,6 +4,7 @@
 
 HEADER		=	so_long.h
 SRCS		=	src/main.c \
+				src/bonus.c \
 				src/handle_moves.c \
 				src/init_map.c \
 				src/inputs.c \

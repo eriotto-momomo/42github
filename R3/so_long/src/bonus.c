@@ -1,32 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   bonus.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/23 14:51:21 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/11 18:26:13 by emonacho         ###   ########.fr       */
+/*   Created: 2025/03/11 17:43:05 by emonacho          #+#    #+#             */
+/*   Updated: 2025/03/11 19:12:51 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
-int	main(int argc, char *argv[])
+void	display_moves_and_collectibles(t_s *s)
 {
-	t_s	s;
+	char	*str;
 
-	check_args(argc, argv);
-	initialize_map(&s, argv[1]);
-	s.img_width = 128;
-	s.img_height = 128;
-	s.init = mlx_init();
-	s.win = mlx_new_window(s.init, (s.img_width * s.map_width),
-			(s.img_height * s.map_height), "so_long");
-	s.close_signal = 0;
-	s.last_loc = 'P';
-	s.moves_cnt = 0;
-	put_assets(&s, 0);
-	key_and_mouse_inputs(&s);
-	mlx_loop(s.init);
+	str = ft_itoa(s->moves_cnt);
+	mlx_string_put(s->init, s->win, 30, 55, 0x000000, "Moves: ");
+	mlx_string_put(s->init, s->win, 120, 55, 0x000000, str);
+	free(str);
+	str = ft_itoa(s->map_c_cnt);
+	mlx_string_put(s->init, s->win, 30, 75, 0x000000, "Waffles left: ");
+	mlx_string_put(s->init, s->win, 120, 75, 0x000000, str);
+	free(str);
 }

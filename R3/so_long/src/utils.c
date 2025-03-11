@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 14:25:42 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/11 16:19:23 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/11 18:59:21 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,11 @@ int	close_signal(t_s *s)
 	return (0);
 }
 
-
 void	destroy_img(t_s *s, void *ptr)
 {
 	mlx_destroy_image(s->init, ptr);
 	ptr = NULL;
 }
-
 
 int	close_and_quit(t_s *s)
 {

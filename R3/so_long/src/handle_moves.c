@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 16:43:06 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/11 16:49:25 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/11 19:12:58 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	check_exit(t_s *s, int keycode)
 	else
 		return (0);
 	s->last_loc = 'E';
+	(s->moves_cnt)++;
 	if (s->exit_status == 1)
 	{
 		ft_printf("LEVEL COMPLETED! King Star King ate all the waffles!\n");
@@ -78,7 +79,7 @@ int	check_collectibles(t_s *s, int keycode)
 	(s->map_c_cnt)--;
 	if (s->map_c_cnt == 0)
 		(s->exit_status) = 1;
-	ft_printf("Moves count: %d\n", s->moves_cnt);
+	ft_printf("Moves: %d\n", s->moves_cnt);
 	ft_printf("----------------------------\n");
 	ft_printf("King Star King ate a waffle!\n");
 	ft_printf("%d waffles left!\n", s->map_c_cnt);
@@ -108,7 +109,7 @@ void	move_player(t_s *s, int keycode)
 		return ;
 	s->last_loc = '0';
 	(s->moves_cnt)++;
-	ft_printf("Moves count: %d\n", s->moves_cnt);
+	ft_printf("Moves: %d\n", s->moves_cnt);
 }
 
 void	handle_moves(t_s *s, int keycode)

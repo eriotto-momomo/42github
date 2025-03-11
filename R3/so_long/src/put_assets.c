@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 14:31:05 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/11 16:19:21 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/11 18:41:11 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,4 +110,5 @@ void	put_assets(t_s *s, int keycode)
 {
 	path_to_assets(s);
 	put_image(s, keycode);
+	display_moves_and_collectibles(s);
 }

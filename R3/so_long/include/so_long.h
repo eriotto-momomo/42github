@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:40:44 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/11 17:32:22 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/11 19:00:04 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ typedef struct s_solong
 	void	*img_floor;
 	void	*img_wall;
 	void	*img_exit_open;
-	void	*img_exit_close;
 	void	*img_collectible;
 	void	*img_player_w;
 	void	*img_player_s;
@@ -93,7 +92,6 @@ int		main(int argc, char *argv[]);
 
 // parse_map.c
 void	get_map_start(t_s *s, int *x, int *y);
-//int		exit_is_reachable(t_s *s, int x, int y);
 void	exit_is_reachable(t_s *s, int x, int y);
 void	map_backtracking(t_s *s);
 void	get_map_info(t_s *s, char c, int row);
@@ -112,5 +110,8 @@ int		close_signal(t_s *s);
 int		close_and_quit(t_s *s);
 void	destroy_img(t_s *s, void *ptr);
 void	print_map(t_s *s);
+
+//bonus.c
+void	display_moves_and_collectibles(t_s *s);
 
 #endif
