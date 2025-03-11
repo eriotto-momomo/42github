@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 20:03:26 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/11 18:53:32 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/11 19:16:45 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ void	get_map_start(t_s *s, int *x, int *y)
 void	exit_is_reachable(t_s *s, int x, int y)
 {
 	if (x < 0 || y < 0 || x >= s->map_width || y >= s->map_height)
-		return;
+		return ;
 	if (s->map_copy[y][x] == 'V' || (s->map_copy[y][x] != '0'
 		&& s->map_copy[y][x] != 'C' && s->map_copy[y][x] != 'E'
 			&& s->map_copy[y][x] != 'P'))
-		return;
+		return ;
 	if (s->map_copy[y][x] == 'C')
 		(s->tmp_c_cnt)++;
 	if (s->map_copy[y][x] == 'E')

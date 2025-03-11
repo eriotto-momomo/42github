@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 14:31:05 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/11 18:41:11 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/11 19:16:44 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	path_to_assets(t_s *s)
 			"assets/collectible.xpm", &s->img_width, &s->img_height);
 	if (!(s->img_player_w || s->img_player_s || s->img_player_a
 			|| s->img_player_d || s->img_floor || s->img_wall
-				|| s->img_exit_open || s->img_collectible))
+			|| s->img_exit_open || s->img_collectible))
 		s->close_signal = 1;
 }
 
