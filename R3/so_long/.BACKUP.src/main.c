@@ -1,33 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   inputs.c                                           :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/23 15:46:16 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/11 16:19:30 by emonacho         ###   ########.fr       */
+/*   Created: 2025/02/23 14:51:21 by emonacho          #+#    #+#             */
+/*   Updated: 2025/03/04 17:03:53 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
-int	deal_key(int keycode, void *param)
+int	main(int argc, char *argv[])
 {
-	t_s	*s;
+	t_s	s;
 
-	s = (t_s *)param;
-	if (keycode == W || keycode == A || keycode == S || keycode == D)
-		handle_moves(s, keycode);
-	if (keycode == Q || keycode == ESC)
-		s->close_signal = 1;
-	return (0);
-}
-
-int	key_and_mouse_inputs(t_s *s)
-{
-	mlx_key_hook(s->win, deal_key, s);
-	mlx_loop_hook(s->init, close_signal, s);
-	mlx_hook(s->win, 17, 0L, close_and_quit, s);
-	return (0);
+	check_args(argc, argv);
+	initialize_map(&s, argv[1]);
+	s.img_width = 128;
+	s.img_height = 128;
+	s.init = mlx_init();
+	s.win = mlx_new_window(s.init, (s.img_width * s.map_width),
+			(s.img_height * s.map_height), "so_long");
+	s.close_signal = 0;
+	put_assets(&s, 0);
+	s.moves_cnt = 0;
+	key_and_mouse_inputs(&s);
+	mlx_loop(s.init);
 }

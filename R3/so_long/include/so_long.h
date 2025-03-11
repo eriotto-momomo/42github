@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:40:44 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/04 17:46:27 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/11 17:32:22 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,9 @@ typedef struct s_solong
 	int		map_height;
 	int		map_x;
 	int		map_y;
+	int		map_exit_reached;
+	char	last_loc;
+	int		tmp_c_cnt;
 	int		map_c_cnt;
 	int		map_e_cnt;
 	int		map_p_cnt;
@@ -90,7 +93,8 @@ int		main(int argc, char *argv[]);
 
 // parse_map.c
 void	get_map_start(t_s *s, int *x, int *y);
-int		exit_is_reachable(t_s *s, int x, int y);
+//int		exit_is_reachable(t_s *s, int x, int y);
+void	exit_is_reachable(t_s *s, int x, int y);
 void	map_backtracking(t_s *s);
 void	get_map_info(t_s *s, char c, int row);
 void	map_parsing(t_s *s, int row);
@@ -100,12 +104,13 @@ void	choose_asset(t_s *s, char c, int keycode);
 void	put_image(t_s *s, int keycode);
 void	path_to_assets(t_s *s);
 void	put_assets(t_s *s, int keycode);
-//void	put_assets(t_s *s);
+void	remove_assets(t_s *s);
 
 //utils.c
 void	check_args(int argc, char *argv[]);
 int		close_signal(t_s *s);
 int		close_and_quit(t_s *s);
+void	destroy_img(t_s *s, void *ptr);
 void	print_map(t_s *s);
 
 #endif

@@ -45,7 +45,7 @@ $(MLX_LIB):
 			$(CC) $(CFLAGS) -I$(MLX_DIR) -I$(LIBFT_DIR) -c $< -o $@
 
 run:		all
-			./$(NAME) maps/map.ber
+			./$(NAME) maps/map_42.ber
 
 clean:
 			$(RM) $(OBJS)
@@ -60,6 +60,6 @@ fclean:		clean
 re:			fclean all
 
 leaks:		all
-			valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME) maps/map.ber
+			valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME) maps/map_42.ber
 
 .PHONY:		all clean fclean re run

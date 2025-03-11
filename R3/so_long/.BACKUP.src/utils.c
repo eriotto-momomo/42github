@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 14:25:42 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/11 16:19:23 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/04 16:58:05 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	check_args(int argc, char *argv[])
 
 	if (argc != 2)
 	{
-		ft_putstr_fd("Error\nInvalid number of arguments!\n", 2);
+		write(2, "Error\n", 6);
+		ft_printf("Invalid number of arguments!\n");
 		exit (1);
 	}
 	i = 0;
@@ -27,7 +28,8 @@ void	check_args(int argc, char *argv[])
 	if (argv[1][i - 4] == '.' && argv[1][i - 3] != 'b'
 		&& argv[1][i - 2] != 'e' && argv[1][i - 1] != 'r')
 	{
-		ft_putstr_fd("Error\nInvalid map format!\n", 2);
+		write(2, "Error\n", 6);
+		ft_printf("Invalid map format!\n");
 		exit (1);
 	}
 }
@@ -42,19 +44,19 @@ int	close_signal(t_s *s)
 	return (0);
 }
 
-
-void	destroy_img(t_s *s, void *ptr)
-{
-	mlx_destroy_image(s->init, ptr);
-	ptr = NULL;
-}
-
-
 int	close_and_quit(t_s *s)
 {
 	ft_free_array(s->map, s->map_height, 'c');
 	ft_free_array(s->map_copy, s->map_height, 'c');
-	remove_assets(s);
+	mlx_destroy_image(s->init, s->img_floor);
+	mlx_destroy_image(s->init, s->img_wall);
+	mlx_destroy_image(s->init, s->img_exit_open);
+	mlx_destroy_image(s->init, s->img_exit_close);
+	mlx_destroy_image(s->init, s->img_collectible);
+	mlx_destroy_image(s->init, s->img_player_w);
+	mlx_destroy_image(s->init, s->img_player_s);
+	mlx_destroy_image(s->init, s->img_player_a);
+	mlx_destroy_image(s->init, s->img_player_d);
 	mlx_destroy_window(s->init, s->win);
 	mlx_destroy_display(s->init);
 	free(s->init);

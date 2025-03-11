@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 20:03:26 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/11 17:33:03 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/04 17:04:15 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,23 +35,31 @@ void	get_map_start(t_s *s, int *x, int *y)
 	}
 }
 
-void	exit_is_reachable(t_s *s, int x, int y)
+// Flood Fill DFS (Depth-First Search)
+// 'V' stands for "VISITED", as the algorithm go throuh the map,
+// it'll mark locations of the matrix already visited.
+int	exit_is_reachable(t_s *s, int x, int y)
 {
 	if (x < 0 || y < 0 || x >= s->map_width || y >= s->map_height)
-		return;
-	if (s->map_copy[y][x] == 'V' || (s->map_copy[y][x] != '0'
-		&& s->map_copy[y][x] != 'C' && s->map_copy[y][x] != 'E'
-			&& s->map_copy[y][x] != 'P'))
-		return;
-	if (s->map_copy[y][x] == 'C')
-		(s->tmp_c_cnt)++;
+		return (0);
+	if (s->map_copy[y][x] != '0' && s->map_copy[y][x] != 'C'
+		&& s->map_copy[y][x] != 'E' && s->map_copy[y][x] != 'P')
+		return (0);
+	if (s->map_copy[y][x] == 'V')
+		return (0);
 	if (s->map_copy[y][x] == 'E')
-		(s->map_exit_reached) = 1;
+		return (1);
 	s->map_copy[y][x] = 'V';
-	exit_is_reachable(s, x + 1, y);
-	exit_is_reachable(s, x - 1, y);
-	exit_is_reachable(s, x, y + 1);
-	exit_is_reachable(s, x, y - 1);
+	if (exit_is_reachable(s, x + 1, y))
+		return (1);
+	if (exit_is_reachable(s, x - 1, y))
+		return (1);
+	if (exit_is_reachable(s, x, y + 1))
+		return (1);
+	if (exit_is_reachable(s, x, y - 1))
+		return (1);
+	else
+		return (0);
 }
 
 void	map_backtracking(t_s *s)
@@ -64,14 +72,12 @@ void	map_backtracking(t_s *s)
 	get_map_start(s, &x, &y);
 	s->player_x = x;
 	s->player_y = y;
-	s->tmp_c_cnt = 0;
-	s->map_exit_reached = 0;
-	exit_is_reachable(s, x, y);
-	if (s->map_exit_reached == 0 && s->tmp_c_cnt == 0)
+	if (!exit_is_reachable(s, x, y))
 	{
 		ft_free_array(s->map, s->map_height, 'c');
 		ft_free_array(s->map_copy, s->map_height, 'c');
-		ft_putstr_fd("Error\nMap exit is not reachable!\n", 2);
+		write(2, "Error\n", 6);
+		ft_printf("Map exit is not reachable!\n");
 		exit(1);
 	}
 }
