@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 16:43:06 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/13 13:43:01 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/13 16:09:35 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int	check_collectibles(t_s *s, int keycode)
 		refresh_matrix(s, &s->player_x, 'x', '+');
 	else
 		return (0);
+	s->last_loc = 'C';
 	(s->moves_cnt)++;
 	(s->map_c_cnt)--;
 	if (s->map_c_cnt == 0)
@@ -86,9 +87,9 @@ int	check_collectibles(t_s *s, int keycode)
 
 void	move_player(t_s *s, int keycode)
 {
-	if (check_collectibles(s, keycode))
-		return ;
 	if (check_exit(s, keycode))
+		return ;
+	if (check_collectibles(s, keycode))
 		return ;
 	if (keycode == W && s->map[s->player_y - 1][s->player_x] != '1'
 		&& s->map[s->player_y - 1][s->player_x] != 'E')

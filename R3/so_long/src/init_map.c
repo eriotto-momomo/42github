@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 20:03:26 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/13 13:43:04 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/13 15:39:14 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	get_map_width(t_s *s)
 		free(s->map_line);
 		if (last_len == -1)
 			last_len = s->map_width;
-		if (s->map_width < 5 || last_len != s->map_width || s->map_error == 1)
+		if (s->map_width < 3 || last_len != s->map_width || s->map_error == 1)
 		{
 			s->map_line = get_next_line(-1);
 			free(s->map_line);
@@ -124,7 +124,10 @@ void	initialize_map(t_s *s, char *argv)
 	s->map_fd = open(argv, O_RDONLY);
 	get_map_width(s);
 	close(s->map_fd);
-	if (s->map_error == 1 || s->map_width <= s->map_height)
+	if (s->map_error == 1 || (s->map_width == 3 && s->map_height < 5)
+		|| (s->map_width < 5 && s->map_height == 3)
+		|| (s->map_width == 4 && s->map_height < 4)
+		|| (s->map_width < 4 && s->map_height == 4))
 	{
 		ft_putstr_fd("Error\nMap is invalid!\n", 2);
 		exit(1);
