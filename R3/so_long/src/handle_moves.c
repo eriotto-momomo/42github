@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 16:43:06 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/11 20:13:07 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/13 13:43:01 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int	check_exit(t_s *s, int keycode)
 		return (0);
 	s->last_loc = 'E';
 	(s->moves_cnt)++;
+	ft_printf("Moves: %d\n", s->moves_cnt);
 	if (s->exit_status == 1)
 	{
 		ft_printf("LEVEL COMPLETED! King Star King ate all the waffles!\n");

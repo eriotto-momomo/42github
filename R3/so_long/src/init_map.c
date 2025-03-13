@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 20:03:26 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/11 20:12:11 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/13 13:43:04 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,10 +126,7 @@ void	initialize_map(t_s *s, char *argv)
 	close(s->map_fd);
 	if (s->map_error == 1 || s->map_width <= s->map_height)
 	{
-		if (s->map_width <= s->map_height)
-			ft_putstr_fd("Error\nMap is not rectangular!\n", 2);
-		else
-			ft_putstr_fd("Error\nMap is invalid!\n", 2);
+		ft_putstr_fd("Error\nMap is invalid!\n", 2);
 		exit(1);
 	}
 	map_to_matrix(s, argv);
