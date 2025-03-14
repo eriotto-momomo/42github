@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 16:18:18 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/10 19:54:47 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/14 23:50:22 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,16 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <signal.h>
-# include <stdbool.h>
 # include <limits.h>
 
-/*typedef struct	s_sigaction
+enum e_state
 {
-	int	sa;
-}	t_sigaction;*/
+	ready,
+	busy,
+};
 
-void signal_wrap(int, void *, bool); // ..., int bool);???
-
-
-
+int		check_pid(char *pid);
+void	kill_wrap(pid_t pid, int signal);
+void	signal_wrap(int signal, void (*handler)(int));
 
 #endif

@@ -6,37 +6,50 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 16:18:04 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/10 19:54:44 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/14 23:50:21 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-void	signal_wrap(int signal, void *handler, bool use_siginfo) // ..., int bool)???
+int	check_pid(char *pid)
 {
-	struct sigaction	sa = {0};
+	int	i;
 
-	// PUT THE HANDLER FUNCTION IN SIGACTION
-	if (use_siginfo) // if (1)???
+	i = 0;
+	while (pid[i] != '\0')
 	{
-		sa.sa_flags = SA_SIGINFO; // but du flag?
-		sa.sa_sigaction = handler;
+		if (!ft_isdigit(pid[i]))
+		{
+			ft_putstr_fd("Error! PID must be a digit.\n", 2);
+			exit(1);
+		}
+		i++;
 	}
-	else
-		sa.sa_handler = handler;
+	return (ft_atoi(pid));
+}
 
-	// MASKS, BLOCK SIGUSR1 WHILE PROCESSING SIGUSR2 AND VICE VERSA
-	sigemptyset(&sa.sa_mask); // clean tout en initialisant a 0
+void	signal_wrap(int signal, void (*handler)(int))
+{
+	struct sigaction	sa;
+
+	sa.sa_handler = handler;
+	sa.sa_flags = 0;
+	sigemptyset(&sa.sa_mask);
 	sigaddset(&sa.sa_mask, SIGUSR1);
 	sigaddset(&sa.sa_mask, SIGUSR2);
-
-	// CALL SIGACTION
-	if (sigaction(signal, &sa, NULL) < 0) // troisieme arg utile pour noter l'erreur
+	if (sigaction(signal, &sa, NULL) < 0)
 	{
-		ft_putstr_fd("Sigaction failed.\n", 2);
+		ft_putstr_fd("Error! Sigaction failed.\n", 2);
 		exit(1);
 	}
-	else
-		ft_printf("Success! Message sent.\n");
+}
 
+void	kill_wrap(pid_t pid, int signal)
+{
+	if(kill(pid, signal) < 0)
+	{
+		ft_putstr_fd("Error! Function 'kill' failed.\n", 2);
+		exit(1);
+	}
 }
