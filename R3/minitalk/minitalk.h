@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 16:18:18 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/16 17:44:43 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/16 23:41:56 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,13 @@ enum e_state
 typedef struct s_minitalk
 {
 	char	*buffer;
+	int		buff_size;
 	int		i;
 	int		c;
 	int		bit;
 	int		step;
 	int		msg_len;
+	char	*str_len;
 	pid_t	client_pid;
 }			t_s;
 

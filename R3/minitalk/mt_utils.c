@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 16:18:04 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/16 17:44:44 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/16 23:41:55 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	initialize_struct(t_s *s)
 {
 	s->buffer = NULL;
+	s->buff_size = 5;
 	s->i = 0;
 	s->c = 0;
 	s->bit = 0;
