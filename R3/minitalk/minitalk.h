@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 16:18:18 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/14 23:50:22 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/16 17:44:43 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,24 @@
 
 enum e_state
 {
-	ready,
 	busy,
-};
+	ready,
+}	t_state;
 
+typedef struct s_minitalk
+{
+	char	*buffer;
+	int		i;
+	int		c;
+	int		bit;
+	int		step;
+	int		msg_len;
+	pid_t	client_pid;
+}			t_s;
+
+int		initialize_struct(t_s *s);
 int		check_pid(char *pid);
-void	kill_wrap(pid_t pid, int signal);
-void	signal_wrap(int signal, void (*handler)(int));
+void	w_kill(pid_t pid, int signal);
+void	w_signal(int signal, void (*handler)(int, siginfo_t *, void *));
 
 #endif
