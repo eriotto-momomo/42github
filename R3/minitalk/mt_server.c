@@ -6,65 +6,57 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 16:18:10 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/16 23:41:53 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/17 22:05:25 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-static int	is_init = 0;
+static int	reset = -1;
 
 void	fill_buffer(t_s *s)
 {
-	s->buffer[s->i] = s->c;
-	(s->i)++;
-	ft_printf("s->i = %d || s->msg_len = %d\n", s->i, s->msg_len);
-	if (s->i < s->msg_len)
-		ft_printf(".server | fill_buffer | FILLING BUFFER\n");
-	//if (s->i == s->msg_len)
+	if (s->i < s->buff_size)
+	{
+		s->buffer[s->i] = s->c;
+		(s->i)++;
+	}
 	if (s->c == '\0')
 	{
-		s->buffer[s->msg_len] = '\0';
-		ft_printf(".server | fill_buffer | BUFFER IS FULL! = [%s]\n", s->buffer);
-		if (s->buff_size == 5)
+		s->buffer[s->i] = '\0';
+		if (s->real_buff_size_set == 1)
+		{
+			write(1, s->buffer, s->buff_size);
+			write(1, "\n", 1);
+			w_kill(s->client_pid, SIGUSR1);
+			free_and_respond(s, SIGUSR2);
+			reset_struct(s, -1);
+			reset = -1;
+		}
+		else
 		{
 			s->buff_size = ft_atoi(s->buffer);
-			ft_printf(".server | fill_buffer | s->buff_size = %d\n", s->buff_size);
+			s->real_buff_size_set = 1;
+			free_and_respond(s, SIGUSR1);
+			reset = 0;
 		}
-		else if (s->buff_size != 0) //TODO: comment faire pour sauter cette condition après avoir initialisé buff_size?
-		{
-			write(1, s->buffer, s->msg_len);
-			write(1, "\n", 1);
-			ft_printf("||||||||||||||||| PRINT BUFFER |||||||||||||||||");
-		}
-		free(s->buffer);
-		s->buffer = NULL;
-		w_kill(s->client_pid, SIGUSR2);
-		is_init = 0;
 	}
 }
 
+// 4096 = 4ko
 int	msg_is_valid(t_s *s)
 {
-	s->msg_len = s->c;
-	//if (s->msg_len <= 0 || s->msg_len > 4096)
-	if (s->msg_len <= 0 || s->msg_len > 4096)
+	if (s->buff_size <= 0 || s->buff_size >= 4096)
 	{
-		ft_putstr_fd("Error! Message too long.\n", 2);
-		return (0);
+		ft_putstr_fd("Error! Message is either too long or too short. Please try again.\n", 2);
+		free_and_respond(s, SIGUSR2);
+		reset_struct(s, -1);
 	}
-	ft_printf(".server | msg_is_valid | s->msg_len = %d]\n", s->msg_len);
-	if (s->buff_size != 0)
-		s->buffer = malloc(sizeof(char) * s->buff_size + 1);
-	else
-		s->buffer = ft_calloc(sizeof(char), s->buff_size);
-		//s->buffer = malloc(sizeof(char) * 5);
+	s->buffer = ft_calloc(sizeof(char), s->buff_size + 1);
 	if (s->buffer == NULL)
 		exit(1);
-	ft_printf(".server | msg_is_valid | c = %c\n", s->c);
 	s->buffer[0] = s->c;
 	s->i = 1;
-	ft_printf(".server | msg_is_valid | BUFFER CREATED[s->msg_len + 1 = %d]\n", s->msg_len + 1);
 	return (1);
 }
 
@@ -77,30 +69,23 @@ void	bit_decoder(int signal, t_s *s)
 	(s->bit)++;
 }
 
-	//ft_printf("Client PID = %d\n", s.client_pid);
-	//ft_printf("Received signal: %d, current bit: %d\n", signal, s.bit);
-	//ft_printf("After decoding: char = %c (%d), bit = %d\n", s.c, s.c, s.bit);
-	//ft_printf(".server | msg_handler | CHARACTER COMPLETED, c = %c\n", s.c);
-
 void	msg_handler(int signal, siginfo_t *info, void *more_info)
 {
 	static t_s	s;
 
 	(void)more_info;
-	if (is_init == 0)		// GLOBAL VARIABLE
-		is_init = initialize_struct(&s);
+	if (reset == 0 || reset == -1)
+		reset = reset_struct(&s, reset);
 	if (s.client_pid == 0)
 		s.client_pid = info->si_pid;
 	bit_decoder(signal, &s);
 	w_kill(s.client_pid, SIGUSR1);
-	ft_printf("Send ack to client!\n");
 	if (s.bit == CHAR_BIT)
 	{
 		s.bit = 0;
 		if (!s.step)
 		{
-			if (!msg_is_valid(&s))
-				exit(1);
+			msg_is_valid(&s);
 			s.step = 1;
 		}
 		else if(s.step)

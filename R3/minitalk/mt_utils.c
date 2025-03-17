@@ -6,16 +6,27 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 16:18:04 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/16 23:41:55 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/17 22:04:57 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-int	initialize_struct(t_s *s)
+void	free_and_respond(t_s *s, int signal)
 {
+	if (s->buffer != NULL)
+		free(s->buffer);
 	s->buffer = NULL;
-	s->buff_size = 5;
+	w_kill(s->client_pid, signal);
+}
+
+int	reset_struct(t_s *s, int reset)
+{
+	if (reset == -1)
+	{
+		s->buff_size = 4;
+		s->real_buff_size_set = -1;
+	}
 	s->i = 0;
 	s->c = 0;
 	s->bit = 0;
@@ -25,52 +36,32 @@ int	initialize_struct(t_s *s)
 	return (1);
 }
 
-int	check_pid(char *pid)
+int	check_pid(char *str_pid)
 {
-	int	i;
+	int		i;
+	pid_t	pid;
 
-	i = 0;
-	while (pid[i] != '\0')
+	pid = ft_atoi(str_pid);
+	if (pid <= 0)
 	{
-		if (!ft_isdigit(pid[i]))
+		ft_putstr_fd("Error! Invalid PID.\n", 2);
+		exit(1);
+	}
+	i = 0;
+	while (str_pid[i] != '\0')
+	{
+		if (!ft_isdigit(str_pid[i]))
 		{
 			ft_putstr_fd("Error! PID must be a digit.\n", 2);
 			exit(1);
 		}
 		i++;
 	}
-	return (ft_atoi(pid));
+	return (pid);
 }
-
-/*void	w_signal(int signal, void (*handler)(int, siginfo_t *, void *))
-{
-	if (sigaction(signal, &sa, NULL) < 0)
-	{
-		ft_putstr_fd("Error! Sigaction failed.\n", 2);
-		exit(1);
-	}
-}*/
-
-// BACKUP
-/*void	w_signal(int signal, void (*handler)(int, siginfo_t *, void *))
-{
-	struct sigaction	sa;
-
-	sa.sa_sigaction = handler;
-	sa.sa_flags = SA_SIGINFO;
-	sigemptyset(&sa.sa_mask);
-	sigaddset(&sa.sa_mask, SIGUSR1);
-	sigaddset(&sa.sa_mask, SIGUSR2);
-	if (sigaction(signal, &sa, NULL) < 0)
-	{
-		ft_putstr_fd("Error! Sigaction failed.\n", 2);
-		exit(1);
-	}
-}*/
 
 void	w_kill(pid_t pid, int signal)
 {
-	ft_printf(".utils | w_kill | Sendings bits | signal = %d\n", signal);
 	if (kill(pid, signal) < 0)
 	{
 		ft_putstr_fd("Error! Function 'kill' failed.\n", 2);

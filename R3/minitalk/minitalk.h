@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 16:18:18 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/16 23:41:56 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/17 21:59:31 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,14 @@
 enum e_state
 {
 	busy,
-	ready,
-}	t_state;
+	ready
+};
 
 typedef struct s_minitalk
 {
 	char	*buffer;
 	int		buff_size;
+	int		real_buff_size_set;
 	int		i;
 	int		c;
 	int		bit;
@@ -37,11 +38,12 @@ typedef struct s_minitalk
 	int		msg_len;
 	char	*str_len;
 	pid_t	client_pid;
+	pid_t	server_pid;
 }			t_s;
 
-int		initialize_struct(t_s *s);
-int		check_pid(char *pid);
+int		check_pid(char *str_pid);
+int		reset_struct(t_s *s, int reset);
+void	free_and_respond(t_s *s, int signal);
 void	w_kill(pid_t pid, int signal);
-void	w_signal(int signal, void (*handler)(int, siginfo_t *, void *));
 
 #endif
