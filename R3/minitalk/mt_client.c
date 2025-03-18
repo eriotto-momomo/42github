@@ -6,29 +6,29 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 16:18:08 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/18 17:13:44 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/18 18:53:29 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-// PK SIGATOMIC?
 volatile sig_atomic_t	g_ack = ready;
 
 void	end_handler(int signal)
 {
+	(void)signal;
 	ft_putstr_fd("Success! Message delivered.\n", 1);
 	exit(0);
 }
 
 void	ack_handler(int signal)
 {
+	(void)signal;
 	g_ack = ready;
 }
 
 void	send_bits(char c, pid_t server)
 {
-	int	i;
 	int	bit;
 
 	bit = 0;
@@ -62,7 +62,6 @@ void	send_string(char *str, pid_t server)
 int	main(int ac, char *av[])
 {
 	t_s	s;
-	int	i;
 
 	if (ac != 3)
 	{
