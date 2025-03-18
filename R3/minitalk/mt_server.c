@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   mt_server.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 16:18:10 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/17 22:05:25 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/18 17:19:55 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-static int	reset = -1;
+static int	g_reset = -1;
 
 void	fill_buffer(t_s *s)
 {
@@ -31,24 +31,27 @@ void	fill_buffer(t_s *s)
 			w_kill(s->client_pid, SIGUSR1);
 			free_and_respond(s, SIGUSR2);
 			reset_struct(s, -1);
-			reset = -1;
+			g_reset = -1;
 		}
 		else
 		{
 			s->buff_size = ft_atoi(s->buffer);
 			s->real_buff_size_set = 1;
 			free_and_respond(s, SIGUSR1);
-			reset = 0;
+			g_reset = 0;
 		}
 	}
 }
 
 // 4096 = 4ko
+// 8192 = 8ko
+// 16384 = 16ko
 int	msg_is_valid(t_s *s)
 {
-	if (s->buff_size <= 0 || s->buff_size >= 4096)
+	if (s->buff_size <= 0 || s->buff_size >= 16384)
 	{
-		ft_putstr_fd("Error! Message is either too long or too short. Please try again.\n", 2);
+		ft_putstr_fd("Error! Message too long or too short. Please try again.\n",
+			2);
 		free_and_respond(s, SIGUSR2);
 		reset_struct(s, -1);
 	}
@@ -74,8 +77,8 @@ void	msg_handler(int signal, siginfo_t *info, void *more_info)
 	static t_s	s;
 
 	(void)more_info;
-	if (reset == 0 || reset == -1)
-		reset = reset_struct(&s, reset);
+	if (g_reset == 0 || g_reset == -1)
+		g_reset = reset_struct(&s, g_reset);
 	if (s.client_pid == 0)
 		s.client_pid = info->si_pid;
 	bit_decoder(signal, &s);
@@ -88,7 +91,7 @@ void	msg_handler(int signal, siginfo_t *info, void *more_info)
 			msg_is_valid(&s);
 			s.step = 1;
 		}
-		else if(s.step)
+		else if (s.step)
 			fill_buffer(&s);
 		s.c = 0;
 	}
@@ -107,8 +110,8 @@ int	main(void)
 	sigaddset(&sa.sa_mask, SIGUSR1);
 	sigaddset(&sa.sa_mask, SIGUSR2);
 	sigaction(SIGUSR1, &sa, NULL);
-    sigaction(SIGUSR2, &sa, NULL);
-	while(1)
+	sigaction(SIGUSR2, &sa, NULL);
+	while (1)
 		pause();
 	return (0);
 }

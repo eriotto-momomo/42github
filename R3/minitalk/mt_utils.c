@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mt_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 16:18:04 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/17 22:04:57 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/18 17:19:55 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	reset_struct(t_s *s, int reset)
 {
 	if (reset == -1)
 	{
-		s->buff_size = 4;
+		s->buff_size = 5;
 		s->real_buff_size_set = -1;
 	}
 	s->i = 0;

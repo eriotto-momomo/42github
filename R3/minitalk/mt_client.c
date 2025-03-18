@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mt_client.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 16:18:08 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/17 22:05:16 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/18 17:13:44 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,21 +59,20 @@ void	send_string(char *str, pid_t server)
 	send_bits('\0', server);
 }
 
-// INSTALLER LES HANDLERS AVANT D'ENVOYER LES BITS!
 int	main(int ac, char *av[])
 {
-	t_s		s;
-	int		i;
+	t_s	s;
+	int	i;
 
 	if (ac != 3)
 	{
-		ft_putstr_fd("Error! Arguments must be server PID and message to send.\n", 2);
+		ft_putstr_fd("Error! Arguments must be server PID and message.\n", 2);
 		exit(1);
 	}
-	if (ft_strlen(av[2]) >= 4096)
+	if (ft_strlen(av[2]) >= 16384)
 	{
-    	ft_putstr_fd("Error! Message is too long.\n", 2);
-    	exit(1);
+		ft_putstr_fd("Error! Message is too long.\n", 2);
+		exit(1);
 	}
 	s.server_pid = check_pid(av[1]);
 	s.msg_len = ft_strlen(av[2]);
@@ -84,7 +83,7 @@ int	main(int ac, char *av[])
 	free(s.str_len);
 	ft_putstr_fd("Sending message, please wait...\n", 1);
 	send_string(av[2], s.server_pid);
-	while(1)
+	while (1)
 		pause();
 	return (0);
 }

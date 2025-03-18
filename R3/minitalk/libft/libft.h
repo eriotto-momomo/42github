@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:08:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/02/08 11:42:44 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/18 16:46:10 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,6 @@ int		ft_tolower(int c);
 int		ft_toupper(int c);
 
 // libft custom
-int	ft_atoi_safe(const char *str, int *error);
+int		ft_atoi_safe(const char *str, int *error);
 
 #endif
