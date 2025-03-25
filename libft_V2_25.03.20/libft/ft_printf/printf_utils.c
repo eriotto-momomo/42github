@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   printf_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 14:09:12 by emonacho          #+#    #+#             */
-/*   Updated: 2025/01/12 16:11:08 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/02 20:11:41 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		cnt_digits(unsigned int nbr);
+int		printf_cnt_digits(unsigned int nbr);
 char	*ft_itoa_unsigned(unsigned int n);
 void	printf_putchar(char c, size_t *cnt);
 void	printf_putstr(char *s, size_t *cnt);
@@ -57,7 +57,7 @@ void	puthex_dec(unsigned int to_convert, char spec, size_t *cnt)
 	printf_putchar(hex[to_convert % 16], cnt);
 }
 
-int	cnt_digits(unsigned int nbr)
+int	printf_cnt_digits(unsigned int nbr)
 {
 	size_t	digits;
 
@@ -79,7 +79,7 @@ char	*ft_itoa_unsigned(unsigned int n)
 	unsigned int	digits;
 
 	nbr = n;
-	digits = cnt_digits(nbr);
+	digits = printf_cnt_digits(nbr);
 	str = (char *)malloc(digits + 1);
 	if (str == 0)
 		return (NULL);

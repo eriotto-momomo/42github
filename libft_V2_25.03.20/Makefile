@@ -14,6 +14,7 @@ SRCS_LIBFT	= \
 	ft_isdigit.c \
 	ft_isprint.c \
 	ft_itoa.c \
+	get_next_line.c \
 	ft_memchr.c \
 	ft_memcmp.c \
 	ft_memcpy.c \
@@ -46,7 +47,8 @@ SRCS_LIBFT	= \
 	ft_toupper.c
 
 SRCS_LIBCUSTOM	= \
-	$(LIBCUSTOM_DIR)/ft_atoi_safe.c
+	$(LIBCUSTOM_DIR)/ft_atoi_safe.c \
+	$(LIBCUSTOM_DIR)/ft_free_array.c
 
 OBJS_LIBFT		= $(SRCS_LIBFT:%.c=$(LIBFT_DIR)/%.o)
 OBJS_LIBCUSTOM	= $(SRCS_LIBCUSTOM:.c=.o)
