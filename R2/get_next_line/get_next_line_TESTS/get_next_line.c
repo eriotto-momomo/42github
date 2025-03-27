@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 16:50:29 by emonacho          #+#    #+#             */
-/*   Updated: 2024/12/21 17:25:56 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/03/27 16:01:36 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ static char	*read_and_store_fd(int fd, char *remainder)
 	return (remainder);
 }
 
-//This function reads a file from 'fd' and return a full line up to '\n' or '\0'
+// This function reads a file from 'fd' and return a full line up to '\n' or '\0'
 // 1. If 'remainder' isn't already used, it's initialised with 'ft_strdup'
 // 2. The result of 'read(fd, buffer, BUFFER_SIZE)' is stored into 'remainder'
 // until the 'fd' is fully read (no bytes left), or if a '\n' or '\0' is found.
