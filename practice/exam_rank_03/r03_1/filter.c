@@ -6,30 +6,29 @@
 
 void	replace_str(char *buffer, const char *target, char replace_char)
 {
-	size_t	i;
+	size_t	i = 0;
+	size_t	j = 0;
+	size_t	k = 0;
+	size_t	target_len = 0;
 
-	i = 0, j, target_len;
-	i = 0, j, target_len = 0;
 	// Calculer la longueur de target (sans utiliser strlen)
 	while (target[target_len] != '\0')
-	{
 		target_len++;
-	}
+
 	// Parcourir le buffer
 	while (buffer[i] != '\0')
 	{
 		// Vérifier si on trouve une occurrence de target
 		j = 0;
 		while (buffer[i + j] == target[j] && target[j] != '\0')
-		{
 			j++;
-		}
 		// Si on a trouvé une occurrence complète, on remplace
 		if (j == target_len)
 		{
-			for (size_t k = 0; k < target_len; k++)
+			while (k < target_len)
 			{
 				buffer[i + k] = replace_char;
+				k++;
 			}
 			i += target_len - 1;
 			// Avancer pour éviter de remplacer partiellement une occurrence
@@ -53,6 +52,7 @@ int	main(int ac, char *av[])
 		printf("Error! Invalid arguments.\n");
 		exit(1);
 	}
+
 	// Alloue le buffer et ouvre le fichier en lecture seule.
 	buffer = malloc(sizeof(char) * BUFFER_SIZE);
 	if (buffer == NULL)
@@ -63,6 +63,7 @@ int	main(int ac, char *av[])
 		printf("Error opening file.\n");
 		exit(1);
 	}
+
 	// Lis le fichier dans un buffer
 	bytes_read = read(fd, buffer, BUFFER_SIZE);
 	if (bytes_read == -1)
@@ -75,8 +76,10 @@ int	main(int ac, char *av[])
 	}
 	buffer[bytes_read] = '\0';
 	close(fd);
+
 	// Modifier le contenu
 	replace_str(buffer, target, '*');
+
 	// Réouvrir en écriture et écraser le contenu
 	fd = open(filename, O_WRONLY | O_TRUNC);
 	if (fd == -1)
@@ -84,6 +87,7 @@ int	main(int ac, char *av[])
 		perror("Erreur réouverture fichier");
 		return (EXIT_FAILURE);
 	}
+
 	// Écrire le contenu modifié
 	if (write(fd, buffer, bytes_read) == -1)
 	{
