@@ -1,4 +1,3 @@
-
 /*
 Assignment
 
@@ -37,101 +36,59 @@ echo 'ababcabababc' | ./filter ababc | cat -e
 */
 
 #include <unistd.h>
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 
-void get_stdin(char *copy)
-{
-	char	current_char;
-	int		copy_size = 1;
-	int		bytes_read = 0;
 
-	while(1)
+
+void get_stdin(char *stdin_copy)
+{
+	int		bytes_read = 0;
+	size_t	size = 0;
+	char	current_char;
+
+	while (1)
 	{
 		bytes_read = read(0, &current_char, 1);
-		if (bytes_read == -1)
+		if (bytes_read < 0)
 		{
-			if (copy != NULL)
-				free(copy);
+			if (stdin_copy != NULL)
+				stdin_copy = NULL;
+			return ;
+		}
+		realloc(stdin_copy, size + 1);
+		if (stdin_copy == NULL)
+			return ;
+		if (current_char == '\0' || current_char == '\n')
+		{
+			stdin_copy[size] = '\0'
 			return ;
 		}
 		else
-		{
-			copy = realloc(copy, copy_size + 1);
-			if (copy == NULL)
-				return ;
-			if (bytes_read == 0)
-			{
-				copy[copy_size - 1] = '\0';
-				return ;
-			}
-			copy[copy_size - 1] = current_char;
-			copy_size++;
-		}
+			stdin_copy[size] = current_char;
+		size++;
 	}
 }
 
-void	filter_if_match(char *filter, char *stdin_copy, int i)
+int ft_filter(const char *filter)
 {
-	size_t	j = i;
-	size_t	k = 0;
-	size_t	match = 0;
-	size_t	filter_len = strlen(filter);
+	char *stdin_copy;
 
-	while(stdin_copy[j] && filter[k] && match < filter_len)
-	{
-		if (stdin_copy[j] == filter[k])
-		{
-			match++;
-			if (match == filter_len)
-			{
-				j = i;
-				while (match > 0)
-				{
-					stdin_copy[j] = '*';
-					match--;
-					j++;
-				}
-				return ;
-			}
-		}
-		j++;
-		k++;
-	}
-}
-
-void	apply_filter(char *filter, char *stdin_copy)
-{
-	size_t	i = 0;
-
-	while(stdin_copy[i] != '\0')
-	{
-		if (stdin_copy[i] == filter[0])
-			filter_if_match(filter, stdin_copy, i);
-		i++;
-	}
-}
-
-int ft_filter(char *filter)
-{
-	char	*stdin_copy = NULL;
-
-	stdin_copy = calloc(1, sizeof(char));
+	stdin_copy = calloc(sizeof(char), 1);
 	if (stdin_copy == NULL)
 		return (0);
 	get_stdin(stdin_copy);
 	if (stdin_copy == NULL)
 		return (0);
-	apply_filter(filter, stdin_copy);
+	filter_if_match(stdin_copy);
 	printf("%s\n", stdin_copy);
-	free(stdin_copy);
 	return (1);
 }
 
-int main(int ac, char *av[])
+int main(int ac, char **av)
 {
-	if (ac != 2 || av[0] == NULL)
+	if (ac != 2 || av[1] == NULL)
 		return (1);
 	if (!ft_filter(av[1]))
 	{
