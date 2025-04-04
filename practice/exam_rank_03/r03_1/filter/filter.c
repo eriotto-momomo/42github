@@ -53,34 +53,32 @@ void	filter_stdin_copy(char *stdin_copy, size_t start, size_t len)
 	}
 }
 
+// 1. Loop through 'stdin_copy'
+// 2. If first char of filter is found in the 'stdin_copy', check if
+//    the 'filter' matches all consecutives char in 'stdin_copy'
+// 3. If it's a full match, replace every consecutives char by '*'
 void	filter_if_match(char *filter, char *stdin_copy)
 {
 	size_t	i;
 	size_t	j;
-	size_t	k;
 	size_t	match;
 	size_t	filter_len;
 
-	filter_len = strlen(filter);
 	i = 0;
+	filter_len = strlen(filter);
 	while (stdin_copy[i])
 	{
 		if (stdin_copy[i] == filter[0])
 		{
-			match = 0;
-			k = i;
+			match = i;
 			j = 0;
-			while (stdin_copy[k] && filter[j] && stdin_copy[k] == filter[j])
+			while (stdin_copy[match] && filter[j]
+				&& stdin_copy[match] == filter[j])
 			{
 				match++;
 				j++;
-				k++;
-				if (match == filter_len)
-				{
+				if (match - i == filter_len)
 					filter_stdin_copy(stdin_copy, i, filter_len);
-					match = 0;
-					j = 0;
-				}
 			}
 		}
 		i++;
@@ -89,20 +87,19 @@ void	filter_if_match(char *filter, char *stdin_copy)
 
 void	get_stdin(char *stdin_copy)
 {
+	char	current_char;
 	int		bytes_read;
 	size_t	size;
-	char	current_char;
 
+	current_char = 0;
 	bytes_read = 0;
 	size = 0;
-	current_char = 0;
 	while (1)
 	{
 		bytes_read = read(0, &current_char, 1);
 		if (bytes_read < 0)
 		{
-			if (stdin_copy != NULL)
-				stdin_copy = NULL;
+			stdin_copy = NULL;
 			return ;
 		}
 		stdin_copy = realloc(stdin_copy, size + 1);
@@ -130,6 +127,9 @@ int	ft_filter(char *filter, char *stdin_copy)
 	return (1);
 }
 
+// IMPORTANT:
+// Initialize 'stdin_copy' with calloc to avoid later undefined behavior in realloc
+// printf the 'stdin_copy' without '\n', it's already in the string
 int	main(int ac, char **av)
 {
 	char	*stdin_copy;

@@ -27,6 +27,4 @@
  * ( ())()$
  */
 
-// A revoir
-// - 'permutations'?
-// - declaration de structures
+// Related to 'permutation'?
