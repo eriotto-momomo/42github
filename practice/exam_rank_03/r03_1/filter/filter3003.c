@@ -1,5 +1,4 @@
 
-
 /*
 Assignment
 
@@ -27,8 +26,7 @@ It must be the equivalent of the shell script filfer.sh
 (Under is a copy of the file "filter.sh" that you get with the assignment.
 You're told that your program should work the same)
 
-In case of error during a read or malloc,
-	you must write "Error: " followed by the error message in stderr and return 1.
+In case of error during a read or malloc, you must write "Error: " followed by the error message in stderr and return 1.
 
 e.g. this should work:
 echo 'abcdefaaaabcdeabcabcdabc' | ./filter abc | cat -e
@@ -38,62 +36,52 @@ echo 'ababcabababc' | ./filter ababc | cat -e
 *****ab*****$
 */
 
+#include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
 
-void	filter_stdin_copy(char *stdin_copy, size_t start, size_t len)
+void filter_stdin(char *stdin_copy, int start, int len)
 {
 	while (len > 0)
 	{
 		stdin_copy[start] = '*';
-		len--;
 		start++;
+		len--;
 	}
 }
 
-// 1. Loop through 'stdin_copy'
-// 2. If first char of filter is found in the 'stdin_copy', check if
-//    the 'filter' matches all consecutives char in 'stdin_copy'
-// 3. If it's a full match, replace every consecutives char by '*'
-void	filter_if_match(char *filter, char *stdin_copy)
+void check_if_match(char *stdin_copy, const char *filter)
 {
-	size_t	i;
-	size_t	j;
-	size_t	match;
-	size_t	filter_len;
+	size_t	i = 0;
+	size_t	j = 0;
+	size_t	match = 0;
 
-	i = 0;
-	filter_len = strlen(filter);
 	while (stdin_copy[i])
 	{
 		if (stdin_copy[i] == filter[0])
 		{
 			match = i;
-			j = 0;
-			while (stdin_copy[match] && filter[j]
-				&& stdin_copy[match] == filter[j])
+			while (stdin_copy[match] && filter[j] && stdin_copy[match] == filter[j])
 			{
+				if (match - i + 1 == strlen(filter))
+					filter_stdin(stdin_copy, i, strlen(filter));
 				match++;
 				j++;
-				if (match - i == filter_len)
-					filter_stdin_copy(stdin_copy, i, filter_len);
 			}
+			j = 0;
+			match = 0;
 		}
 		i++;
 	}
 }
 
-void	get_stdin(char *stdin_copy)
+void get_stdin(char *stdin_copy)
 {
-	char	current_char;
-	int		bytes_read;
-	size_t	size;
+	size_t	size = 0;
+	int		bytes_read = 0;
+	char 	current_char = '\0';
 
-	current_char = 0;
-	bytes_read = 0;
-	size = 0;
 	while (1)
 	{
 		bytes_read = read(0, &current_char, 1);
@@ -105,7 +93,7 @@ void	get_stdin(char *stdin_copy)
 		stdin_copy = realloc(stdin_copy, size + 1);
 		if (stdin_copy == NULL)
 			return ;
-		if (bytes_read == 0)
+		if (bytes_read == 0 || current_char == '\n')
 		{
 			stdin_copy[size] = '\0';
 			return ;
@@ -116,33 +104,34 @@ void	get_stdin(char *stdin_copy)
 	}
 }
 
-int	ft_filter(char *filter, char *stdin_copy)
+// ATTENTION!
+// 1. Toujours initialiser les `str` avant de les utiliser
+// 2. `malloc` etc... toujours avec `size + 1`
+int	ft_filter(const char *filter)
 {
+	char *stdin_copy = NULL;
+
+	stdin_copy = calloc(1, sizeof(char));
+	if (stdin_copy == NULL)
+		return (0);
 	get_stdin(stdin_copy);
 	if (stdin_copy == NULL)
 		return (0);
-	filter_if_match(filter, stdin_copy);
-	if (stdin_copy == NULL)
-		return (0);
+	check_if_match(stdin_copy, filter);
+	printf("%s\n", stdin_copy);
+	free(stdin_copy);
 	return (1);
 }
 
-// IMPORTANT:
-// Initialize 'stdin_copy' with calloc to avoid later undefined behavior in realloc
-// printf the 'stdin_copy' without '\n', it's already in the string
+
 int	main(int ac, char **av)
 {
-	char	*stdin_copy;
-
 	if (ac != 2 || av[1] == NULL)
 		return (1);
-	stdin_copy = calloc(sizeof(char), 1);
-	if (!ft_filter(av[1], stdin_copy) || stdin_copy == NULL)
+	if (!ft_filter(av[1]))
 	{
 		perror("Error");
 		return (1);
 	}
-	printf("%s", stdin_copy);
-	free(stdin_copy);
 	return (0);
 }
