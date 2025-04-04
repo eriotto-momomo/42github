@@ -177,7 +177,15 @@ Si tout se passe bien, tu auras juste un message de confirmation. Mais si des **
 
 ###### Debugging
 
-|                    |                                                                 |
-| ------------------ | --------------------------------------------------------------- |
-| `git blame [file]` | Show what revision and author last modified each line of a file |
-| `git bisect`       | Use binary search to find the commit that introduced a bug      |
+|                  |                                                               |
+|------------------|---------------------------------------------------------------|
+|`git blame [file]`|Show what revision and author last modified each line of a file|
+|`git bisect`|Use binary search to find the commit that introduced a bug|
+
+###### FORCE git pull (to use with caution)
+
+|                    |                                                               |
+| ------------------ |---------------------------------------------------------------|
+|`gith fetch --all` |Update all origin/<branch> refs to latest|
+|`git branch backup-main`|Backup your current branch (e.g. main)|
+|`git reset --hard origin/main`|Jump to the latest commit on origin/main and checkout those files|
