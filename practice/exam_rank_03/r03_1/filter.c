@@ -59,12 +59,11 @@ void	filter_stdin_copy(char *stdin_copy, size_t start, size_t len)
 // 3. If it's a full match, replace every consecutives char by '*'
 void	filter_if_match(char *filter, char *stdin_copy)
 {
-	size_t	i;
+	size_t	i = 0;
 	size_t	j;
 	size_t	match;
 	size_t	filter_len;
 
-	i = 0;
 	filter_len = strlen(filter);
 	while (stdin_copy[i])
 	{
@@ -87,13 +86,10 @@ void	filter_if_match(char *filter, char *stdin_copy)
 
 void	get_stdin(char *stdin_copy)
 {
-	char	current_char;
-	int		bytes_read;
-	size_t	size;
+	char	current_char = 0;
+	int		bytes_read = 0;
+	size_t	size = 0;
 
-	current_char = 0;
-	bytes_read = 0;
-	size = 0;
 	while (1)
 	{
 		bytes_read = read(0, &current_char, 1);
@@ -128,7 +124,7 @@ int	ft_filter(char *filter, char *stdin_copy)
 }
 
 // IMPORTANT:
-// Initialize 'stdin_copy' with calloc to avoid later undefined behavior in realloc
+// Initialize 'stdin_copy' with calloc to avoid undefined behavior later in realloc
 // printf the 'stdin_copy' without '\n', it's already in the string
 int	main(int ac, char **av)
 {

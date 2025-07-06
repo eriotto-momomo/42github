@@ -27,4 +27,21 @@
  * ( ())()$
  */
 
-// Related to 'permutation'?
+int	main(int ac, char **av)
+{
+	if (ac != 2)
+	{
+		puts("Too many/few arguments\n");
+		return (1);
+	}
+	if (rip(av[1]) != 0)
+	{
+		puts("No solution possible\n");
+		return (1);
+	}
+
+
+
+
+}
+
