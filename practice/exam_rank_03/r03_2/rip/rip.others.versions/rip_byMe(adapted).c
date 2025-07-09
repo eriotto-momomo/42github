@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rip.c                                              :+:      :+:    :+:   */
+/*   rip_byMe(adapted).c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 21:28:26 by emonacho          #+#    #+#             */
-/*   Updated: 2025/07/08 17:13:52 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/08 00:39:24 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	rip(char *input, char *output, int max_deletions, int current_deletions, in
 	if (input[i] == '\0')
 	{
 		output[i] = '\0';
-		if (is_balance(output) && current_deletions == max_deletions)
+		if (is_balance(output) && max_deletions == current_deletions)
 			puts(output);
 		return;
 	}
@@ -90,12 +90,12 @@ void	rip(char *input, char *output, int max_deletions, int current_deletions, in
 
 int main(int ac, char **av)
 {
-	if (ac != 2 || !av[1][0])
-		return (printf("Error: invalid arguments"), 1);
 	int		spaces;
 	int		braces;
 	char	*input = av[1];
 	char	output[ft_strlen(av[1]) + 1];
+	if (ac != 2 || !av[1][0])
+		return (printf("Error: invalid arguments"), 1);
 	braces = 0;
 	spaces = 0;
 	while(*input)
@@ -107,4 +107,5 @@ int main(int ac, char **av)
 		input++;
 	}
 	rip(av[1], output, spaces + braces, 0, 0);
+	//rip(input, output, spaces + braces, 0, 0); // Pas possible de passer `input`
 }

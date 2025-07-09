@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rip.c                                              :+:      :+:    :+:   */
+/*   rip_bySebastian.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 21:28:26 by emonacho          #+#    #+#             */
-/*   Updated: 2025/07/08 17:13:52 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/07 22:29:18 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,74 +37,64 @@
  * ( ())()$
  ***************************************************************************** */
 
- // TEST "((()()"
-
 #include <stdio.h>
 
 int ft_strlen(char *str)
 {
-	int i;
-
-	i = 0;
+	int i = 0;
 	while (str[i])
 		i++;
 	return (i);
 }
 
-int	is_balance(char *output)
+int is_balance(char *s)
 {
-	int	open_count;
+	int balance;
 
-	open_count = 0;
-	while (*output)
+	balance = 0;
+	while (*s)
 	{
-		if (*output == '(')
-			open_count++;
-		else if (*output == ')')
-		{
-			if (open_count == 0)
-				return (0); // Fermeture sans ouverture
-			open_count--;
-		}
-		output++;
+		balance += (*s == '(') - (*s == ')');
+		if (balance < 0)
+			return (0);
+		s++;
 	}
-	return (open_count == 0); // BOOLEEN `return (1)(if true)`
+	return balance == 0;
 }
 
-void	rip(char *input, char *output, int max_deletions, int current_deletions, int i)
+void rip(char *str, char *res, int spaces, int cur, int i)
 {
-	if (input[i] == '\0')
+	if (!str[i])
 	{
-		output[i] = '\0';
-		if (is_balance(output) && current_deletions == max_deletions)
-			puts(output);
+		res[i] = 0;
+		if (is_balance(res) && spaces == cur)
+			puts(res);
 		return;
 	}
-	if (input[i] != '(' && input[i] != ')')
+	if (str[i] != '(' && str[i] != ')')
 		return;
-	output[i] = ' ';		// Option 1: Supprimer cette parenthèse (en mettant un espace)
-	rip(input, output, max_deletions, current_deletions + 1, i + 1);
-	output[i] = input[i];	// Option 2: Garder cette parenthèse
-	rip(input, output, max_deletions, current_deletions, i + 1);
+	res[i] = ' ';
+	rip(str, res, spaces, cur + 1, i + 1);
+	res[i] = str[i];
+	rip(str, res, spaces, cur, i + 1);
 }
 
 int main(int ac, char **av)
 {
-	if (ac != 2 || !av[1][0])
-		return (printf("Error: invalid arguments"), 1);
 	int		spaces;
 	int		braces;
-	char	*input = av[1];
-	char	output[ft_strlen(av[1]) + 1];
+	char	res[ft_strlen(av[1]) + 1];
+
+	if (ac != 2 || !av[1][0])
+		return (printf("Error: invalid arguments"), 1);
 	braces = 0;
 	spaces = 0;
-	while(*input)
+	for (char *s = av[1]; *s; s++)
 	{
-		if (*input == '(')
+		if (*s == '(')
 			braces++;
-		else if (*input == ')' && braces-- <= 0)
+		else if (*s == ')' && braces-- <= 0)
 			spaces++;
-		input++;
 	}
-	rip(av[1], output, spaces + braces, 0, 0);
+	rip(av[1], res, spaces + braces, 0, 0);
 }

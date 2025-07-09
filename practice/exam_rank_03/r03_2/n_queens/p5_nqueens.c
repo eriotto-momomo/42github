@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   n_queens.c                                         :+:      :+:    :+:   */
+/*   p5_nqueens.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/07 10:43:17 by emonacho          #+#    #+#             */
-/*   Updated: 2025/07/08 16:19:47 by emonacho         ###   ########.fr       */
+/*   Created: 2025/07/08 16:21:36 by emonacho          #+#    #+#             */
+/*   Updated: 2025/07/08 16:34:55 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void print_board(int *board, int n)
 	printf("\n");
 }
 
-int queen_is_safe(int *board, int row, int col)
+int	queen_is_safe(int *board, int row, int col)
 {
 	int i = 0;
 
@@ -46,14 +46,14 @@ void n_queens(int *board, int n, int col)
 {
 	int row = 0;
 
-	while (row < n)
+	while (row < n) // Tant qu'on a pas check toutes les cases `n` des `row`
 	{
-		if (queen_is_safe(board, row, col))
+		if (queen_is_safe(board, row, col)) // Solution valide trouvée
 		{
 			board[col] = row;
-			if (col == n - 1)
+			if (col == n - 1)				// Toutes les reines placées
 				print_board(board, n);
-			else
+			else							// Reste des reines à placer
 				n_queens(board, n, col + 1);
 		}
 		row++;
@@ -66,7 +66,7 @@ int main(int ac, char **av)
 		return (printf("Error: invalid arguments\n"), 1);
 	int n = atoi(av[1]);
 	if (n < 1)
-		return (printf("Error: invalid number\n"), 1);
+		return (printf("Error: invalid numer\n"), 1);
 	int board[n];
 	n_queens(board, n, 0);
 	return (0);

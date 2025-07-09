@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   n_queens.c                                         :+:      :+:    :+:   */
+/*   p6_nqueens.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/07 10:43:17 by emonacho          #+#    #+#             */
-/*   Updated: 2025/07/08 16:19:47 by emonacho         ###   ########.fr       */
+/*   Created: 2025/07/08 17:17:53 by emonacho          #+#    #+#             */
+/*   Updated: 2025/07/08 17:26:53 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,10 @@ void n_queens(int *board, int n, int col)
 int main(int ac, char **av)
 {
 	if (ac != 2 || !av[1])
-		return (printf("Error: invalid arguments\n"), 1);
+		return (printf("Error: invalid arguments\n"), 2);
 	int n = atoi(av[1]);
 	if (n < 1)
-		return (printf("Error: invalid number\n"), 1);
+		return (printf("Error: invalid number\n"), 2);
 	int board[n];
 	n_queens(board, n, 0);
 	return (0);

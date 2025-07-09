@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   n_queens.c                                         :+:      :+:    :+:   */
+/*   p2_nqueens.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 10:43:17 by emonacho          #+#    #+#             */
-/*   Updated: 2025/07/08 16:19:47 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/07 10:58:56 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <stdio.h>
 
-void print_board(int *board, int n)
+void	print_board(int *board, int n)
 {
-	int i = 0;
+	int	i;
 
+	i = 0;
 	while (i < n)
 	{
 		printf("%d", board[i]);
@@ -27,25 +28,27 @@ void print_board(int *board, int n)
 	printf("\n");
 }
 
-int queen_is_safe(int *board, int row, int col)
+int	queen_is_safe(int *board, int row, int col)
 {
-	int i = 0;
+	int	i;
 
+	i = 0;
 	while (i < col)
 	{
 		if (board[i] == row ||
-			board[i] == row - (col - i) ||
-			board[i] == row + (col - i))
+			board[i] == row + (col - i) ||
+			board[i] == row - (col - i))
 			return (0);
 		i++;
 	}
 	return (1);
 }
 
-void n_queens(int *board, int n, int col)
+void	n_queens(int *board, int n, int col)
 {
-	int row = 0;
+	int	row;
 
+	row = 0;
 	while (row < n)
 	{
 		if (queen_is_safe(board, row, col))
@@ -60,14 +63,20 @@ void n_queens(int *board, int n, int col)
 	}
 }
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
+	int	n;
+	int *board;
+
 	if (ac != 2 || !av[1])
-		return (printf("Error: invalid arguments\n"), 1);
-	int n = atoi(av[1]);
+		return (printf("Error: invalid arguments\n"), 2);
+	n = atoi(av[1]);
 	if (n < 1)
-		return (printf("Error: invalid number\n"), 1);
-	int board[n];
+		return (printf("Error: invalid number\n"), 2);
+	board = malloc(sizeof(int) * n);
+	if (!board)
+		return (printf("Error: malloc failed\n"), 2);
 	n_queens(board, n, 0);
+	free(board);
 	return (0);
 }

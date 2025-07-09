@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   n_queens.c                                         :+:      :+:    :+:   */
+/*   p7_nqueens.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/07 10:43:17 by emonacho          #+#    #+#             */
-/*   Updated: 2025/07/08 16:19:47 by emonacho         ###   ########.fr       */
+/*   Created: 2025/07/09 09:58:01 by emonacho          #+#    #+#             */
+/*   Updated: 2025/07/09 10:06:33 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 void print_board(int *board, int n)
 {
@@ -60,7 +60,7 @@ void n_queens(int *board, int n, int col)
 	}
 }
 
-int main(int ac, char **av)
+int main (int ac, char **av)
 {
 	if (ac != 2 || !av[1])
 		return (printf("Error: invalid arguments\n"), 1);
