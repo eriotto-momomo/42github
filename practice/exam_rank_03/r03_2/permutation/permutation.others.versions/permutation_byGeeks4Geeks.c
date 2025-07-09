@@ -40,14 +40,8 @@ int	main(int ac, char **av)
 	int	end;
 
 	if (ac != 2)
-	{
-		perror("Invalid arguments!");
-		return (1);
-	}
-	else
-	{
-		end = strlen(av[1]);
-		permutation(av[1], 0, end - 1);
-	}
+		return (perror("Invalid arguments!"), 1);
+	end = strlen(av[1]);
+	permutation(av[1], 0, end - 1);
 	return (0);
 }

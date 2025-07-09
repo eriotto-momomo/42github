@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   powerset.c                                         :+:      :+:    :+:   */
+/*   p1_powerset.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/09 10:20:53 by emonacho          #+#    #+#             */
-/*   Updated: 2025/07/09 11:59:51 by emonacho         ###   ########.fr       */
+/*   Created: 2025/07/09 11:14:42 by emonacho          #+#    #+#             */
+/*   Updated: 2025/07/09 12:00:20 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <stdio.h>
 
-int	g_N;
-int	g_size;
+int g_N;
+int g_size;
 
-void	print_solution(int *out, int i_out)
+void print_solution(int *out, int i_out)
 {
 	int i = 0;
 
@@ -30,13 +30,10 @@ void	print_solution(int *out, int i_out)
 	printf("\n");
 }
 
-void	powerset(int remains, int *in, int *out, int i_in, int i_out)
+void powerset(int remains, int *in, int *out, int i_in, int i_out)
 {
-	//if (remains == 0 && i_out > 0)				// conditions by me
-	if (remains == 0 && (g_N != 0 || i_out > 0))	// condition by Raoul
+	if (remains == 0 && i_out > 0)
 		return (print_solution(out, i_out));
-	if (i_in >= g_size)
-		return ;
 	while (i_in < g_size)
 	{
 		out[i_out] = in[i_in];
@@ -45,10 +42,10 @@ void	powerset(int remains, int *in, int *out, int i_in, int i_out)
 	}
 }
 
-int	main(int ac, char **av)
+int main(int ac, char **av)
 {
 	if (ac < 3)
-		return (printf("Error usage: %s <target> <num1> [num2 ...]\n", av[0]), 1);
+		return (printf("Error, invalid arguments\n"), 1);
 	g_N		= atoi(av[1]);
 	g_size	= ac - 2;
 	int		in[g_size];
