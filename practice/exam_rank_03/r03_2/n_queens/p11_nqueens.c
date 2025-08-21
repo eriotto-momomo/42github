@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   p5_nqueens.c                                       :+:      :+:    :+:   */
+/*   p11_nqueens.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/08 16:21:36 by emonacho          #+#    #+#             */
-/*   Updated: 2025/07/08 16:34:55 by emonacho         ###   ########.fr       */
+/*   Created: 2025/07/11 14:54:13 by emonacho          #+#    #+#             */
+/*   Updated: 2025/07/11 15:00:26 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 void print_board(int *board, int n)
 {
@@ -27,7 +27,7 @@ void print_board(int *board, int n)
 	printf("\n");
 }
 
-int	queen_is_safe(int *board, int row, int col)
+int queen_is_safe(int *board, int row, int col)
 {
 	int i = 0;
 
@@ -46,14 +46,14 @@ void n_queens(int *board, int n, int col)
 {
 	int row = 0;
 
-	while (row < n) // Tant qu'on a pas check toutes les cases `n` des `row`
+	while (row < n)
 	{
-		if (queen_is_safe(board, row, col)) // Solution valide trouvée
+		if (queen_is_safe(board, row, col))
 		{
 			board[col] = row;
-			if (col == n - 1)				// Toutes les reines placées
+			if (col == n - 1)
 				print_board(board, n);
-			else							// Reste des reines à placer
+			else
 				n_queens(board, n, col + 1);
 		}
 		row++;
@@ -62,12 +62,7 @@ void n_queens(int *board, int n, int col)
 
 int main(int ac, char **av)
 {
-	if (ac != 2 || !av[1])
-		return (printf("Error: invalid arguments\n"), 1);
 	int n = atoi(av[1]);
-	if (n < 1)
-		return (printf("Error: invalid numer\n"), 1);
 	int board[n];
 	n_queens(board, n, 0);
-	return (0);
 }

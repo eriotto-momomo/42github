@@ -1,41 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   permutation.c                                      :+:      :+:    :+:   */
+/*   p4_permutation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/10 14:36:25 by emonacho          #+#    #+#             */
-/*   Updated: 2025/07/10 18:13:06 by emonacho         ###   ########.fr       */
+/*   Created: 2025/07/11 14:07:05 by emonacho          #+#    #+#             */
+/*   Updated: 2025/07/11 14:20:07 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include<string.h>
-#include<stdio.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-void	swap(char *x, char *y)
+void swap(char *x, char *y)
 {
-	char	tmp;
+	char tmp;
 
 	tmp = *x;
 	*x = *y;
 	*y = tmp;
 }
 
-int	is_sorted(char *str, int len, int start)
+int to_swap(char *str, int start, int i)
 {
-	int i = start;
-
-	while (i < len - 1)
+	while (start < i)
 	{
-		if (str[i + 1] && (str[i] > str[i + 1]))
+		if (str[start] == str[i])
 			return (0);
-		i++;
+		start++;
 	}
 	return (1);
 }
 
-void	sort_str(char *str, int len, int start)
+int is_sorted(char *str, int len, int start)
+{
+	while (start < len - 1)
+	{
+		if (str[start] > str[start + 1])
+			return (0);
+		start++;
+	}
+	return (1);
+}
+
+void sort_str(char *str, int len, int start)
 {
 	int i;
 
@@ -51,33 +61,19 @@ void	sort_str(char *str, int len, int start)
 	}
 }
 
-int	should_swap(char *str, int start, int current)
-{
-	int i = start;
-
-	while (i < current)
-	{
-		if (str[i] == str[current])
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-
-void	permutation(char *str, int len, int start)
+void permutation(char *str, int len, int start)
 {
 	int i;
 
-	if (start == len  - 1)
-		printf("%s\n", str);
+	if (start == len - 1)
+		puts(str);
 	else
 	{
 		i = start;
 		while (i < len)
 		{
 			sort_str(str, len, start);
-			if (should_swap(str, start, i))
+			if (to_swap(str, start, i))
 			{
 				swap(&str[start], &str[i]);
 				permutation(str, len, start + 1);
@@ -88,11 +84,11 @@ void	permutation(char *str, int len, int start)
 	}
 }
 
-int	main(int ac, char **av)
+int main(int ac, char **av)
 {
-	if (ac != 2)
-		return (perror("Invalid arguments!"), 1);
-	int	len = strlen(av[1]);
+	if (ac != 2 || !av[1])
+		return (printf("Error: invalid arguments\n"));
+	int len = strlen(av[1]);
 	sort_str(av[1], len, 0);
 	permutation(av[1], len, 0);
 	return (0);

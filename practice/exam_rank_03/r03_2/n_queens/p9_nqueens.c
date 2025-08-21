@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   p6_nqueens.c                                       :+:      :+:    :+:   */
+/*   p9_nqueens.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/08 17:17:53 by emonacho          #+#    #+#             */
-/*   Updated: 2025/07/08 17:26:53 by emonacho         ###   ########.fr       */
+/*   Created: 2025/07/10 18:15:19 by emonacho          #+#    #+#             */
+/*   Updated: 2025/07/10 20:30:24 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 
-void print_board(int *board, int n)
+void print_board(int * board, int n)
 {
 	int i = 0;
 
@@ -63,10 +63,10 @@ void n_queens(int *board, int n, int col)
 int main(int ac, char **av)
 {
 	if (ac != 2 || !av[1])
-		return (printf("Error: invalid arguments\n"), 2);
+		return (printf("Error: invalid arguments\n"), 1);
 	int n = atoi(av[1]);
 	if (n < 1)
-		return (printf("Error: invalid number\n"), 2);
+		return (printf("Error: invalid number\n"), 1);
 	int board[n];
 	n_queens(board, n, 0);
 	return (0);
