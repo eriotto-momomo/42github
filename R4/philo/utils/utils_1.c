@@ -6,27 +6,27 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 10:56:37 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/21 17:54:58 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/22 10:32:22 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-void	get_forks(t_main *s, t_fork *fork, t_philo *p)
+void	get_forks(t_main *s, t_fork *forks, t_philo *p)
 {
 	if (p->id % 2 == 0)
 	{
-		p->frst_fork = &fork[(p->id + 1) % s->in[N_PHILO]];
-		p->scnd_fork = &fork[p->id];
+		p->frst_fork = &forks[(p->id + 1) % s->in[N_PHILO]].fork;
+		p->scnd_fork = &forks[p->id].fork;
 	}
 	else
 	{
-		p->frst_fork = &fork[p->id];
-		p->scnd_fork = &fork[(p->id + 1) % s->in[N_PHILO]];
+		p->frst_fork = &forks[p->id].fork;
+		p->scnd_fork = &forks[(p->id + 1) % s->in[N_PHILO]].fork;
 	}
 }
 
-static size_t	get_time(void)
+size_t	get_time(void)
 {
 	struct timeval	time;
 

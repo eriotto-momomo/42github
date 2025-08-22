@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 13:55:47 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/21 18:05:02 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/22 10:22:09 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	init_philos(t_main *s)
 		s->philos[i].eaten_meals = 0;
 		s->philos[i].start_time = get_time();
 		s->philos[i].last_meal = get_time();
-		get_forks(&s, &s->forks[i], &s->philos[i]);
+		get_forks(s, &s->forks[i], &s->philos[i]);
 		i++;
 	}
 }
@@ -50,6 +50,7 @@ static int	init_forks(int n_philo, t_fork *forks)
 		forks[i].id = i;
 		i++;
 	}
+	return (0);
 }
 
 static int	init_mutex(t_main *s)
@@ -72,9 +73,6 @@ static int	init_mutex(t_main *s)
 
 static int	init_structs(t_main *s)
 {
-	int	ret;
-
-	ret = 0;
 	s->philos = malloc(sizeof(t_philo) * (*s).in[N_PHILO]);
 	if (!(*s).philos)
 		return (ft_putstr_fd("Error: malloc failed", 2), 1);
@@ -89,18 +87,18 @@ static int	init_structs(t_main *s)
 
 int	init_data(t_main *s)
 {
-	if (init_structs(&s) != 0)
+	if (init_structs(s) != 0)
 		return (1);
-	if (init_mutex(&s) != 0)
+	if (init_mutex(s) != 0)
 	{
-		free_structs(&s);
+		free_structs(s);
 		return (1);
 	}
-	if (init_forks(s->in[N_PHILO], &s->forks) != 0)
+	if (init_forks(s->in[N_PHILO], s->forks) != 0)
 	{
-		clean_free(&s);
+		clean_free(s);
 		return (1);
 	}
-	init_philos(&s);
+	init_philos(s);
 	return (0);
 }

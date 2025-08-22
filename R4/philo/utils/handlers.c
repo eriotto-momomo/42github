@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 12:33:36 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/21 17:31:02 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/22 10:32:24 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ int	handle_thread(pthread_t *thread, t_routines mode, void *(*foo)(void *), void
 	if (mode == CREATE)
 		ret = pthread_create(thread, NULL, foo, data);
 	else if (mode == DETACH)
-		ret = pthread_detach(thread);
+		ret = pthread_detach(*thread);
 	else if (mode == JOIN)
-		ret = pthread_join(thread, NULL);
+		ret = pthread_join(*thread, NULL);
 	if (ret != 0)
 		return (ft_putstr_fd("Error: thread routine error\n", 2), 1);
 	return (0);

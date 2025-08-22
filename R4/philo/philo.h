@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 10:19:07 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/21 18:06:19 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/22 10:51:36 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ typedef enum	e_routines
 
 typedef enum	e_values
 {
-	ZERO,
 	N_PHILO,
 	TTO_DIE,
 	TTO_EAT,
@@ -114,8 +113,9 @@ int		handle_mutex(pthread_mutex_t *mutex, t_routines mode);
 void	ft_putstr_fd(char *s, int fd);
 size_t	ft_strlen(char *s);
 int		ft_usleep(size_t milliseconds);
+size_t	get_time(void);
 
 // utils_2.c
-void	get_forks(t_main *s, t_fork *fork, t_philo *p);
+void	get_forks(t_main *s, t_fork *forks, t_philo *p);
 
 #endif

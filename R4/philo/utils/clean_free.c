@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 17:53:16 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/21 18:00:33 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/22 10:27:40 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,6 @@ void	destroy_mutex(t_main *s)
 
 void	clean_free(t_main *s)
 {
-	destroy_mutex(&s);
-	free_structs(&s);
+	destroy_mutex(s);
+	free_structs(s);
 }

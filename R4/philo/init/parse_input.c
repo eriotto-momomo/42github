@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 10:37:24 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/04 15:02:26 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/22 10:52:00 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static int	*convert_input(int ac, char **av)
 	i = 0;
 	while (i < ac - 1)
 	{
-		input[i] = ft_atoi(av[i + 2]);
+		input[i] = ft_atoi(av[i + 1]);
 		if ((i < 6 && input[i] <= 0) || (i == 6 && input[i] < 0)
 			|| input[i] > INT_MAX)
 		{
@@ -82,7 +82,7 @@ int	parse_input(int ac, char **av, t_main *s)
 	i = 0;
 	while (i < ac - 1)
 	{
-		if (!is_digit(av[i + 2]))
+		if (!is_digit(av[i + 1]))
 			return (ft_putstr_fd("Error: invalid arguments\n", 2), 1);
 		i++;
 	}
