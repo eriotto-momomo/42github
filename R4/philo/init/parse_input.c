@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 10:37:24 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/22 10:52:00 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/22 15:37:20 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,14 @@ static int	*convert_input(int ac, char **av)
 	int	*input;
 	int	i;
 
-	input = (malloc(sizeof(int) * ac - 1));
+	input = (malloc(sizeof(int) * 5));
 	if (!input)
 		return (ft_putstr_fd("Error: malloc failed\n", 2), NULL);
 	i = 0;
 	while (i < ac - 1)
 	{
 		input[i] = ft_atoi(av[i + 1]);
-		if ((i < 6 && input[i] <= 0) || (i == 6 && input[i] < 0)
-			|| input[i] > INT_MAX)
+		if (input[i] < 0 || input[i] > INT_MAX)
 		{
 			free(input);
 			return (ft_putstr_fd
@@ -70,6 +69,8 @@ static int	*convert_input(int ac, char **av)
 		}
 		i++;
 	}
+	if (ac == 5)
+		input[i] = 0;
 	return (input);
 }
 

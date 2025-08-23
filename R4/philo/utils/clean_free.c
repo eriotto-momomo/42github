@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 17:53:16 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/22 10:27:40 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/23 16:51:37 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	free_structs(t_main *s)
 {
 	free(s->philos);
 	free(s->forks);
+	free(s->philo_died);
 	free(s->in);
 }
 

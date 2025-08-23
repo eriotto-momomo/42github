@@ -9,6 +9,7 @@ SRCS	=	main.c \
 			./threads/threads.c \
 			./utils/clean_free.c \
 			./utils/handlers.c \
+			./utils/helpers.c \
 			./utils/utils_1.c \
 			./utils/utils_2.c
 

@@ -6,13 +6,11 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 13:55:47 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/22 10:22:09 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/23 16:44:54 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
-
-
 
 static void	init_philos(t_main *s)
 {
@@ -22,10 +20,13 @@ static void	init_philos(t_main *s)
 	while (i < s->in[N_PHILO])
 	{
 		s->philos[i].id = i + 1;
-		s->philos[i].eaten_meals = 0;
+		s->philos[i].philo_died = &s->philo_died;
+		s->philos[i].meals_toeat = s->in[MUST_EAT];
+		s->philos[i].meals_eaten = 0;
 		s->philos[i].start_time = get_time();
 		s->philos[i].last_meal = get_time();
-		get_forks(s, &s->forks[i], &s->philos[i]);
+		s->philos[i].frst_fork = &s->forks[i];
+		s->philos[i].scnd_fork = &s->forks[(i + 1) % s->in[N_PHILO]];
 		i++;
 	}
 }
@@ -73,6 +74,10 @@ static int	init_mutex(t_main *s)
 
 static int	init_structs(t_main *s)
 {
+	s->philo_died = malloc(sizeof(int));
+	if (!s->philo_died)
+		return (ft_putstr_fd("Error: malloc failed", 2), 1);
+	s->philo_died = true;
 	s->philos = malloc(sizeof(t_philo) * (*s).in[N_PHILO]);
 	if (!(*s).philos)
 		return (ft_putstr_fd("Error: malloc failed", 2), 1);
