@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 10:19:07 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/25 11:33:10 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/25 17:06:41 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,10 @@ typedef struct s_main_struct	t_main;
 typedef struct		s_philo
 {
 	int				id;
-	pthread_t		thread;
-	int			meals_eaten;
+	int				meals_eaten;
 	t_fork			*frst_fork;
 	t_fork			*scnd_fork;
+	pthread_t		thread;
 	t_time			start_time;
 	t_time			last_meal;
 	t_time			tto_die;
@@ -79,6 +79,7 @@ typedef struct		s_philo
 typedef struct		s_main_struct
 {
 	int				*in;
+	int				philos_init;
 	t_philo			*philos;
 	t_fork			*forks;
 	bool			*philo_died;
@@ -87,19 +88,10 @@ typedef struct		s_main_struct
 
 // ⚠️
 void	helper_print_philo(t_philo *p); // ⚠️ à delete
+void	helper_print_data(t_main *s); // ⚠️ à delete
 
-// main.c
-int		main(int ac, char **av);
-
-// clean_free.c
-void	free_structs(t_main *s);
-void	destroy_mutex(t_main *s);
-void	clean_free(t_main *s);
-
-// init.c
+// init.c & parse_input.c
 int		init_data(t_main *s);
-
-// parse_input.c
 int		parse_input(int ac, char **av, t_main *s);
 
 // handlers.c
@@ -116,12 +108,15 @@ int		print_philo(t_philo *p, char *status, bool end_dinner);
 int		dinner_is_done(t_philo *p);
 int		dinner(t_main *s);
 
-// utils_1.c
+// clean_free.c
+void	free_structs(t_main *s);
+void	destroy_mutex(t_main *s);
+void	clean_free(t_main *s);
+
+// utils.c
 void	ft_putstr_fd(char *s, int fd);
 size_t	ft_strlen(char *s);
 int		ft_usleep(size_t milliseconds);
 t_time	get_time(void);
-
-// utils_2.c
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 13:55:47 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/25 11:43:19 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/25 16:11:48 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,16 @@ static void	init_philos(t_main *s)
 	{
 		s->philos[i].id = i + 1;
 		s->philos[i].meals_eaten = 0;
-		s->philos[i].frst_fork = &s->forks[i];
-		s->philos[i].scnd_fork = &s->forks[(i + 1) % s->in[N_PHILO]];
+		if (s->philos[i].id % 2 == 0)
+		{
+			s->philos[i].frst_fork = &s->forks[i];
+			s->philos[i].scnd_fork = &s->forks[(i + 1) % s->in[N_PHILO]];
+		}
+		else if (s->philos[i].id % 2 != 0)
+		{
+			s->philos[i].frst_fork = &s->forks[(i + 1) % s->in[N_PHILO]];
+			s->philos[i].scnd_fork = &s->forks[i];
+		}
 		s->philos[i].start_time = get_time();
 		s->philos[i].last_meal = get_time();
 		s->philos[i].tto_die = (size_t)s->in[TTO_DIE];
@@ -90,7 +98,8 @@ int	init_data(t_main *s)
 	}
 	if (init_forks(s->in[N_PHILO], s->forks) != 0)
 	{
-		clean_free(s);
+		handle_mutex(&s->dead_lock, DESTROY);
+		free_structs(s);
 		return (1);
 	}
 	init_philos(s);

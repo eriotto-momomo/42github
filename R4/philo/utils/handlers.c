@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 12:33:36 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/25 11:43:55 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/25 17:42:52 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ int	handle_mutex(pthread_mutex_t *mutex, t_routines mode)
 	{
 		//printf("%shandle_mutex | mode = %d | DESTROY%s\n", B, mode, RST);
 		ret = pthread_mutex_destroy(mutex);
+		if (ret)
+			printf("handle_mutex | DESTROY MUTEX ISSUE | errno: %s\n", strerror(errno));
 	}
 	else if (mode == LOCK)
 	{
