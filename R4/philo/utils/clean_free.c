@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 17:53:16 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/25 17:38:57 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/25 21:22:51 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ void	destroy_mutex(t_main *s)
 	int	i;
 
 	i = -1;
-	//while (++i < s->in[N_PHILO])
-	printf("destroy_mutex | s->philos_init: %d\n", s->philos_init);
 	while (++i < s->philos_init)
 		handle_mutex(&s->forks[i].fork, DESTROY);
 	handle_mutex(&s->dead_lock, DESTROY);

@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 10:19:15 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/25 17:29:27 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/25 21:22:42 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,11 @@ int	main(int ac, char **av)
 	}
 	if (init_data(s) != 0)
 		return (1);
-	helper_print_data(s); // 🖨️❗️
 	if (dinner(s) != 0)
 	{
 		clean_free(s);
 		return (1);
 	}
-	helper_print_data(s); // 🖨️❗️
 	clean_free(s);
 	return (0);
 }

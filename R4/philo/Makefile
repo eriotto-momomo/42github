@@ -10,7 +10,6 @@ SRCS	=	main.c \
 			./utils/clean_free.c \
 			./utils/handlers.c \
 			./utils/utils.c \
-			./helpers.c
 
 OBJS	=	$(SRCS:.c=.o)
 # **************************************************************************** #
@@ -39,7 +38,5 @@ fclean: clean
 	rm -rf $(NAME)
 
 re: fclean all
-
-run: ./philo 5  10 5 5 5
 
 .PHONY: all clean fclean re run

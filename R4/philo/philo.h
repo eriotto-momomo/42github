@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 10:19:07 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/25 17:06:41 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/25 21:46:48 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,10 @@
 # include <sys/time.h>
 # include <stdbool.h>
 
-# define R "\033[1;31m"
-# define G "\033[1;32m"
-# define Y "\033[1;33m"
-# define B "\033[1;34m"
-# define P "\033[1;35m"
-# define C "\033[1;36m"
-# define RST "\033[0m"
+typedef unsigned long long		t_time;
+typedef struct s_main_struct	t_main;
 
-typedef unsigned long long	t_time;
-
-typedef enum	e_routines
+typedef enum e_routines
 {
 	CREATE,
 	DETACH,
@@ -44,7 +37,7 @@ typedef enum	e_routines
 	UNLOCK,
 }	t_routines;
 
-typedef enum	e_values
+typedef enum e_values
 {
 	N_PHILO,
 	TTO_DIE,
@@ -53,15 +46,13 @@ typedef enum	e_values
 	MUST_EAT
 }	t_val;
 
-typedef struct		s_fork
+typedef struct s_fork
 {
 	int				id;
 	pthread_mutex_t	fork;
 }	t_fork;
 
-typedef struct s_main_struct	t_main;
-
-typedef struct		s_philo
+typedef struct s_philo
 {
 	int				id;
 	int				meals_eaten;
@@ -76,7 +67,7 @@ typedef struct		s_philo
 	t_main			*s;
 }	t_philo;
 
-typedef struct		s_main_struct
+typedef struct s_main_struct
 {
 	int				*in;
 	int				philos_init;
@@ -86,16 +77,13 @@ typedef struct		s_main_struct
 	pthread_mutex_t	dead_lock;
 }	t_main;
 
-// ⚠️
-void	helper_print_philo(t_philo *p); // ⚠️ à delete
-void	helper_print_data(t_main *s); // ⚠️ à delete
-
 // init.c & parse_input.c
 int		init_data(t_main *s);
 int		parse_input(int ac, char **av, t_main *s);
 
 // handlers.c
-int		handle_thread(pthread_t *thread, t_routines mode, void *(*foo)(void *), void *data);
+int		handle_thread(pthread_t *thread, t_routines mode,
+			void *(*foo)(void *), void *data);
 int		handle_mutex(pthread_mutex_t *mutex, t_routines mode);
 
 // philos.c

@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 16:50:17 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/25 18:17:44 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/25 21:49:19 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	dinner_is_done(t_philo *p)
 		return (1);
 	}
 	if (handle_mutex(&p->s->dead_lock, UNLOCK) != 0)
-			return (-1);
+		return (-1);
 	if ((get_time() - p->last_meal) > p->tto_die)
 	{
 		print_philo(p, "died", true);
@@ -81,7 +81,7 @@ static int	solo_dinner(t_philo *p)
 	return (0);
 }
 
-void	*start_dinner(void *data)
+static void	*start_dinner(void *data)
 {
 	t_philo	*philo;
 
@@ -101,13 +101,14 @@ int	dinner(t_main *s)
 	i = 0;
 	while (i < s->in[N_PHILO])
 	{
-		if (handle_thread(&s->philos[i].thread, CREATE, start_dinner, &s->philos[i]) != 0)
+		if (handle_thread(&s->philos[i].thread, CREATE,
+				start_dinner, &s->philos[i]) != 0)
 			return (1);
 		ret = dinner_is_done(&s->philos[i]);
 		i++;
 		if (ret != 0)
 			break ;
-		ft_usleep(100);
+		ft_usleep(10);
 	}
 	s->philos_init = i;
 	i = -1;

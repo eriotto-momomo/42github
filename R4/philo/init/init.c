@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 13:55:47 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/25 16:11:48 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/25 21:28:02 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static int	init_forks(int n_philo, t_fork *forks)
 	return (0);
 }
 
-static int	init_mutex(t_main *s)
+static int	init_locks(t_main *s)
 {
 	if (handle_mutex(&s->dead_lock, INIT) != 0)
 		return (1);
@@ -91,7 +91,7 @@ int	init_data(t_main *s)
 {
 	if (init_structs(s) != 0)
 		return (1);
-	if (init_mutex(s) != 0)
+	if (init_locks(s) != 0)
 	{
 		free_structs(s);
 		return (1);

@@ -6,11 +6,11 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:20:59 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/25 16:30:29 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/25 21:48:44 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../philo.h"
+#include "../philo.h"
 
 void	philo_think(t_philo *p)
 {
@@ -56,7 +56,6 @@ void	philo_eat(t_philo *p)
 	p->meals_eaten++;
 	handle_mutex(&p->s->dead_lock, UNLOCK);
 	print_philo(p, "is eating", false);
-	helper_print_philo(p); //🖨️❗️
 	philo_wait(p, p->tto_eat);
 	handle_mutex(&p->s->dead_lock, LOCK);
 	p->last_meal = get_time();
