@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 10:19:07 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/23 16:51:46 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/25 11:33:10 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,38 +59,34 @@ typedef struct		s_fork
 	pthread_mutex_t	fork;
 }	t_fork;
 
+typedef struct s_main_struct	t_main;
+
 typedef struct		s_philo
 {
 	int				id;
-	int				meals_toeat;
-	int				meals_eaten;
+	pthread_t		thread;
+	int			meals_eaten;
+	t_fork			*frst_fork;
+	t_fork			*scnd_fork;
 	t_time			start_time;
 	t_time			last_meal;
 	t_time			tto_die;
 	t_time			tto_eat;
-	t_time			tto_sleep;
-	pthread_t		thread;
-	t_fork			*frst_fork;
-	t_fork			*scnd_fork;
-	bool			*philo_died;
-	pthread_mutex_t	*write_lock;
-	pthread_mutex_t	*dead_lock;
-	pthread_mutex_t	*meal_lock;
+	t_time			tto_slp;
+	t_main			*s;
 }	t_philo;
 
 typedef struct		s_main_struct
 {
 	int				*in;
-	bool			philo_died;
 	t_philo			*philos;
 	t_fork			*forks;
-	pthread_mutex_t	write_lock;
+	bool			*philo_died;
 	pthread_mutex_t	dead_lock;
-	pthread_mutex_t	meal_lock;
 }	t_main;
 
 // ⚠️
-void	print_philo(t_philo *p); // ⚠️ à delete
+void	helper_print_philo(t_philo *p); // ⚠️ à delete
 
 // main.c
 int		main(int ac, char **av);
@@ -110,6 +106,12 @@ int		parse_input(int ac, char **av, t_main *s);
 int		handle_thread(pthread_t *thread, t_routines mode, void *(*foo)(void *), void *data);
 int		handle_mutex(pthread_mutex_t *mutex, t_routines mode);
 
+// philos.c
+void	philo_think(t_philo *p);
+void	philo_sleep(t_philo *p);
+void	philo_eat(t_philo *p);
+int		print_philo(t_philo *p, char *status, bool end_dinner);
+
 // threads.c
 int		dinner_is_done(t_philo *p);
 int		dinner(t_main *s);
@@ -118,7 +120,7 @@ int		dinner(t_main *s);
 void	ft_putstr_fd(char *s, int fd);
 size_t	ft_strlen(char *s);
 int		ft_usleep(size_t milliseconds);
-size_t	get_time(void);
+t_time	get_time(void);
 
 // utils_2.c
 

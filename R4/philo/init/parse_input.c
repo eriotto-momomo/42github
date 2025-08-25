@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 10:37:24 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/22 15:37:20 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/25 11:43:26 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,15 @@ static int	is_digit(char *str)
 static int	*convert_input(int ac, char **av)
 {
 	int	*input;
-	int	i;
+	int		i;
 
-	input = (malloc(sizeof(int) * 5));
+	input = (malloc(sizeof(size_t) * 5));
 	if (!input)
 		return (ft_putstr_fd("Error: malloc failed\n", 2), NULL);
 	i = 0;
 	while (i < ac - 1)
 	{
-		input[i] = ft_atoi(av[i + 1]);
+		input[i] = (size_t)ft_atoi(av[i + 1]);
 		if (input[i] < 0 || input[i] > INT_MAX)
 		{
 			free(input);
@@ -70,7 +70,7 @@ static int	*convert_input(int ac, char **av)
 		i++;
 	}
 	if (ac == 5)
-		input[i] = 0;
+		input[4] = -1;
 	return (input);
 }
 

@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 13:55:47 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/23 16:44:54 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/25 11:43:19 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,15 @@ static void	init_philos(t_main *s)
 	while (i < s->in[N_PHILO])
 	{
 		s->philos[i].id = i + 1;
-		s->philos[i].philo_died = &s->philo_died;
-		s->philos[i].meals_toeat = s->in[MUST_EAT];
 		s->philos[i].meals_eaten = 0;
-		s->philos[i].start_time = get_time();
-		s->philos[i].last_meal = get_time();
 		s->philos[i].frst_fork = &s->forks[i];
 		s->philos[i].scnd_fork = &s->forks[(i + 1) % s->in[N_PHILO]];
+		s->philos[i].start_time = get_time();
+		s->philos[i].last_meal = get_time();
+		s->philos[i].tto_die = (size_t)s->in[TTO_DIE];
+		s->philos[i].tto_eat = (size_t)s->in[TTO_EAT];
+		s->philos[i].tto_slp = (size_t)s->in[TTO_SLEEP];
+		s->philos[i].s = s;
 		i++;
 	}
 }
@@ -56,35 +58,22 @@ static int	init_forks(int n_philo, t_fork *forks)
 
 static int	init_mutex(t_main *s)
 {
-	if (handle_mutex(&s->write_lock, INIT) != 0)
-			return (1);
 	if (handle_mutex(&s->dead_lock, INIT) != 0)
-	{
-		handle_mutex(&s->write_lock, DESTROY);
 		return (1);
-	}
-	if (handle_mutex(&s->meal_lock, INIT) != 0)
-	{
-		handle_mutex(&s->write_lock, DESTROY);
-		handle_mutex(&s->dead_lock, DESTROY);
-		return (1);
-	}
 	return (0);
 }
 
 static int	init_structs(t_main *s)
 {
-	s->philo_died = malloc(sizeof(int));
+	s->philo_died = malloc(sizeof(bool));
 	if (!s->philo_died)
-		return (ft_putstr_fd("Error: malloc failed", 2), 1);
-	s->philo_died = true;
+		return (1);
+	*(s->philo_died) = false;
 	s->philos = malloc(sizeof(t_philo) * (*s).in[N_PHILO]);
-	if (!(*s).philos)
-		return (ft_putstr_fd("Error: malloc failed", 2), 1);
 	s->forks = malloc(sizeof(t_fork) * (*s).in[N_PHILO]);
-	if (!(*s).forks)
+	if (!s->philos || !s->forks)
 	{
-		free((*s).philos);
+		free_structs(s);
 		return (ft_putstr_fd("Error: malloc failed", 2), 1);
 	}
 	return (0);

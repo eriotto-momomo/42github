@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 12:33:36 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/22 10:32:24 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/25 11:43:55 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,26 @@ int	handle_mutex(pthread_mutex_t *mutex, t_routines mode)
 
 	ret = 0;
 	if (mode == INIT)
+	{
+		//printf("%shandle_mutex | mode = %d | INIT%s\n", B, mode, RST);
 		ret = pthread_mutex_init(mutex, NULL);
+	}
 	else if (mode == DESTROY)
+	{
+		//printf("%shandle_mutex | mode = %d | DESTROY%s\n", B, mode, RST);
 		ret = pthread_mutex_destroy(mutex);
+	}
 	else if (mode == LOCK)
+	{
+		//printf("%shandle_mutex | mode = %d | LOCK%s\n", B, mode, RST);
 		ret = pthread_mutex_lock(mutex);
+	}
 	else if (mode == UNLOCK)
+	{
+		//printf("%shandle_mutex | mode = %d | UNLOCK%s\n", B, mode, RST);
 		ret = pthread_mutex_unlock(mutex);
+	}
 	if (ret != 0)
-		return (ft_putstr_fd("Error: mutex routine error\n", 2), 1);
+		return (ft_putstr_fd("Error: mutex error\n", 2), 1);
 	return (0);
 }

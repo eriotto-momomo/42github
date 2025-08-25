@@ -5,13 +5,12 @@ HEADER	=	philo.h
 SRCS	=	main.c \
 			./init/init.c \
 			./init/parse_input.c \
-			./threads/status.c \
-			./threads/threads.c \
+			./dinner/philos.c \
+			./dinner/threads.c \
 			./utils/clean_free.c \
 			./utils/handlers.c \
-			./utils/helpers.c \
-			./utils/utils_1.c \
-			./utils/utils_2.c
+			./utils/utils.c \
+			./helpers.c
 
 OBJS	=	$(SRCS:.c=.o)
 # **************************************************************************** #
