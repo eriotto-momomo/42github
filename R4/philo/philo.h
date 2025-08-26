@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 10:19:07 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/26 18:36:08 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/26 19:39:01 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,6 @@ typedef struct s_main_struct
 	bool			*philo_died;
 	pthread_mutex_t	main_lock;
 }	t_main;
-
-void	helper_print_data(t_main *s); //🖨️❗️
-void	helper_print_philo(t_philo *p); //🖨️❗️
 
 // init.c & parse_input.c
 int		init_data(t_main *s);

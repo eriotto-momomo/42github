@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 10:37:24 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/26 18:48:52 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/26 19:40:17 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ static long	ft_atol(const char *str)
 	long	res;
 	int		sign;
 
-	i = 0;
-	res = 0;
 	sign = 1;
+	res = 0;
+	i = 0;
 	while (str[i] <= 32)
 		i++;
 	if (str[i] == '-' || str[i] == '+')
