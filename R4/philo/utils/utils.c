@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 10:56:37 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/25 11:53:37 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/26 18:56:21 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
+
+int	quit_dinner(t_philo *p)
+{
+	if (handle_mutex(&p->s->main_lock, UNLOCK) != 0)
+		return (-1);
+	return (1);
+}
 
 t_time	get_time(void)
 {

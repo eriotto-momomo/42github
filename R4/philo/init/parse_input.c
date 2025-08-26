@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 10:37:24 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/25 21:24:17 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/26 18:48:52 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ static int	*convert_input(int ac, char **av)
 		if (conversion < 0 || conversion > INT_MAX)
 		{
 			free(input);
-			return (ft_putstr_fd
-				("Error: invalid arguments\n", 2), NULL);
+			ft_putstr_fd("Error: invalid arguments\n", 2);
+			return (NULL);
 		}
 		else
 			input[i] = (int)conversion;
@@ -80,10 +80,8 @@ int	parse_input(int ac, char **av, t_main *s)
 {
 	int	i;
 
-	if (!(ac == 5 || ac == 6))
-		return (ft_putstr_fd("Error: invalid number of arguments\n", 2), 1);
 	i = 1;
-	while (i < ac - 1)
+	while (i < ac)
 	{
 		if (is_digit(av[i]) == false)
 			return (ft_putstr_fd("Error: invalid arguments\n", 2), 1);

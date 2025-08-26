@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_free.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 17:53:16 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/25 21:22:51 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/26 18:53:21 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,19 @@ void	destroy_mutex(t_main *s)
 	i = -1;
 	while (++i < s->philos_init)
 		handle_mutex(&s->forks[i].fork, DESTROY);
-	handle_mutex(&s->dead_lock, DESTROY);
+	handle_mutex(&s->main_lock, DESTROY);
 }
 
 void	free_structs(t_main *s)
 {
-	if (s->in)
+	if (*s->in)
 		free(s->in);
-	if (s->philo_died)
+	if (*s->philo_died)
 		free(s->philo_died);
-	if (s->philos)
-		free(s->philos);
 	if (s->forks)
 		free(s->forks);
+	if (s->philos)
+		free(s->philos);
 	free(s);
 }
 

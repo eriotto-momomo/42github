@@ -3,21 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   philos.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:20:59 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/25 21:48:44 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/26 19:11:11 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
-
-void	philo_think(t_philo *p)
-{
-	if (dinner_is_done(p) == 1)
-		return ;
-	print_philo(p, "is thinking", false);
-}
 
 static void	philo_wait(t_philo *p, t_time tto_wait)
 {
@@ -32,41 +25,82 @@ static void	philo_wait(t_philo *p, t_time tto_wait)
 	}
 }
 
-void	philo_sleep(t_philo *p)
+int	philo_think(t_philo *p)
 {
-	handle_mutex(&p->frst_fork->fork, UNLOCK);
-	handle_mutex(&p->scnd_fork->fork, UNLOCK);
-	if (dinner_is_done(p) == 1)
-		return ;
-	print_philo(p, "is sleeping", false);
-	philo_wait(p, p->tto_slp);
+	if (dinner_is_done(p) != 0)
+		return (1);
+	print_philo(p, "is thinking", false);
+	return (0);
 }
 
-void	philo_eat(t_philo *p)
+int	philo_sleep(t_philo *p)
+{
+	if (dinner_is_done(p) != 0)
+		return (1);
+	print_philo(p, "is sleeping", false);
+	philo_wait(p, p->tto_slp);
+	return (0);
+}
+
+//V2
+int	philo_eat(t_philo *p)
 {
 	if (dinner_is_done(p) == 1)
-		return ;
+		return (0);
 	handle_mutex(&p->frst_fork->fork, LOCK);
 	print_philo(p, "has taken a fork", false);
 	handle_mutex(&p->scnd_fork->fork, LOCK);
 	if (dinner_is_done(p) == 1)
-		return ;
+	{
+		handle_mutex(&p->frst_fork->fork, UNLOCK);
+		return (handle_mutex(&p->scnd_fork->fork, UNLOCK));
+	}
 	print_philo(p, "has taken a fork", false);
-	handle_mutex(&p->s->dead_lock, LOCK);
+	handle_mutex(&p->s->main_lock, LOCK);
 	p->meals_eaten++;
-	handle_mutex(&p->s->dead_lock, UNLOCK);
-	print_philo(p, "is eating", false);
+	handle_mutex(&p->s->main_lock, UNLOCK);
 	philo_wait(p, p->tto_eat);
-	handle_mutex(&p->s->dead_lock, LOCK);
+	print_philo(p, "is eating", false);
+	handle_mutex(&p->frst_fork->fork, UNLOCK);
+	handle_mutex(&p->scnd_fork->fork, UNLOCK);
+	handle_mutex(&p->s->main_lock, LOCK);
 	p->last_meal = get_time();
-	handle_mutex(&p->s->dead_lock, UNLOCK);
-	if (dinner_is_done(p) == 1)
-		return ;
+	handle_mutex(&p->s->main_lock, UNLOCK);
+	return (0);
 }
+
+//V1
+//int	philo_eat(t_philo *p)
+//{
+//	if (dinner_is_done(p) == 1)
+//		return (0);
+//	handle_mutex(&p->frst_fork->fork, LOCK);
+//	print_philo(p, "has taken a fork", false);
+//	handle_mutex(&p->scnd_fork->fork, LOCK);
+//	if (dinner_is_done(p) == 1)
+//	{
+//		handle_mutex(&p->frst_fork->fork, UNLOCK);
+//		return (handle_mutex(&p->scnd_fork->fork, UNLOCK));
+//	}
+//	print_philo(p, "has taken a fork", false); //V1
+//	handle_mutex(&p->s->main_lock, LOCK);
+//	p->meals_eaten++;
+//	//handle_mutex(&p->s->main_lock, UNLOCK); //V2
+//	//print_philo(p, "has taken a fork", false); //V2
+//	handle_mutex(&p->s->main_lock, UNLOCK); //V1
+//	philo_wait(p, p->tto_eat);
+//	print_philo(p, "is eating", false);
+//	handle_mutex(&p->frst_fork->fork, UNLOCK);
+//	handle_mutex(&p->scnd_fork->fork, UNLOCK);
+//	handle_mutex(&p->s->main_lock, LOCK);
+//	p->last_meal = get_time();
+//	handle_mutex(&p->s->main_lock, UNLOCK);
+//	return (0);
+//}
 
 int	print_philo(t_philo *p, char *status, bool end_dinner)
 {
-	if (handle_mutex(&p->s->dead_lock, LOCK) != 0)
+	if (handle_mutex(&p->s->main_lock, LOCK) != 0)
 		return (1);
 	if (*p->s->philo_died == false)
 	{
@@ -74,7 +108,7 @@ int	print_philo(t_philo *p, char *status, bool end_dinner)
 		if (end_dinner == true)
 			*p->s->philo_died = true;
 	}
-	if (handle_mutex(&p->s->dead_lock, UNLOCK) != 0)
+	if (handle_mutex(&p->s->main_lock, UNLOCK) != 0)
 		return (1);
 	dinner_is_done(p);
 	return (0);

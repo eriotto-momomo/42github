@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   threads.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 16:50:17 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/25 21:49:19 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/26 19:11:14 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,21 @@
 // return(-1)= ERROR
 int	dinner_is_done(t_philo *p)
 {
-	if (p->meals_eaten == p->s->in[MUST_EAT])
-		return (1);
-	if (handle_mutex(&p->s->dead_lock, LOCK) != 0)
+	if (handle_mutex(&p->s->main_lock, LOCK) != 0)
 		return (-1);
+	if (p->meals_eaten == p->meals_toeat)
+		return (quit_dinner(p));
 	if (*p->s->philo_died == true)
-	{
-		if (handle_mutex(&p->s->dead_lock, UNLOCK) != 0)
-			return (-1);
-		return (1);
-	}
-	if (handle_mutex(&p->s->dead_lock, UNLOCK) != 0)
-		return (-1);
+		return (quit_dinner(p));
 	if ((get_time() - p->last_meal) > p->tto_die)
 	{
+		if (handle_mutex(&p->s->main_lock, UNLOCK) != 0)
+			return (-1);
 		print_philo(p, "died", true);
 		return (1);
 	}
+	if (handle_mutex(&p->s->main_lock, UNLOCK) != 0)
+		return (-1);
 	return (0);
 }
 
@@ -108,7 +106,6 @@ int	dinner(t_main *s)
 		i++;
 		if (ret != 0)
 			break ;
-		ft_usleep(10);
 	}
 	s->philos_init = i;
 	i = -1;

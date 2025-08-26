@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 10:19:07 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/25 21:46:48 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/26 18:36:08 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_philo
 {
 	int				id;
 	int				meals_eaten;
+	int				meals_toeat;
 	t_fork			*frst_fork;
 	t_fork			*scnd_fork;
 	pthread_t		thread;
@@ -74,8 +75,11 @@ typedef struct s_main_struct
 	t_philo			*philos;
 	t_fork			*forks;
 	bool			*philo_died;
-	pthread_mutex_t	dead_lock;
+	pthread_mutex_t	main_lock;
 }	t_main;
+
+void	helper_print_data(t_main *s); //🖨️❗️
+void	helper_print_philo(t_philo *p); //🖨️❗️
 
 // init.c & parse_input.c
 int		init_data(t_main *s);
@@ -87,9 +91,9 @@ int		handle_thread(pthread_t *thread, t_routines mode,
 int		handle_mutex(pthread_mutex_t *mutex, t_routines mode);
 
 // philos.c
-void	philo_think(t_philo *p);
-void	philo_sleep(t_philo *p);
-void	philo_eat(t_philo *p);
+int		philo_think(t_philo *p);
+int		philo_sleep(t_philo *p);
+int		philo_eat(t_philo *p);
 int		print_philo(t_philo *p, char *status, bool end_dinner);
 
 // threads.c
@@ -102,6 +106,7 @@ void	destroy_mutex(t_main *s);
 void	clean_free(t_main *s);
 
 // utils.c
+int		quit_dinner(t_philo *p);
 void	ft_putstr_fd(char *s, int fd);
 size_t	ft_strlen(char *s);
 int		ft_usleep(size_t milliseconds);
