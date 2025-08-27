@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philos.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:20:59 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/26 19:41:12 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/27 19:19:43 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,25 @@
 
 static void	philo_wait(t_philo *p, t_time tto_wait)
 {
-	t_time	time;
+	t_time	start_wait;
+	t_time	elaps_wait;
 
-	time = get_time();
-	while ((get_time() - time) < tto_wait)
+	start_wait = get_time();
+	elaps_wait = 0;
+	//fprintf(stderr, "philo_wait | p[id][%d] | start_wait: %llu\n", p->id, start_wait);
+	//fprintf(stderr, "philo_wait | ........ | elaps_wait: %llu\n", elaps_wait);
+	while (elaps_wait < tto_wait)
 	{
+		elaps_wait = (get_time() - start_wait);
+		fprintf(stderr, "philo_wait | p[id][%d] | elaps_wait: %llu\n", p->id, elaps_wait);
+		if (elaps_wait > tto_wait)
+			break ;
 		if (dinner_is_done(p) == 1)
 			return ;
-		ft_usleep(10);
+		usleep(10);
+		//ft_usleep(10); // BUGGY on MacOS??
 	}
+	//fprintf(stderr, "philo_wait | p[id][%d] | STOP WAITING | TIME ELAPSED: %llu\n", p->id, elaps_wait);
 }
 
 int	philo_think(t_philo *p)
@@ -72,7 +82,7 @@ int	print_philo(t_philo *p, char *status, bool end_dinner)
 		return (1);
 	if (*p->s->philo_died == false)
 	{
-		printf("%llu %d %s\n", (get_time() - p->start_time), p->id, status);
+		printf("%llu %d %s\n", (get_time() - p->s->start_time), p->id, status);
 		if (end_dinner == true)
 			*p->s->philo_died = true;
 	}

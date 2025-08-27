@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 13:55:47 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/26 19:41:35 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/27 19:19:43 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,9 @@ static void	init_philos(t_main *s)
 			s->philos[i].frst_fork = &s->forks[(i + 1) % s->in[N_PHILO]];
 			s->philos[i].scnd_fork = &s->forks[i];
 		}
-		s->philos[i].start_time = get_time();
-		s->philos[i].last_meal = get_time();
+		s->philos[i].start_time = 0;
+		//s->philos[i].last_meal = get_time();
+		//fprintf(stderr, "init_philo | p->last_meal: %llu\n", s->philos[i].last_meal);
 		s->philos[i].tto_die = (size_t)s->in[TTO_DIE];
 		s->philos[i].tto_eat = (size_t)s->in[TTO_EAT];
 		s->philos[i].tto_slp = (size_t)s->in[TTO_SLEEP];
@@ -73,6 +74,7 @@ static int	init_locks(t_main *s)
 
 static int	init_structs(t_main *s)
 {
+	s->start_time = get_time();
 	s->philo_died = malloc(sizeof(bool));
 	if (!s->philo_died)
 		return (1);
