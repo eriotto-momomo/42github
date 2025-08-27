@@ -18,6 +18,7 @@ OBJS	=	$(SRCS:.c=.o)
 NAME	=	philo
 CC		=	gcc
 CFLAGS	=	-Wall -Werror -Wextra
+SANITIZE	=	-fsanitize=thread -g -O1 -fno-omit-frame-pointer
 # **************************************************************************** #
 # TARGETS
 # **************************************************************************** #
@@ -26,6 +27,10 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 	@echo "\033[1;32mSuccessfully compiled: $(NAME)\033[0m"
+
+sanitize: $(OBJS)
+	$(CC) $(SANITIZE) $(CFLAGS) $(OBJS) -o $(NAME)
+	@echo "\033[1;32mSuccessfully compiled with sanitizer: $(NAME)\033[0m"
 
 %.o: %.c $(HEADER)
 	$(CC) -c $(CFLAGS) -I. $< -o $@

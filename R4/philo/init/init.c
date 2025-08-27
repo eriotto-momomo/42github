@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 13:55:47 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/26 19:41:35 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/27 10:00:40 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,21 @@ static void	init_philos(t_main *s)
 		s->philos[i].id = i + 1;
 		s->philos[i].meals_eaten = 0;
 		s->philos[i].meals_toeat = s->in[MUST_EAT];
+		//s->philos[i].frst_fork = &s->forks[i];
+		//s->philos[i].scnd_fork = &s->forks[(i + 1) % s->in[N_PHILO]];
+		//s->philos[i].frst_fork = &s->forks[(i + 1) % s->in[N_PHILO]];
+		//s->philos[i].scnd_fork = &s->forks[i];
 		if (s->philos[i].id % 2 == 0)
 		{
+			//s->philos[i].frst_fork = &s->forks[(i + 1) % s->in[N_PHILO]];
+			//s->philos[i].scnd_fork = &s->forks[i];
 			s->philos[i].frst_fork = &s->forks[i];
 			s->philos[i].scnd_fork = &s->forks[(i + 1) % s->in[N_PHILO]];
 		}
-		else if (s->philos[i].id % 2 != 0)
+		else
 		{
+			//s->philos[i].frst_fork = &s->forks[i];
+			//s->philos[i].scnd_fork = &s->forks[(i + 1) % s->in[N_PHILO]];
 			s->philos[i].frst_fork = &s->forks[(i + 1) % s->in[N_PHILO]];
 			s->philos[i].scnd_fork = &s->forks[i];
 		}
@@ -68,11 +76,14 @@ static int	init_locks(t_main *s)
 {
 	if (handle_mutex(&s->main_lock, INIT) != 0)
 		return (1);
+	if (handle_mutex(&s->strv_lock, INIT) != 0)
+		return (1);
 	return (0);
 }
 
 static int	init_structs(t_main *s)
 {
+	s->active_philos = 0;
 	s->philo_died = malloc(sizeof(bool));
 	if (!s->philo_died)
 		return (1);

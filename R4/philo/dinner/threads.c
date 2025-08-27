@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   threads.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 16:50:17 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/26 20:01:40 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/27 10:00:37 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ static int	big_dinner(t_philo *p)
 {
 	int	ret;
 
+	//if (p->id % 2 == 0)
+	//	ft_usleep(p->id * 100);
 	while (1)
 	{
 		ret = dinner_is_done(p);
@@ -84,10 +86,10 @@ static void	*start_dinner(void *data)
 	t_philo	*philo;
 
 	philo = (t_philo *)data;
-	if (philo->s->in[N_PHILO] == 1)
-		solo_dinner(philo);
-	else
+	if (philo->s->in[N_PHILO] > 1)
 		big_dinner(philo);
+	else
+		solo_dinner(philo);
 	return (NULL);
 }
 
@@ -106,6 +108,7 @@ int	dinner(t_main *s)
 		i++;
 		if (ret != 0)
 			break ;
+		//ft_usleep(s->philos[i].id * 100);
 	}
 	s->philos_init = i;
 	i = -1;
