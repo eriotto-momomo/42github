@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/21 16:50:17 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/27 19:19:42 by emonacho         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2025/08/27 19:22:57 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../philo.h"
 
@@ -115,10 +116,10 @@ static void	*start_dinner(void *data)
 	t_philo	*philo;
 
 	philo = (t_philo *)data;
-	if (philo->s->in[N_PHILO] == 1)
-		solo_dinner(philo);
-	else
+	if (philo->s->in[N_PHILO] > 1)
 		big_dinner(philo);
+	else
+		solo_dinner(philo);
 	return (NULL);
 }
 
@@ -139,6 +140,7 @@ int	dinner(t_main *s)
 		i++;
 		if (ret != 0)
 			break ;
+		//ft_usleep(s->philos[i].id * 100);
 	}
 	s->philos_init = i;
 	i = -1;
