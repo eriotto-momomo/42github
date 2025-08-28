@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 13:55:47 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/28 18:07:50 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/28 19:10:00 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static int	init_locks(t_main *s)
 {
 	if (handle_mutex(&s->main_lock, INIT) != 0)
 		return (1);
-	if (handle_mutex(&s->strv_lock, INIT) != 0)
+	if (handle_mutex(&s->start_lock, INIT) != 0)
 		return (1);
 	return (0);
 }
@@ -75,6 +75,7 @@ static int	init_structs(t_main *s)
 {
 	s->philo_died = malloc(sizeof(bool));
 	s->wait_time = s->in[TTO_DIE] / 2;			// TO DELETE ?
+	s->start_flag = false;
 	if (!s->philo_died)
 		return (1);
 	*(s->philo_died) = false;

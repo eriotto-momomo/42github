@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 10:19:15 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/28 18:05:15 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/28 19:52:21 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	helper_print_philo(t_philo *p)
 
 	now = get_time();
 	fprintf(stderr, "%s----------------------%s\n", B, RST); //🖨️❗️
+	//fprintf(stderr, "Start time.....: %s%llu%s\n", Y, p->start_time, RST); //🖨️❗️
 	fprintf(stderr, "🧙Philo......ID: %s%d%s\n", Y, p->id, RST); //🖨️❗️
 	fprintf(stderr, "🍴First fork ID: %s%d%s\n🍴Secnd fork ID: %s%d%s\n", Y, p->frst_fork->id, RST, Y, p->scnd_fork->id, RST); //🖨️❗️
 	fprintf(stderr, "🍽️Meals eaten..: %s%d%s / %d\n", Y, p->meals_eaten, RST, p->s->in[MUST_EAT]); //🖨️❗️

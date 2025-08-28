@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:20:59 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/28 17:11:07 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/28 20:09:46 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,7 @@ static void	philo_wait(t_philo *p, t_time tto_wait)
 	t_time	start_wait;
 	t_time	elaps_wait;
 
-	if (handle_mutex(&p->s->main_lock, LOCK) != 0) //🖨️❗️
-		return ; //🖨️❗️
 	start_wait = get_time();
-	if (handle_mutex(&p->s->main_lock, UNLOCK) != 0) //🖨️❗️
-		return ; //🖨️❗️
 	elaps_wait = 0;
 	while (elaps_wait < tto_wait)
 	{
@@ -32,7 +28,7 @@ static void	philo_wait(t_philo *p, t_time tto_wait)
 		if (dinner_is_done(p) == 1)
 			return ;
 		usleep(500);
-		//ft_usleep(10);
+		//ft_usleep(500);
 	}
 	//fprintf(stderr, "philo_wait | p[id][%d] | STOP WAITING | TIME ELAPSED: %llu\n", p->id, elaps_wait);
 }
@@ -69,17 +65,13 @@ int	philo_eat(t_philo *p)
 		return (0);
 	}
 	print_philo(p, "has taken a fork", false);
-	handle_mutex(&p->s->main_lock, LOCK);
 	p->last_meal = get_time();
 	p->starving_time = p->last_meal + p->tto_die;
 	p->meals_eaten++;
-	handle_mutex(&p->s->main_lock, UNLOCK);
 	print_philo(p, "is eating", false);
 	philo_wait(p, p->tto_eat);
 	handle_mutex(&p->frst_fork->fork, UNLOCK);
 	handle_mutex(&p->scnd_fork->fork, UNLOCK);
-
-
 	return (0);
 }
 
