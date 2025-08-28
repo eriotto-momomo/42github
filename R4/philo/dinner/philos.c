@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:20:59 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/28 20:09:46 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/28 22:03:50 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	philo_think(t_philo *p)
 	if (dinner_is_done(p) != 0)
 		return (1);
 	print_philo(p, "is thinking", false);
+	usleep(100);
 	return (0);
 }
 
@@ -67,11 +68,13 @@ int	philo_eat(t_philo *p)
 	print_philo(p, "has taken a fork", false);
 	p->last_meal = get_time();
 	p->starving_time = p->last_meal + p->tto_die;
-	p->meals_eaten++;
 	print_philo(p, "is eating", false);
 	philo_wait(p, p->tto_eat);
 	handle_mutex(&p->frst_fork->fork, UNLOCK);
 	handle_mutex(&p->scnd_fork->fork, UNLOCK);
+	p->meals_eaten++;
+	p->is_prior = false;
+	usleep(100);
 	return (0);
 }
 
@@ -86,10 +89,13 @@ int	print_philo(t_philo *p, char *status, bool end_dinner)
 	{
 		printf("%llu %d %s\n", now, p->id, status);
 		if (end_dinner == true)
+		{
+			helper_print_philo(p); //🖨️❗️
 			*p->s->philo_died = true;
+		}
 	}
 	if (handle_mutex(&p->s->main_lock, UNLOCK) != 0)
 		return (1);
-	dinner_is_done(p);
+	//dinner_is_done(p);
 	return (0);
 }

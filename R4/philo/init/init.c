@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 13:55:47 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/28 19:10:00 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/28 22:02:49 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ static void	init_philos(t_main *s)
 	{
 		s->philos[i].id = i + 1;
 		s->philos[i].meals_eaten = 0;
+		s->philos[i].is_prior = false;
 		s->philos[i].meals_toeat = s->in[MUST_EAT];
+		s->philos[i].starving_time = s->in[TTO_DIE];
 		if (s->philos[i].id % 2 == 0)
 		{
 			s->philos[i].frst_fork = &s->forks[(i + 1) % s->in[N_PHILO]];	//1st choice for 4 philos
@@ -74,7 +76,6 @@ static int	init_locks(t_main *s)
 static int	init_structs(t_main *s)
 {
 	s->philo_died = malloc(sizeof(bool));
-	s->wait_time = s->in[TTO_DIE] / 2;			// TO DELETE ?
 	s->start_flag = false;
 	if (!s->philo_died)
 		return (1);
