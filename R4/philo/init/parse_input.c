@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 10:37:24 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/26 19:40:17 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/28 19:36:46 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	*convert_input(int ac, char **av)
 	while (i < ac - 1)
 	{
 		conversion = ft_atol(av[i + 1]);
-		if (conversion < 0 || conversion > INT_MAX)
+		if ((conversion < 0 || conversion > INT_MAX) || (i == 0 && conversion <= 0))
 		{
 			free(input);
 			ft_putstr_fd("Error: invalid arguments\n", 2);

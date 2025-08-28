@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/14 10:19:07 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/26 19:39:01 by emonacho         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2025/08/28 19:09:27 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef PHILO_H
 # define PHILO_H
@@ -22,6 +23,14 @@
 # include <unistd.h>
 # include <sys/time.h>
 # include <stdbool.h>
+
+# define R "\033[1;31m"
+# define G "\033[1;32m"
+# define Y "\033[1;33m"
+# define B "\033[1;34m"
+# define P "\033[1;35m"
+# define C "\033[1;36m"
+# define RST "\033[0m"
 
 typedef unsigned long long		t_time;
 typedef struct s_main_struct	t_main;
@@ -62,6 +71,7 @@ typedef struct s_philo
 	pthread_t		thread;
 	t_time			start_time;
 	t_time			last_meal;
+	t_time			starving_time;
 	t_time			tto_die;
 	t_time			tto_eat;
 	t_time			tto_slp;
@@ -72,17 +82,26 @@ typedef struct s_main_struct
 {
 	int				*in;
 	int				philos_init;
+	t_time			wait_time;
+	t_time			start_time;
 	t_philo			*philos;
 	t_fork			*forks;
 	bool			*philo_died;
+	bool			start_flag;
 	pthread_mutex_t	main_lock;
+	pthread_mutex_t	start_lock;
 }	t_main;
+
+void	helper_print_philo(t_philo *p);	// HELPER
+void	helper_print_data(t_main *s);	// HELPER
+
 
 // init.c & parse_input.c
 int		init_data(t_main *s);
 int		parse_input(int ac, char **av, t_main *s);
 
 // handlers.c
+void	pick_forks(t_philo *p);
 int		handle_thread(pthread_t *thread, t_routines mode,
 			void *(*foo)(void *), void *data);
 int		handle_mutex(pthread_mutex_t *mutex, t_routines mode);

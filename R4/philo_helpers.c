@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 14:49:52 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/25 21:22:10 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/27 08:18:55 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	helper_print_philo(t_philo *p)
 {
 	printf("%s----------------------%s\n", B, RST); //🖨️❗️
 	printf("🧙🏻‍♂️Philo......ID: %s%d%s\n", Y, p->id, RST); //🖨️❗️
+	printf("🍝Active philos: %s%d%s\n", Y, p->s->active_philos, RST); //🖨️❗️
 	printf("🍴First fork ID: %s%d%s\n🍴Secnd fork ID: %s%d%s\n", Y, p->frst_fork->id, RST, Y, p->scnd_fork->id, RST); //🖨️❗️
 	printf("🍽️Meals eaten..: %s%d%s / %d\n", Y, p->meals_eaten, RST, p->s->in[MUST_EAT]); //🖨️❗️
 	printf("%s----------------------%s\n", B, RST); //🖨️❗️

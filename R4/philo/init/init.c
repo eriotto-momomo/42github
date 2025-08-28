@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 13:55:47 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/26 19:41:35 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/28 19:10:00 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,17 @@ static void	init_philos(t_main *s)
 		s->philos[i].meals_toeat = s->in[MUST_EAT];
 		if (s->philos[i].id % 2 == 0)
 		{
-			s->philos[i].frst_fork = &s->forks[i];
-			s->philos[i].scnd_fork = &s->forks[(i + 1) % s->in[N_PHILO]];
+			s->philos[i].frst_fork = &s->forks[(i + 1) % s->in[N_PHILO]];	//1st choice for 4 philos
+			s->philos[i].scnd_fork = &s->forks[i]; 							//1st choice for 4 philos
 		}
-		else if (s->philos[i].id % 2 != 0)
+		else
 		{
-			s->philos[i].frst_fork = &s->forks[(i + 1) % s->in[N_PHILO]];
-			s->philos[i].scnd_fork = &s->forks[i];
+			s->philos[i].frst_fork = &s->forks[i];							//1st choice for 4 philos
+			s->philos[i].scnd_fork = &s->forks[(i + 1) % s->in[N_PHILO]];	//1st choice for 4 philos
 		}
-		s->philos[i].start_time = get_time();
-		s->philos[i].last_meal = get_time();
-		s->philos[i].tto_die = (size_t)s->in[TTO_DIE];
-		s->philos[i].tto_eat = (size_t)s->in[TTO_EAT];
-		s->philos[i].tto_slp = (size_t)s->in[TTO_SLEEP];
+		s->philos[i].tto_die = (t_time)s->in[TTO_DIE];
+		s->philos[i].tto_eat = (t_time)s->in[TTO_EAT];
+		s->philos[i].tto_slp = (t_time)s->in[TTO_SLEEP];
 		s->philos[i].s = s;
 	}
 }
@@ -68,12 +66,16 @@ static int	init_locks(t_main *s)
 {
 	if (handle_mutex(&s->main_lock, INIT) != 0)
 		return (1);
+	if (handle_mutex(&s->start_lock, INIT) != 0)
+		return (1);
 	return (0);
 }
 
 static int	init_structs(t_main *s)
 {
 	s->philo_died = malloc(sizeof(bool));
+	s->wait_time = s->in[TTO_DIE] / 2;			// TO DELETE ?
+	s->start_flag = false;
 	if (!s->philo_died)
 		return (1);
 	*(s->philo_died) = false;
@@ -82,7 +84,7 @@ static int	init_structs(t_main *s)
 	if (!s->philos || !s->forks)
 	{
 		free_structs(s);
-		ft_putstr_fd("Error: malloc failed", 2);
+		ft_putstr_fd("Error: malloc failed", 2); // ??????? ./philo 400000000 410 200 200
 		return (1);
 	}
 	return (0);
