@@ -6,11 +6,17 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 12:33:36 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/28 16:53:36 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/28 17:48:33 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
+
+long	diff_timeval_us(struct timeval *a, struct timeval *b)
+{
+	return (((a->tv_sec - b->tv_sec) * 1000)
+		+ (a->tv_usec - b->tv_usec) / 1000);
+}
 
 //bool	is_prior(t_main *s, t_time time_to_check, int id)
 //{

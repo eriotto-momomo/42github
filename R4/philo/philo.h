@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/08/28 14:28:09 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/28 17:32:27 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,13 @@ typedef struct s_philo
 	t_fork			*frst_fork;
 	t_fork			*scnd_fork;
 	pthread_t		thread;
+	struct timeval	last_meal;
 	t_time			start_time;
-	t_time			last_meal;
+	//t_time			last_meal;
 	t_time			starving_time;
-	t_time			tto_die;
-	t_time			tto_eat;
-	t_time			tto_slp;
+	long			tto_die;
+	long			tto_eat;
+	long			tto_slp;
 	t_main			*s;
 }	t_philo;
 
@@ -83,7 +84,8 @@ typedef struct s_main_struct
 	int				*in;
 	int				philos_init;
 	t_time			wait_time;
-	t_time			start_time;
+	struct timeval	start_time;
+	//t_time			start_time;
 	t_philo			*philos;
 	t_fork			*forks;
 	bool			*philo_died;
@@ -104,6 +106,8 @@ void	pick_forks(t_philo *p);
 int		handle_thread(pthread_t *thread, t_routines mode,
 			void *(*foo)(void *), void *data);
 int		handle_mutex(pthread_mutex_t *mutex, t_routines mode);
+long	diff_timeval_us(struct timeval *a, struct timeval *b);
+
 
 // philos.c
 int		philo_think(t_philo *p);

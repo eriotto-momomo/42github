@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/08/28 17:07:00 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/28 17:58:26 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 // return(-1)= ERROR
 int	dinner_is_done(t_philo *p)
 {
-	t_time	now;
+	struct timeval	now;
+	long			elapsed;
 
 	if (p->meals_eaten == p->meals_toeat)
 		return (1);
@@ -26,16 +27,27 @@ int	dinner_is_done(t_philo *p)
 		return (-1);
 	if (*p->s->philo_died == true)
 		return (quit_dinner(p));
-	now = get_time();
-	helper_print_philo(p); //🖨️❗️
-	if ((p->starving_time - now) > p->tto_die)
+	//helper_print_philo(p); //🖨️❗️
+	gettimeofday(&now, NULL);
+	elapsed = diff_timeval_us(&now, &p->last_meal);
+
+	if (elapsed >= p->tto_die)
 	{
-		helper_print_philo(p); //🖨️❗️
+		fprintf(stderr, "dinner_is_done | p[id][%d] | elapsed: %ld\n", p->id, elapsed);
+		//helper_print_philo(p); //🖨️❗️
 		if (handle_mutex(&p->s->main_lock, UNLOCK) != 0)
 			return (-1);
 		print_philo(p, "died", true);
 		return (1);
 	}
+	//if ((p->starving_time - now) > p->tto_die)
+	//{
+	//	helper_print_philo(p); //🖨️❗️
+	//	if (handle_mutex(&p->s->main_lock, UNLOCK) != 0)
+	//		return (-1);
+	//	print_philo(p, "died", true);
+	//	return (1);
+	//}
 	if (handle_mutex(&p->s->main_lock, UNLOCK) != 0)
 		return (-1);
 	return (0);
@@ -45,16 +57,16 @@ static int	big_dinner(t_philo *p)
 {
 	int	ret;
 
-	if (p->s->in[N_PHILO] % 2 == 0)
-	{
-		if (p->id == 0)
-			usleep(500);
-	}
-	else
-	{
-		if (p->id % 2 == 0)
-			usleep(500);
-	}
+	//if (p->s->in[N_PHILO] % 2 == 0)
+	//{
+	//	if (p->id == 0)
+	//		usleep(500);
+	//}
+	//else
+	//{
+	//	if (p->id % 2 == 0)
+	//		usleep(500);
+	//}
 	//if (p->id % 2 == 0)
 	//	usleep(1);
 	while (1)
@@ -120,12 +132,14 @@ int	dinner(t_main *s)
 	i = 0;
 	while (i < s->in[N_PHILO])
 	{
-		s->philos[i].start_time = get_time();
-		s->philos[i].last_meal = s->philos[i].start_time;
-		s->philos[i].starving_time = s->philos[i].last_meal + s->philos[i].tto_die;
+		//s->philos[i].start_time = get_time();
+		gettimeofday(&s->start_time, NULL);
+		//s->philos[i].last_meal = s->philos[i].start_time;
+		//s->philos[i].starving_time = s->philos[i].last_meal + s->philos[i].tto_die;
 		if (handle_thread(&s->philos[i].thread, CREATE,
 				start_dinner, &s->philos[i]) != 0)
 			return (1);
+		fprintf(stderr, "dinner | p[id][%d] | 1\n", s->philos[i].id);
 		ret = dinner_is_done(&s->philos[i]);
 		i++;
 		if (ret != 0)

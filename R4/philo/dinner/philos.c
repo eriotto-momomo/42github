@@ -6,28 +6,29 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:20:59 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/28 17:11:07 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/28 17:55:32 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-static void	philo_wait(t_philo *p, t_time tto_wait)
+static void	philo_wait(t_philo *p, long tto_wait)
 {
-	t_time	start_wait;
-	t_time	elaps_wait;
+	struct timeval	now;
+	struct timeval	time_to_wait;
+	long			elapsed;
 
 	if (handle_mutex(&p->s->main_lock, LOCK) != 0) //🖨️❗️
 		return ; //🖨️❗️
-	start_wait = get_time();
+	gettimeofday(&now, NULL);
 	if (handle_mutex(&p->s->main_lock, UNLOCK) != 0) //🖨️❗️
 		return ; //🖨️❗️
-	elaps_wait = 0;
-	while (elaps_wait < tto_wait)
+	while (elapsed < tto_wait)
 	{
-		elaps_wait = (get_time() - start_wait);
-		//fprintf(stderr, "philo_wait | p[id][%d] | elaps_wait: %llu\n", p->id, elaps_wait);
-		if (elaps_wait > tto_wait)
+		gettimeofday(&time_to_wait, NULL);
+		elapsed = diff_timeval_us(&time_to_wait, &now);
+		fprintf(stderr, "philo_wait | p[id][%d] | elapsed wiat: %ld\n", p->id, elapsed);
+		if (elapsed > tto_wait)
 			break ;
 		if (dinner_is_done(p) == 1)
 			return ;
@@ -59,6 +60,7 @@ int	philo_eat(t_philo *p)
 	//handle_mutex(&p->s->main_lock, LOCK); //🖨️❗️
 	//helper_print_philo(p); //🖨️❗️
 	//handle_mutex(&p->s->main_lock, UNLOCK); //🖨️❗️
+	fprintf(stderr, "philo_eat| p[id][%d] | 1\n", p->id);
 	if (dinner_is_done(p) != 0)
 		return (0);
 	pick_forks(p);
@@ -70,8 +72,9 @@ int	philo_eat(t_philo *p)
 	}
 	print_philo(p, "has taken a fork", false);
 	handle_mutex(&p->s->main_lock, LOCK);
-	p->last_meal = get_time();
-	p->starving_time = p->last_meal + p->tto_die;
+	gettimeofday(&p->last_meal, NULL);
+	//p->last_meal = get_time();
+	//p->starving_time = p->last_meal + p->tto_die;
 	p->meals_eaten++;
 	handle_mutex(&p->s->main_lock, UNLOCK);
 	print_philo(p, "is eating", false);
@@ -85,14 +88,16 @@ int	philo_eat(t_philo *p)
 
 int	print_philo(t_philo *p, char *status, bool end_dinner)
 {
-	t_time	now;
+	struct timeval	now;
+	long			elapsed;
 
 	if (handle_mutex(&p->s->main_lock, LOCK) != 0)
 		return (1);
-	now = get_time() - p->start_time;
+	gettimeofday(&now, NULL);
+	elapsed = diff_timeval_us(&now, &p->s->start_time);
 	if (*p->s->philo_died == false)
 	{
-		printf("%llu %d %s\n", now, p->id, status);
+		printf("%ld %d %s\n", elapsed, p->id, status);
 		if (end_dinner == true)
 			*p->s->philo_died = true;
 	}
