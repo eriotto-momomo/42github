@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/08/27 19:22:57 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/28 10:52:36 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,10 @@ int	dinner_is_done(t_philo *p)
 	if (*p->s->philo_died == true)
 		return (quit_dinner(p));
 	now = get_time();
-	if ((now - p->last_meal - p->start_time) > p->tto_die)
+	if ((p->starving_time - now) > p->tto_die)
 	{
-		fprintf(stderr, "☠️❗️[%d] | time_elapsed from last_meal: %llu\np->last_meal: %llu | now: %llu\n", p->id, now - p->last_meal - p->start_time, p->last_meal, now);
+		//fprintf(stderr, "☠️❗️[%d] | time_elapsed from last_meal: %llu\np->last_meal: %llu | now: %llu\n", p->id, p->starving_time - now, p->last_meal - p->start_time, now - p->start_time);
+		helper_print_philo(p);
 		if (handle_mutex(&p->s->main_lock, UNLOCK) != 0)
 			return (-1);
 		print_philo(p, "died", true);
@@ -67,7 +68,6 @@ static int	big_dinner(t_philo *p)
 {
 	int	ret;
 
-	//p->last_meal = get_time();
 	//fprintf(stderr, "big_dinner | p->last_meal: %llu\n", p->last_meal);
 	while (1)
 	{
@@ -87,7 +87,6 @@ static int	solo_dinner(t_philo *p)
 {
 	int	ret;
 
-	//p->last_meal = get_time();
 	//fprintf(stderr, "solo_dinner | p->last_meal: %llu\n", p->last_meal);
 	ret = dinner_is_done(p);
 	if (ret == 0)
@@ -131,8 +130,10 @@ int	dinner(t_main *s)
 	i = 0;
 	while (i < s->in[N_PHILO])
 	{
-		s->philos[i].last_meal = get_time();
-		fprintf(stderr, "dinner | p->last_meal: %llu\n", s->philos[i].last_meal);
+		s->philos[i].start_time = get_time();
+		s->philos[i].last_meal = s->philos[i].start_time;
+		s->philos[i].starving_time = s->philos[i].last_meal + s->philos[i].tto_die;
+		//fprintf(stderr, "dinner | p->last_meal: %llu\n", s->philos[i].last_meal);
 		if (handle_thread(&s->philos[i].thread, CREATE,
 				start_dinner, &s->philos[i]) != 0)
 			return (1);

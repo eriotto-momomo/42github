@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/08/27 19:22:41 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/28 09:37:35 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct s_philo
 	pthread_t		thread;
 	t_time			start_time;
 	t_time			last_meal;
+	t_time			starving_time;
 	t_time			tto_die;
 	t_time			tto_eat;
 	t_time			tto_slp;
