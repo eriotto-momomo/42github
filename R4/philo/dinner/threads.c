@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/08/28 16:44:02 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/28 17:07:00 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	dinner_is_done(t_philo *p)
 	if (*p->s->philo_died == true)
 		return (quit_dinner(p));
 	now = get_time();
+	helper_print_philo(p); //🖨️❗️
 	if ((p->starving_time - now) > p->tto_die)
 	{
 		helper_print_philo(p); //🖨️❗️
@@ -44,6 +45,18 @@ static int	big_dinner(t_philo *p)
 {
 	int	ret;
 
+	if (p->s->in[N_PHILO] % 2 == 0)
+	{
+		if (p->id == 0)
+			usleep(500);
+	}
+	else
+	{
+		if (p->id % 2 == 0)
+			usleep(500);
+	}
+	//if (p->id % 2 == 0)
+	//	usleep(1);
 	while (1)
 	{
 		ret = dinner_is_done(p);

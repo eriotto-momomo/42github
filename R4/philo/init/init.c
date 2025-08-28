@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 13:55:47 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/28 16:45:17 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/28 17:10:00 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,11 @@ static void	init_philos(t_main *s)
 		{
 			s->philos[i].frst_fork = &s->forks[(i + 1) % s->in[N_PHILO]];	//1st choice for 4 philos
 			s->philos[i].scnd_fork = &s->forks[i]; 							//1st choice for 4 philos
-			//s->philos[i].frst_fork = &s->forks[i];
-			//s->philos[i].scnd_fork = &s->forks[(i + 1) % s->in[N_PHILO]];
 		}
 		else
 		{
 			s->philos[i].frst_fork = &s->forks[i];							//1st choice for 4 philos
 			s->philos[i].scnd_fork = &s->forks[(i + 1) % s->in[N_PHILO]];	//1st choice for 4 philos
-			//s->philos[i].frst_fork = &s->forks[(i + 1) % s->in[N_PHILO]];
-			//s->philos[i].scnd_fork = &s->forks[i];
 		}
 		s->philos[i].tto_die = (size_t)s->in[TTO_DIE];
 		s->philos[i].tto_eat = (size_t)s->in[TTO_EAT];
@@ -87,7 +83,7 @@ static int	init_structs(t_main *s)
 	if (!s->philos || !s->forks)
 	{
 		free_structs(s);
-		ft_putstr_fd("Error: malloc failed", 2);
+		ft_putstr_fd("Error: malloc failed", 2); // ??????? ./philo 400000000 410 200 200
 		return (1);
 	}
 	return (0);

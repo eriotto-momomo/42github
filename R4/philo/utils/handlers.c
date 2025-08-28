@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 12:33:36 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/28 16:45:46 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/28 16:53:36 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@
 
 void	pick_forks(t_philo *p)
 {
-	if (p->meals_eaten == 0 && p->id % 2 == 0)
-		usleep(1);
 	//	ft_usleep(1);					//TO DELETE ?
 	if (p->id % 2 == 0)
 	{
