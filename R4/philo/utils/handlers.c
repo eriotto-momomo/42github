@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handlers.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 12:33:36 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/28 10:52:34 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/28 14:28:10 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,22 +47,24 @@
 void	pick_forks(t_philo *p)
 {
 	t_time	now;
-	t_time	wait;
+	t_time	elapsed;
 
-	//handle_mutex(&p->s->main_lock, UNLOCK);
-	wait = p->tto_die / 2;
+	if (handle_mutex(&p->s->main_lock, LOCK) != 0) //🖨️❗️
+		return ; //🖨️❗️
 	now = get_time();
-	helper_print_philo(p);
-	//fprintf(stderr, "pick_forks | 🧙🏻‍♂️[%d]TIME ELAPSED FROM LAST MEAL: %llu | tto_die / 2: %llu\n", p->id, (now - p->start_time) - (p->last_meal - p->start_time), p->tto_die / 2);
-	fprintf(stderr, "pick_forks | 🧙🏻‍♂️[%d] wait....: %llu\n", p->id, wait);
-	fprintf(stderr, "pick_forks | 🧙🏻‍♂️[%d] now....: %llu\n", p->id, now - p->start_time);
-	fprintf(stderr, "pick_forks | 🧙🏻‍♂️[%d] now + wait..........: %llu\n", p->id, (now - p->start_time) + wait);
-	fprintf(stderr, "pick_forks | 🧙🏻‍♂️[%d] starving_time.......: %llu\n", p->id, (p->starving_time - p->start_time));
-	if (p->meals_eaten > 0 && (p->starving_time - (p->tto_die / 2)) < (p->last_meal + (p->tto_die / 2)))
+	elapsed = now - p->last_meal;
+	if (p->meals_eaten > 0)
 	{
-		fprintf(stderr, "pick_forks | 🧙🏻‍♂️[%d]TIME ELAPSED FROM LAST MEAL: %llu | tto_die / 2: %llu\n", p->id, (now - p->start_time) - (p->last_meal - p->start_time), p->tto_die / 2);
-		ft_usleep(20);
+		fprintf(stderr, "🔴 pick_forks | [%d]TIME ELAPSED FROM LAST MEAL: %llu\n", p->id, elapsed);
+		if (elapsed < p->s->wait_time)
+		{
+			fprintf(stderr, "🔴 pick_forks | [%d]sleep for: %llu\n", p->id, p->s->wait_time / 2);
+			ft_usleep(p->s->wait_time / 2);
+		}
 	}
+	//helper_print_philo(p); //🖨️❗️
+	if (handle_mutex(&p->s->main_lock, UNLOCK) != 0) //🖨️❗️
+		return ; //🖨️❗️
 	if (p->id % 2 == 0)
 	{
 		handle_mutex(&p->scnd_fork->fork, LOCK);
@@ -75,6 +77,15 @@ void	pick_forks(t_philo *p)
 		print_philo(p, "has taken a fork", false);
 		handle_mutex(&p->scnd_fork->fork, LOCK);
 	}
+	if (handle_mutex(&p->s->main_lock, LOCK) != 0) //🖨️❗️
+		return ; //🖨️❗️
+	fprintf(stderr, "🔵 pick_forks | [%d] last_meal..........: %llu\n", p->id, p->last_meal - p->start_time);
+	fprintf(stderr, "🔵 pick_forks | [%d] now................: %llu\n", p->id, now - p->start_time);
+	fprintf(stderr, "🔵 pick_forks | [%d] now - last_meal....: %llu\n", p->id, now - p->last_meal);
+	fprintf(stderr, "🔵 pick_forks | [%d] starving_time......: %llu\n", p->id, p->starving_time - p->start_time);
+	fprintf(stderr, "🔵 pick_forks | [%d] now + wait.........: %llu\n", p->id, ((now - p->start_time) + p->s->wait_time));
+	if (handle_mutex(&p->s->main_lock, UNLOCK) != 0) //🖨️❗️
+		return ; //🖨️❗️
 	//handle_mutex(&p->s->main_lock, LOCK);
 	//p->s->active_philos++;
 	//if (p->s->active_philos < (p->s->in[N_PHILO]) / 2)

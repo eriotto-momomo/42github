@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philos.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:20:59 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/28 10:52:36 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/28 14:28:08 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,23 @@ static void	philo_wait(t_philo *p, t_time tto_wait)
 
 int	philo_think(t_philo *p)
 {
+	//t_time	now;
+	//t_time	wait;
+	//t_time	elapsed;
+
+	//if (handle_mutex(&p->s->main_lock, LOCK) != 0) //🖨️❗️
+	//	return (1); //🖨️❗️
+	//now = get_time();
+	//wait = (p->tto_die / 2);
+	//elapsed = now - p->last_meal;
+	//if (handle_mutex(&p->s->main_lock, UNLOCK) != 0) //🖨️❗️
+	//	return (1); //🖨️❗️
+	//fprintf(stderr, "⚪ philo_think | [%d]elapsed: %llu | wait: %llu\n", p->id, elapsed, wait);
+	//if (elapsed + wait )
+	//{
+	//	fprintf(stderr, "🔴 philo_think | [%d]sleep for: %llu\n", p->id, wait / 2);
+	//	ft_usleep(wait / 2);
+	//}
 	if (dinner_is_done(p) != 0)
 		return (1);
 	print_philo(p, "is thinking", false);
@@ -64,18 +81,18 @@ int	philo_eat(t_philo *p)
 		handle_mutex(&p->scnd_fork->fork, UNLOCK);
 		return (0);
 	}
+	print_philo(p, "has taken a fork", false);
 	handle_mutex(&p->s->main_lock, LOCK);
 	p->meals_eaten++;
 	p->last_meal = get_time();
 	p->starving_time = p->last_meal + p->tto_die;
 	handle_mutex(&p->s->main_lock, UNLOCK);
-	print_philo(p, "has taken a fork", false);
 	print_philo(p, "is eating", false);
 	philo_wait(p, p->tto_eat);
 	handle_mutex(&p->frst_fork->fork, UNLOCK);
 	handle_mutex(&p->scnd_fork->fork, UNLOCK);
 	//handle_mutex(&p->s->main_lock, LOCK); //🖨️❗️
-	//helper_print_philo(p);
+	//helper_print_philo(p); //🖨️❗️
 	//handle_mutex(&p->s->main_lock, UNLOCK); //🖨️❗️
 	return (0);
 }

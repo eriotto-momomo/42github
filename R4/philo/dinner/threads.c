@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   threads.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/08/28 10:52:36 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/28 14:28:12 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	dinner_is_done(t_philo *p)
 	if ((p->starving_time - now) > p->tto_die)
 	{
 		//fprintf(stderr, "☠️❗️[%d] | time_elapsed from last_meal: %llu\np->last_meal: %llu | now: %llu\n", p->id, p->starving_time - now, p->last_meal - p->start_time, now - p->start_time);
-		helper_print_philo(p);
+		//helper_print_philo(p); //🖨️❗️
 		if (handle_mutex(&p->s->main_lock, UNLOCK) != 0)
 			return (-1);
 		print_philo(p, "died", true);

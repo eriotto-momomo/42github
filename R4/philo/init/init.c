@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 13:55:47 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/28 10:52:35 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/28 14:16:09 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ static int	init_structs(t_main *s)
 {
 	//s->start_time = get_time();
 	s->philo_died = malloc(sizeof(bool));
+	s->wait_time = s->in[TTO_DIE] / 2;
 	if (!s->philo_died)
 		return (1);
 	*(s->philo_died) = false;
