@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 13:55:47 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/28 22:02:49 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/29 11:41:34 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,18 @@ static void	init_philos(t_main *s)
 	{
 		s->philos[i].id = i + 1;
 		s->philos[i].meals_eaten = 0;
-		s->philos[i].is_prior = false;
+		s->philos[i].priority = 3;
 		s->philos[i].meals_toeat = s->in[MUST_EAT];
 		s->philos[i].starving_time = s->in[TTO_DIE];
 		if (s->philos[i].id % 2 == 0)
 		{
-			s->philos[i].frst_fork = &s->forks[(i + 1) % s->in[N_PHILO]];	//1st choice for 4 philos
-			s->philos[i].scnd_fork = &s->forks[i]; 							//1st choice for 4 philos
+			s->philos[i].frst_fork = &s->forks[(i + 1) % s->in[N_PHILO]];
+			s->philos[i].scnd_fork = &s->forks[i];
 		}
 		else
 		{
-			s->philos[i].frst_fork = &s->forks[i];							//1st choice for 4 philos
-			s->philos[i].scnd_fork = &s->forks[(i + 1) % s->in[N_PHILO]];	//1st choice for 4 philos
+			s->philos[i].frst_fork = &s->forks[i];
+			s->philos[i].scnd_fork = &s->forks[(i + 1) % s->in[N_PHILO]];
 		}
 		s->philos[i].tto_die = (t_time)s->in[TTO_DIE];
 		s->philos[i].tto_eat = (t_time)s->in[TTO_EAT];
@@ -85,7 +85,7 @@ static int	init_structs(t_main *s)
 	if (!s->philos || !s->forks)
 	{
 		free_structs(s);
-		ft_putstr_fd("Error: malloc failed", 2); // ??????? ./philo 400000000 410 200 200
+		ft_putstr_fd("Error: malloc failed", 2);
 		return (1);
 	}
 	return (0);

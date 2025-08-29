@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/08/28 22:02:42 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/29 11:41:33 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ typedef struct s_fork
 typedef struct s_philo
 {
 	int				id;
-	bool			is_prior;
+	int				priority;
 	int				meals_eaten;
 	int				meals_toeat;
 	t_fork			*frst_fork;
