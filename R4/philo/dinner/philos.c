@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:20:59 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/29 14:14:51 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/29 15:28:46 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,13 @@ void	print_philo(t_philo *p, char *status, bool end_dinner)
 	t_time	now;
 
 	now = get_time() - p->start_time;
+	handle_mutex(&p->s->main_lock, LOCK);
 	if (end_dinner == true)
 	{
 		printf("%llu %d %s\n", now, p->id, status);
+		handle_mutex(&p->s->main_lock, UNLOCK);
 		return ;
 	}
-	handle_mutex(&p->s->main_lock, LOCK);
 	if (*p->s->philo_died == true)
 	{
 		handle_mutex(&p->s->main_lock, UNLOCK);

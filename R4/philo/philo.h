@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/08/29 14:14:52 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/29 15:28:11 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct s_philo
 	int				priority;
 	int				meals_eaten;
 	int				meals_toeat;
+	int				n_philos;
 	t_fork			*frst_fork;
 	t_fork			*scnd_fork;
 	pthread_t		thread;
@@ -118,7 +119,6 @@ int		philo_eat(t_philo *p);
 void	print_philo(t_philo *p, char *status, bool end_dinner);
 
 // threads.c
-int		dinner_is_done(t_philo *p);
 int		dinner(t_main *s);
 
 // clean_free.c
@@ -127,6 +127,7 @@ void	destroy_mutex(t_main *s);
 void	clean_free(t_main *s);
 
 // utils.c
+int		dinner_is_done(t_philo *p);
 void	ft_putstr_fd(char *s, int fd);
 size_t	ft_strlen(char *s);
 int		ft_usleep(size_t milliseconds);

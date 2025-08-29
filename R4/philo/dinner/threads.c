@@ -6,34 +6,12 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/08/29 14:10:01 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/29 15:31:00 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../philo.h"
-
-int	dinner_is_done(t_philo *p)
-{
-	if (handle_mutex(&p->s->main_lock, LOCK) != 0)
-		return (-1);
-	if (*p->s->philo_died == true)
-	{
-		if (handle_mutex(&p->s->main_lock, UNLOCK) != 0)
-			return (-1);
-		return (1);
-	}
-	if (handle_mutex(&p->s->main_lock, UNLOCK) != 0)
-		return (-1);
-	if (p->meals_eaten == p->meals_toeat)
-	{
-		handle_mutex(&p->s->monitor_lock, LOCK);
-		p->s->philos_full++;
-		handle_mutex(&p->s->monitor_lock, UNLOCK);
-		return (1);
-	}
-	return (0);
-}
 
 static int	big_dinner(t_philo *p)
 {
@@ -80,29 +58,41 @@ static int	solo_dinner(t_philo *p)
 	return (0);
 }
 
-static void	*start_dinner(void *data)
+static void	sync_philos(t_main *s)
 {
-	t_philo	*philo;
-	t_main	*s;
-
-	philo = (t_philo *)data;
-	s = philo->s;
 	while (1)
 	{
 		handle_mutex(&s->start_lock, LOCK);
 		if (s->start_flag == true)
+		{
+			handle_mutex(&s->start_lock, UNLOCK);
 			break ;
+		}
 		handle_mutex(&s->start_lock, UNLOCK);
 		usleep(100);
 	}
+}
+
+static void	*start_dinner(void *data)
+{
+	t_philo	*p;
+	t_main	*s;
+
+	p = (t_philo *)data;
+	s = p->s;
+	sync_philos(s);
+	handle_mutex(&s->start_lock, LOCK);
+	p->start_time = get_time();
+	p->last_meal = p->start_time;
+	p->starving_time = p->last_meal + p->tto_die;
+	if (p->n_philos > 1)
+	{
+		handle_mutex(&s->start_lock, UNLOCK);
+		big_dinner(p);
+		return (NULL);
+	}
 	handle_mutex(&s->start_lock, UNLOCK);
-	philo->start_time = get_time();
-	philo->last_meal = philo->start_time;
-	philo->starving_time = philo->last_meal + philo->tto_die;
-	if (philo->s->in[N_PHILO] > 1)
-		big_dinner(philo);
-	else
-		solo_dinner(philo);
+	solo_dinner(p);
 	return (NULL);
 }
 
