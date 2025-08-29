@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 13:55:47 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/28 19:10:00 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/29 15:18:24 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,23 @@ static void	init_philos(t_main *s)
 	{
 		s->philos[i].id = i + 1;
 		s->philos[i].meals_eaten = 0;
+		s->philos[i].priority = 3;
 		s->philos[i].meals_toeat = s->in[MUST_EAT];
+		s->philos[i].n_philos = s->in[N_PHILO];
 		if (s->philos[i].id % 2 == 0)
 		{
-			s->philos[i].frst_fork = &s->forks[(i + 1) % s->in[N_PHILO]];	//1st choice for 4 philos
-			s->philos[i].scnd_fork = &s->forks[i]; 							//1st choice for 4 philos
+			s->philos[i].frst_fork = &s->forks[(i + 1) % s->in[N_PHILO]];
+			s->philos[i].scnd_fork = &s->forks[i];
 		}
 		else
 		{
-			s->philos[i].frst_fork = &s->forks[i];							//1st choice for 4 philos
-			s->philos[i].scnd_fork = &s->forks[(i + 1) % s->in[N_PHILO]];	//1st choice for 4 philos
+			s->philos[i].frst_fork = &s->forks[i];
+			s->philos[i].scnd_fork = &s->forks[(i + 1) % s->in[N_PHILO]];
 		}
 		s->philos[i].tto_die = (t_time)s->in[TTO_DIE];
 		s->philos[i].tto_eat = (t_time)s->in[TTO_EAT];
 		s->philos[i].tto_slp = (t_time)s->in[TTO_SLEEP];
+		s->philos[i].starving_time = s->philos[i].tto_die;
 		s->philos[i].s = s;
 	}
 }
@@ -67,15 +70,24 @@ static int	init_locks(t_main *s)
 	if (handle_mutex(&s->main_lock, INIT) != 0)
 		return (1);
 	if (handle_mutex(&s->start_lock, INIT) != 0)
+	{
+		handle_mutex(&s->main_lock, DESTROY);
 		return (1);
+	}
+	if (handle_mutex(&s->monitor_lock, INIT) != 0)
+	{
+		handle_mutex(&s->main_lock, DESTROY);
+		handle_mutex(&s->start_lock, DESTROY);
+		return (1);
+	}
 	return (0);
 }
 
 static int	init_structs(t_main *s)
 {
 	s->philo_died = malloc(sizeof(bool));
-	s->wait_time = s->in[TTO_DIE] / 2;			// TO DELETE ?
 	s->start_flag = false;
+	s->philos_full = 0;
 	if (!s->philo_died)
 		return (1);
 	*(s->philo_died) = false;
@@ -84,7 +96,7 @@ static int	init_structs(t_main *s)
 	if (!s->philos || !s->forks)
 	{
 		free_structs(s);
-		ft_putstr_fd("Error: malloc failed", 2); // ??????? ./philo 400000000 410 200 200
+		ft_putstr_fd("Error: malloc failed", 2);
 		return (1);
 	}
 	return (0);

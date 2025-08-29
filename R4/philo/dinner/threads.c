@@ -6,71 +6,28 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/08/28 20:09:30 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/29 15:31:00 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../philo.h"
 
-// return(1) = TRUE
-// return(0) = FALSE
-// return(-1)= ERROR
-int	dinner_is_done(t_philo *p)
-{
-	t_time	now;
-
-	if (p->meals_eaten == p->meals_toeat)
-		return (1);
-	if (handle_mutex(&p->s->main_lock, LOCK) != 0)
-		return (-1);
-	if (*p->s->philo_died == true)
-		return (quit_dinner(p));
-	if (handle_mutex(&p->s->main_lock, UNLOCK) != 0)
-		return (-1);
-	now = get_time();
-	if ((p->starving_time - now) > p->tto_die)
-	{
-		helper_print_philo(p); //🖨️❗️
-		print_philo(p, "died", true);
-		return (1);
-	}
-	return (0);
-}
-
 static int	big_dinner(t_philo *p)
 {
-	int	ret;
-
-	fprintf(stderr, "Start time.....: %s%llu%s\n", Y, p->start_time, RST); //🖨️❗️
-	if (p->s->in[N_PHILO] % 2 == 0)
-	{
-		if (p->id == 0)
-		{
-			usleep(500);
-			//ft_usleep(500);
-		}
-	}
-	else
-	{
-		if (p->id % 2 == 0)
-		{
-			usleep(500);
-			//ft_usleep(500);
-		}
-	}
+	fprintf(stderr, "✅ start time.....: %s%llu%s\n", Y, p->start_time, RST); //🖨️❗️
+	if (p->id % 2 == 0)
+		usleep(100);
 	while (1)
 	{
-		ret = dinner_is_done(p);
-		if (ret == 1)
+		if (dinner_is_done(p) != 0)
 			break ;
-		else if (ret == -1)
-			return (1);
-		philo_eat(p);
-		philo_sleep(p);
-		philo_think(p);
-		//ft_usleep(100);
-		usleep(100);
+		if (philo_eat(p) == 1)
+			break ;
+		if (philo_sleep(p) == 1)
+			break ;
+		if (philo_think(p) == 1)
+			break ;
 	}
 	return (0);
 }
@@ -101,13 +58,8 @@ static int	solo_dinner(t_philo *p)
 	return (0);
 }
 
-static void	*start_dinner(void *data)
+static void	sync_philos(t_main *s)
 {
-	t_philo	*philo;
-	t_main	*s;
-
-	philo = (t_philo *)data;
-	s = philo->s;
 	while (1)
 	{
 		handle_mutex(&s->start_lock, LOCK);
@@ -117,16 +69,30 @@ static void	*start_dinner(void *data)
 			break ;
 		}
 		handle_mutex(&s->start_lock, UNLOCK);
-		//ft_usleep(100);
 		usleep(100);
 	}
-	philo->start_time = get_time();
-	philo->last_meal = philo->start_time;
-	philo->starving_time = philo->last_meal + philo->tto_die;
-	if (philo->s->in[N_PHILO] > 1)
-		big_dinner(philo);
-	else
-		solo_dinner(philo);
+}
+
+static void	*start_dinner(void *data)
+{
+	t_philo	*p;
+	t_main	*s;
+
+	p = (t_philo *)data;
+	s = p->s;
+	sync_philos(s);
+	handle_mutex(&s->start_lock, LOCK);
+	p->start_time = get_time();
+	p->last_meal = p->start_time;
+	p->starving_time = p->last_meal + p->tto_die;
+	if (p->n_philos > 1)
+	{
+		handle_mutex(&s->start_lock, UNLOCK);
+		big_dinner(p);
+		return (NULL);
+	}
+	handle_mutex(&s->start_lock, UNLOCK);
+	solo_dinner(p);
 	return (NULL);
 }
 
@@ -143,6 +109,8 @@ int	dinner(t_main *s)
 		i++;
 	}
 	s->philos_init = i;
+	if (handle_thread(&s->waiter_thread, CREATE, waiter_routine, s) != 0)
+		return (1);
 	handle_mutex(&s->start_lock, LOCK);
 	s->start_flag = true;
 	handle_mutex(&s->start_lock, UNLOCK);
@@ -152,6 +120,7 @@ int	dinner(t_main *s)
 		if (handle_thread(&s->philos[i].thread, JOIN, NULL, NULL) != 0)
 			return (1);
 	}
-
+	if (handle_thread(&s->waiter_thread, JOIN, NULL, NULL) != 0)
+		return (1);
 	return (0);
 }

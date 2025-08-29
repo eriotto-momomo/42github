@@ -5,6 +5,7 @@ HEADER	=	philo.h
 SRCS	=	main.c \
 			./init/init.c \
 			./init/parse_input.c \
+			./dinner/monitoring.c \
 			./dinner/philos.c \
 			./dinner/threads.c \
 			./utils/clean_free.c \
