@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:20:59 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/29 11:42:13 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/29 12:14:22 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,15 +66,20 @@ int	philo_eat(t_philo *p)
 		return (0);
 	}
 	print_philo(p, "has taken a fork", false);
-	p->last_meal = get_time();
-	p->starving_time = p->last_meal + p->tto_die;
 	print_philo(p, "is eating", false);
 	philo_wait(p, p->tto_eat);
 	handle_mutex(&p->frst_fork->fork, UNLOCK);
 	handle_mutex(&p->scnd_fork->fork, UNLOCK);
 	p->meals_eaten++;
+	if (dinner_is_done(p) != 0)
+		return (0);
+	p->last_meal = get_time();
+	handle_mutex(&p->s->read_lock, LOCK);
+	p->s->philos_full++;
+	p->starving_time = p->last_meal + p->tto_die;
+	handle_mutex(&p->s->read_lock, UNLOCK);
 	p->priority = 3;
-	usleep(100);
+	//usleep(100);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 21:17:19 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/28 22:04:56 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/29 12:14:23 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,22 @@ void	*waiter_routine(void *data)
 		i = 0;
 		while (i < s->in[N_PHILO])
 		{
-			//if (get_time() - s->philos[i].last_meal >= s->philos[i].tto_die)
+			handle_mutex(&s->read_lock, LOCK);
+			if (s->philos_full == s->in[N_PHILO])
+			{
+				handle_mutex(&s->read_lock, UNLOCK);
+				return (NULL);
+			}
 			if (get_time() >= s->philos[i].starving_time)
 			{
+				handle_mutex(&s->read_lock, UNLOCK);
 				print_philo(&s->philos[i], "died", true);
 				handle_mutex(&s->main_lock, LOCK);
 				*s->philo_died = true;
 				handle_mutex(&s->main_lock, UNLOCK);
 				return (NULL);
 			}
+			handle_mutex(&s->read_lock, UNLOCK);
 			i++;
 		}
 		usleep(500);

@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/08/29 11:41:33 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/29 12:07:48 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef struct s_main_struct
 {
 	int				*in;
 	int				philos_init;
+	int				philos_full;
 	t_time			start_time;
 	t_philo			*philos;
 	t_fork			*forks;
@@ -91,6 +92,7 @@ typedef struct s_main_struct
 	pthread_t		waiter_thread;
 	pthread_mutex_t	main_lock;
 	pthread_mutex_t	start_lock;
+	pthread_mutex_t	read_lock;
 }	t_main;
 
 void	helper_print_philo(t_philo *p);	// HELPER
