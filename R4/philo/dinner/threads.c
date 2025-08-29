@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/08/29 19:13:14 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/29 19:48:40 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 static int	big_dinner(t_philo *p)
 {
-	fprintf(stderr, "✅ start time.....: %s%d%s\n", Y, get_time_ms(p->start_time), RST); //🖨️❗️
+	//fprintf(stderr, "✅ start time.....: %s%d%s\n", Y, get_time_ms(p->start_time), RST); //🖨️❗️
 	if (p->id % 2 == 0)
 		usleep(1000);	// MacOS
 		//usleep(100);	// MacOS
@@ -60,21 +60,21 @@ static int	solo_dinner(t_philo *p)
 	return (0);
 }
 
-static void	sync_philos(t_main *s)
-{
-	while (1)
-	{
-		handle_mutex(&s->start_lock, LOCK);
-		if (s->start_flag == true)
-		{
-			handle_mutex(&s->start_lock, UNLOCK);
-			break ;
-		}
-		handle_mutex(&s->start_lock, UNLOCK);
-		usleep(500); 	//MacOS
-		//usleep(100);	//Linux
-	}
-}
+//static void	sync_philos(t_main *s)
+//{
+//	while (1)
+//	{
+//		handle_mutex(&s->start_lock, LOCK);
+//		if (s->start_flag == true)
+//		{
+//			handle_mutex(&s->start_lock, UNLOCK);
+//			break ;
+//		}
+//		handle_mutex(&s->start_lock, UNLOCK);
+//		usleep(500); 	//MacOS
+//		//usleep(100);	//Linux
+//	}
+//}
 
 static void	*start_dinner(void *data)
 {
@@ -83,7 +83,7 @@ static void	*start_dinner(void *data)
 
 	p = (t_philo *)data;
 	s = p->s;
-	sync_philos(s);
+	//sync_philos(s); // ???
 	handle_mutex(&s->start_lock, LOCK);
 	if (gettimeofday(&p->start_time, NULL) != 0)
 		return (NULL);
@@ -108,15 +108,20 @@ int	dinner(t_main *s)
 	{
 		if (handle_thread(&s->philos[i].thread, CREATE,
 				start_dinner, &s->philos[i]) != 0)
-			return (1);
+		{
+			handle_mutex(&s->main_lock, LOCK);
+			*s->philo_died = true;
+			handle_mutex(&s->main_lock, UNLOCK);
+			break ;
+		}
 		i++;
 	}
 	s->philos_init = i;
 	if (handle_thread(&s->waiter_thread, CREATE, waiter_routine, s) != 0)
 		return (1);
-	handle_mutex(&s->start_lock, LOCK);
-	s->start_flag = true;
-	handle_mutex(&s->start_lock, UNLOCK);
+	//handle_mutex(&s->start_lock, LOCK);
+	//s->start_flag = true;
+	//handle_mutex(&s->start_lock, UNLOCK);
 	i = -1;
 	while (++i < s->philos_init)
 	{

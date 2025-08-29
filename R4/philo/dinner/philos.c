@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:20:59 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/29 19:13:16 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/29 19:28:47 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	philo_think(t_philo *p)
 		return (1);
 	print_philo(p, "is thinking", false);
 	//usleep(500);
-	usleep(100); // MacOS
+	//usleep(100); // MacOS
 	return (0);
 }
 
