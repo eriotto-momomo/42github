@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 13:55:47 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/29 18:15:12 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/29 22:34:56 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,11 @@ static void	init_philos(t_main *s)
 	while (++i < s->in[N_PHILO])
 	{
 		s->philos[i].id = i + 1;
+		s->philos[i].frst_fork = &s->forks[i];
+		s->philos[i].scnd_fork = &s->forks[(i + 1) % s->in[N_PHILO]];
 		s->philos[i].meals_eaten = 0;
-		s->philos[i].priority = 3;
 		s->philos[i].meals_toeat = s->in[MUST_EAT];
 		s->philos[i].n_philos = s->in[N_PHILO];
-		if (s->philos[i].id % 2 == 0)
-		{
-			s->philos[i].frst_fork = &s->forks[(i + 1) % s->in[N_PHILO]];
-			s->philos[i].scnd_fork = &s->forks[i];							//v1
-
-		}
-		else
-		{
-			s->philos[i].frst_fork = &s->forks[i];							//v1
-			s->philos[i].scnd_fork = &s->forks[(i + 1) % s->in[N_PHILO]];
-		}
 		s->philos[i].tto_die = s->in[TTO_DIE];
 		s->philos[i].tto_eat = s->in[TTO_EAT];
 		s->philos[i].tto_slp = s->in[TTO_SLEEP];
@@ -59,7 +49,6 @@ static int	init_forks(int n_philo, t_fork *forks)
 			}
 			return (1);
 		}
-		forks[i].id = i;
 		i++;
 	}
 	return (0);

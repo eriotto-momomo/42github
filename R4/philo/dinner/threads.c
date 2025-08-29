@@ -5,21 +5,17 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/08/29 21:27:29 by emonacho         ###   ########.fr       */
+/*   Created: 2025/08/23 15:20:59 by emonacho          #+#    #+#             */
+/*   Updated: 2025/08/29 22:36:22 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../philo.h"
 
 static int	big_dinner(t_philo *p)
 {
-	//fprintf(stderr, "✅ start time.....: %s%d%s\n", Y, get_time_ms(p->start_time), RST); //🖨️❗️
 	if (p->id % 2 == 0)
-		usleep(500);	// Linux (pe moins)
-		//usleep(1000);	// MacOS
-		//usleep(100);	// MacOS
+		usleep(500);
 	while (1)
 	{
 		if (dinner_is_done(p) != 0)
@@ -83,10 +79,10 @@ static void	*start_dinner(void *data)
 
 	p = (t_philo *)data;
 	s = p->s;
-	//sync_philos(s); // ???
+	//sync_philos(s); //TO DELETE
 	handle_mutex(&s->start_lock, LOCK);
 	if (gettimeofday(&p->start_time, NULL) != 0)
-		return (NULL);
+		return (NULL); // error_handling
 	p->last_meal = p->start_time;
 	if (p->n_philos > 1)
 	{
@@ -103,32 +99,26 @@ int	dinner(t_main *s)
 {
 	int	i;
 
-	i = 0;
-	while (i < s->in[N_PHILO])
+	i = -1;
+	while (++i < s->in[N_PHILO])
 	{
 		if (handle_thread(&s->philos[i].thread, CREATE,
 				start_dinner, &s->philos[i]) != 0)
 		{
-			//handle_mutex(&s->main_lock, LOCK);
+			handle_mutex(&s->main_lock, LOCK);
 			*s->philo_died = true;
-			//handle_mutex(&s->main_lock, UNLOCK);
+			handle_mutex(&s->main_lock, UNLOCK);
 			break ;
 		}
-		i++;
 	}
 	s->philos_init = i;
-	if (handle_thread(&s->waiter_thread, CREATE, waiter_routine, s) != 0)
+	if (handle_thread(&s->monitoring, CREATE, waiter_routine, s) != 0)
 		return (1);
-	//handle_mutex(&s->start_lock, LOCK);
-	//s->start_flag = true;
-	//handle_mutex(&s->start_lock, UNLOCK);
 	i = -1;
 	while (++i < s->philos_init)
-	{
 		if (handle_thread(&s->philos[i].thread, JOIN, NULL, NULL) != 0)
 			return (1);
-	}
-	if (handle_thread(&s->waiter_thread, JOIN, NULL, NULL) != 0)
+	if (handle_thread(&s->monitoring, JOIN, NULL, NULL) != 0)
 		return (1);
 	return (0);
 }

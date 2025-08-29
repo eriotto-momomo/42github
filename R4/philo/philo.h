@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/08/29 18:58:23 by emonacho         ###   ########.fr       */
+/*   Created: 2025/08/22 14:49:52 by emonacho          #+#    #+#             */
+/*   Updated: 2025/08/29 22:35:10 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef PHILO_H
 # define PHILO_H
@@ -57,23 +56,17 @@ typedef enum e_values
 
 typedef struct s_fork
 {
-	int				id;
 	pthread_mutex_t	fork;
 }	t_fork;
 
 typedef struct s_philo
 {
 	int				id;
-	int				priority;
 	int				meals_eaten;
 	int				meals_toeat;
 	int				n_philos;
 	struct timeval	last_meal;
-	//t_time			last_meal;
 	struct timeval	start_time;
-	//t_time			start_time;
-	struct timeval	starving_time;
-	//t_time			starving_time;
 	t_fork			*frst_fork;
 	t_fork			*scnd_fork;
 	pthread_t		thread;
@@ -86,29 +79,25 @@ typedef struct s_philo
 typedef struct s_main_struct
 {
 	int				*in;
+	bool			*philo_died;
+	t_fork			*forks;
+	t_philo			*philos;
+	struct timeval	ref_time;
 	int				philos_init;
 	int				philos_full;
-	struct timeval	ref_time;
-	t_time			start_time;
-	t_philo			*philos;
-	t_fork			*forks;
-	bool			*philo_died;
-	bool			start_flag;
-	pthread_t		waiter_thread;
+	bool			start_flag; // delete
+	pthread_t		monitoring;
 	pthread_mutex_t	main_lock;
 	pthread_mutex_t	start_lock;
 	pthread_mutex_t	monitor_lock;
 }	t_main;
-
-void	helper_print_philo(t_philo *p);	// HELPER
-void	helper_print_data(t_main *s);	// HELPER
 
 // init.c & parse_input.c
 int		init_data(t_main *s);
 int		parse_input(int ac, char **av, t_main *s);
 
 // handlers.c
-int	pick_forks(t_philo *p);
+int		pick_forks(t_philo *p);
 int		handle_thread(pthread_t *thread, t_routines mode,
 			void *(*foo)(void *), void *data);
 int		handle_mutex(pthread_mutex_t *mutex, t_routines mode);
@@ -134,9 +123,6 @@ void	clean_free(t_main *s);
 int		dinner_is_done(t_philo *p);
 void	ft_putstr_fd(char *s, int fd);
 size_t	ft_strlen(char *s);
-
-// utils_time.c
 int		get_time_ms(struct timeval ref_time);
-int		ft_usleep(t_philo *p);
 
 #endif

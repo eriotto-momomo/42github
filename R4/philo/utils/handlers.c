@@ -6,13 +6,13 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 12:33:36 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/29 15:28:31 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/29 22:38:39 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-static int choose_forks(t_philo *p, t_fork *first, t_fork *second)
+static int	choose_forks(t_philo *p, t_fork *first, t_fork *second)
 {
 	handle_mutex(&first->fork, LOCK);
 	print_philo(p, "has taken a fork", false);
@@ -34,18 +34,23 @@ static int choose_forks(t_philo *p, t_fork *first, t_fork *second)
 
 int	pick_forks(t_philo *p)
 {
+	t_fork	*first;
+	t_fork	*second;
+
 	if (dinner_is_done(p) != 0)
 		return (1);
-	if (p->id % 2 == 0)
+	if (p->frst_fork < p->scnd_fork)
 	{
-		if (choose_forks(p, p->scnd_fork, p->frst_fork) != 0)
-			return (1);
+		first = p->frst_fork;
+		second = p->scnd_fork;
 	}
 	else
 	{
-		if (choose_forks(p, p->frst_fork, p->scnd_fork) != 0)
-			return (1);
+		first = p->scnd_fork;
+		second = p->frst_fork;
 	}
+	if (choose_forks(p, first, second) != 0)
+		return (1);
 	return (0);
 }
 

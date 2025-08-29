@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 10:37:24 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/29 11:44:32 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/29 22:38:23 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	parse_input(int ac, char **av, t_main *s)
 	if (s->in[N_PHILO] == 0 || s->in[N_PHILO] > 200)
 	{
 		free(s->in);
-		return (ft_putstr_fd("Error: invalid number of philosophers (min 1 / max 200)\n", 2), 1);
+		return (ft_putstr_fd("Error: invalid number of philosophers\n", 2), 1);
 	}
 	return (0);
 }
