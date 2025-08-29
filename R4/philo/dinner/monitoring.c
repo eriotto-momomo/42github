@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitoring.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 21:17:19 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/29 19:09:56 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/29 21:27:30 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ static bool philo_died(t_philo *p)
 		handle_mutex(&p->s->main_lock, UNLOCK);
 		return (true);
 	}
-	handle_mutex(&p->s->monitor_lock, UNLOCK);
 	return (false);
 }
 
@@ -75,22 +74,25 @@ void	*waiter_routine(void *data)
 	int		i;
 
 	s = (t_main *)data;
-	handle_mutex(&s->main_lock, LOCK);
 	usleep(500);
-	while (!*s->philo_died)
+	while (1)
 	{
+		handle_mutex(&s->main_lock, LOCK);
+		if (*s->philo_died == true)
+		{
+			handle_mutex(&s->main_lock, UNLOCK);
+			break ;
+		}
 		handle_mutex(&s->main_lock, UNLOCK);
-		i = 0;
-		while (i < s->in[N_PHILO])
+		i = -1;
+		while (++i < s->in[N_PHILO])
 		{
 			if (philo_died(&s->philos[i]) == true)
 				return (NULL);
 			if (all_philos_are_full(s) == true)
 				return (NULL);
-			i++;
 		}
 		usleep(500);
-		handle_mutex(&s->main_lock, LOCK);
 	}
 	return (NULL);
 }

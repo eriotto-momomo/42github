@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philos.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:20:59 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/29 19:28:47 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/29 21:27:29 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,7 @@ static void	philo_wait(t_philo *p, int tto_wait)
 			break ;
 		if (dinner_is_done(p) == 1)
 			return ;
-		//usleep(500);
-		usleep(500); // MacOS
-		//ft_usleep(500);
+		usleep(500);
 	}
 	//fprintf(stderr, "philo_wait | p[id][%d] | STOP WAITING | TIME ELAPSED: %llu\n", p->id, elaps_wait);
 }
@@ -76,7 +74,7 @@ int	philo_eat(t_philo *p)
 		return (1);
 	}
 	p->meals_eaten++;
-	p->priority = 3;
+	//p->priority = 3;
 	handle_mutex(&p->s->monitor_lock, UNLOCK);
 	if (dinner_is_done(p) != 0)
 		return (0);

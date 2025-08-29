@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 10:19:15 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/29 17:44:09 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/29 21:14:39 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	main(int ac, char **av)
 {
 	t_main	*s;
 
-	printf("%s----------------------%s\n", C, RST); //🖨️❗️
+	//printf("%s----------------------%s\n", C, RST); //🖨️❗️
 	if (!(ac == 5 || ac == 6))
 		return (ft_putstr_fd("Error: invalid number of arguments\n", 2), 1);
 	s = malloc(sizeof(t_main));
@@ -68,8 +68,8 @@ int	main(int ac, char **av)
 		clean_free(s);
 		return (1);
 	}
-	printf("%s-----DINNER DONE------%s\n", R, RST); //🖨️❗️
+	//printf("%s-----DINNER DONE------%s\n", R, RST); //🖨️❗️
 	clean_free(s);
-	printf("%s----------------------%s\n", C, RST); //🖨️❗️
+	//printf("%s----------------------%s\n", C, RST); //🖨️❗️
 	return (0);
 }

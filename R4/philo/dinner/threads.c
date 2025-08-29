@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   threads.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/08/29 19:48:40 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/29 21:27:29 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ static int	big_dinner(t_philo *p)
 {
 	//fprintf(stderr, "✅ start time.....: %s%d%s\n", Y, get_time_ms(p->start_time), RST); //🖨️❗️
 	if (p->id % 2 == 0)
-		usleep(1000);	// MacOS
+		usleep(500);	// Linux (pe moins)
+		//usleep(1000);	// MacOS
 		//usleep(100);	// MacOS
-		//usleep(500);	// Linux (pe moins)
 	while (1)
 	{
 		if (dinner_is_done(p) != 0)
@@ -71,8 +71,8 @@ static int	solo_dinner(t_philo *p)
 //			break ;
 //		}
 //		handle_mutex(&s->start_lock, UNLOCK);
-//		usleep(500); 	//MacOS
-//		//usleep(100);	//Linux
+//		//usleep(500); 	//MacOS
+//		usleep(100);	//Linux
 //	}
 //}
 
@@ -109,9 +109,9 @@ int	dinner(t_main *s)
 		if (handle_thread(&s->philos[i].thread, CREATE,
 				start_dinner, &s->philos[i]) != 0)
 		{
-			handle_mutex(&s->main_lock, LOCK);
+			//handle_mutex(&s->main_lock, LOCK);
 			*s->philo_died = true;
-			handle_mutex(&s->main_lock, UNLOCK);
+			//handle_mutex(&s->main_lock, UNLOCK);
 			break ;
 		}
 		i++;
