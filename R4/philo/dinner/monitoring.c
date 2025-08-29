@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitoring.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 21:17:19 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/29 15:28:45 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/29 19:09:56 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,37 @@ static bool all_philos_are_full(t_main *s)
 	return (false);
 }
 
+//static bool	philo_starved(t_philo *p)
+//{
+//	int				elapsed_time;
+
+//	handle_mutex(&p->s->monitor_lock, LOCK);
+//	elapsed_time = get_time_ms(p->last_meal);
+//	//fprintf(stderr, "philo_starved[%d]| time from last meal[elapsed_time]: %d\n", p->id, elapsed_time);
+//	handle_mutex(&p->s->monitor_lock, UNLOCK);
+//	if (elapsed_time > p->tto_die)
+//		return (true);
+//	return (false);
+//}
+
+//v1
+static bool	philo_starved(t_philo *p)
+{
+	int	elapsed_time;
+
+	handle_mutex(&p->s->monitor_lock, LOCK);
+	elapsed_time = get_time_ms(p->last_meal);
+	//fprintf(stderr, "philo_starved | time from last meal: %d\n", elapsed_time);
+	handle_mutex(&p->s->monitor_lock, UNLOCK);
+	if (elapsed_time > p->tto_die)
+		return (true);
+	return (false);
+}
+
 static bool philo_died(t_philo *p)
 {
-	handle_mutex(&p->s->monitor_lock, LOCK);
-	if (get_time() >= p->starving_time)
+	if (philo_starved(p))
 	{
-		handle_mutex(&p->s->monitor_lock, UNLOCK);
 		print_philo(p, "died", true);
 		handle_mutex(&p->s->main_lock, LOCK);
 		*p->s->philo_died = true;
@@ -58,9 +83,9 @@ void	*waiter_routine(void *data)
 		i = 0;
 		while (i < s->in[N_PHILO])
 		{
-			if (all_philos_are_full(s) == true)
-				return (NULL);
 			if (philo_died(&s->philos[i]) == true)
+				return (NULL);
+			if (all_philos_are_full(s) == true)
 				return (NULL);
 			i++;
 		}

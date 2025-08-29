@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 13:55:47 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/29 15:18:24 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/29 18:15:12 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,17 @@ static void	init_philos(t_main *s)
 		if (s->philos[i].id % 2 == 0)
 		{
 			s->philos[i].frst_fork = &s->forks[(i + 1) % s->in[N_PHILO]];
-			s->philos[i].scnd_fork = &s->forks[i];
+			s->philos[i].scnd_fork = &s->forks[i];							//v1
+
 		}
 		else
 		{
-			s->philos[i].frst_fork = &s->forks[i];
+			s->philos[i].frst_fork = &s->forks[i];							//v1
 			s->philos[i].scnd_fork = &s->forks[(i + 1) % s->in[N_PHILO]];
 		}
-		s->philos[i].tto_die = (t_time)s->in[TTO_DIE];
-		s->philos[i].tto_eat = (t_time)s->in[TTO_EAT];
-		s->philos[i].tto_slp = (t_time)s->in[TTO_SLEEP];
-		s->philos[i].starving_time = s->philos[i].tto_die;
+		s->philos[i].tto_die = s->in[TTO_DIE];
+		s->philos[i].tto_eat = s->in[TTO_EAT];
+		s->philos[i].tto_slp = s->in[TTO_SLEEP];
 		s->philos[i].s = s;
 	}
 }
@@ -86,11 +86,11 @@ static int	init_locks(t_main *s)
 static int	init_structs(t_main *s)
 {
 	s->philo_died = malloc(sizeof(bool));
-	s->start_flag = false;
-	s->philos_full = 0;
 	if (!s->philo_died)
 		return (1);
 	*(s->philo_died) = false;
+	s->start_flag = false;
+	s->philos_full = 0;
 	s->philos = malloc(sizeof(t_philo) * (*s).in[N_PHILO]);
 	s->forks = malloc(sizeof(t_fork) * (*s).in[N_PHILO]);
 	if (!s->philos || !s->forks)
@@ -118,5 +118,10 @@ int	init_data(t_main *s)
 		return (1);
 	}
 	init_philos(s);
+	if (gettimeofday(&s->ref_time, NULL) != 0)
+	{
+		clean_free(s);
+		return (1);
+	}
 	return (0);
 }

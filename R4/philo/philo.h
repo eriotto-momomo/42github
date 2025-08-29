@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/08/29 15:28:11 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/29 18:58:23 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,15 +68,18 @@ typedef struct s_philo
 	int				meals_eaten;
 	int				meals_toeat;
 	int				n_philos;
+	struct timeval	last_meal;
+	//t_time			last_meal;
+	struct timeval	start_time;
+	//t_time			start_time;
+	struct timeval	starving_time;
+	//t_time			starving_time;
 	t_fork			*frst_fork;
 	t_fork			*scnd_fork;
 	pthread_t		thread;
-	t_time			start_time;
-	t_time			last_meal;
-	t_time			starving_time;
-	t_time			tto_die;
-	t_time			tto_eat;
-	t_time			tto_slp;
+	int				tto_die;
+	int				tto_eat;
+	int				tto_slp;
 	t_main			*s;
 }	t_philo;
 
@@ -85,6 +88,7 @@ typedef struct s_main_struct
 	int				*in;
 	int				philos_init;
 	int				philos_full;
+	struct timeval	ref_time;
 	t_time			start_time;
 	t_philo			*philos;
 	t_fork			*forks;
@@ -130,7 +134,9 @@ void	clean_free(t_main *s);
 int		dinner_is_done(t_philo *p);
 void	ft_putstr_fd(char *s, int fd);
 size_t	ft_strlen(char *s);
-int		ft_usleep(size_t milliseconds);
-t_time	get_time(void);
+
+// utils_time.c
+int		get_time_ms(struct timeval ref_time);
+int		ft_usleep(t_philo *p);
 
 #endif

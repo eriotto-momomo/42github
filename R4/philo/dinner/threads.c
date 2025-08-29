@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   threads.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/08/29 15:31:00 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/29 19:13:14 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 
 static int	big_dinner(t_philo *p)
 {
-	fprintf(stderr, "✅ start time.....: %s%llu%s\n", Y, p->start_time, RST); //🖨️❗️
+	fprintf(stderr, "✅ start time.....: %s%d%s\n", Y, get_time_ms(p->start_time), RST); //🖨️❗️
 	if (p->id % 2 == 0)
-		usleep(100);
+		usleep(1000);	// MacOS
+		//usleep(100);	// MacOS
+		//usleep(500);	// Linux (pe moins)
 	while (1)
 	{
 		if (dinner_is_done(p) != 0)
@@ -69,7 +71,8 @@ static void	sync_philos(t_main *s)
 			break ;
 		}
 		handle_mutex(&s->start_lock, UNLOCK);
-		usleep(100);
+		usleep(500); 	//MacOS
+		//usleep(100);	//Linux
 	}
 }
 
@@ -82,9 +85,9 @@ static void	*start_dinner(void *data)
 	s = p->s;
 	sync_philos(s);
 	handle_mutex(&s->start_lock, LOCK);
-	p->start_time = get_time();
+	if (gettimeofday(&p->start_time, NULL) != 0)
+		return (NULL);
 	p->last_meal = p->start_time;
-	p->starving_time = p->last_meal + p->tto_die;
 	if (p->n_philos > 1)
 	{
 		handle_mutex(&s->start_lock, UNLOCK);

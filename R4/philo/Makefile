@@ -11,6 +11,7 @@ SRCS	=	main.c \
 			./utils/clean_free.c \
 			./utils/handlers.c \
 			./utils/utils.c \
+			./utils/utils_time.c \
 
 OBJS	=	$(SRCS:.c=.o)
 # **************************************************************************** #
