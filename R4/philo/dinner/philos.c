@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:20:59 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/29 12:14:22 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/29 13:16:36 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ int	philo_eat(t_philo *p)
 		return (0);
 	p->last_meal = get_time();
 	handle_mutex(&p->s->read_lock, LOCK);
-	p->s->philos_full++;
 	p->starving_time = p->last_meal + p->tto_die;
 	handle_mutex(&p->s->read_lock, UNLOCK);
 	p->priority = 3;

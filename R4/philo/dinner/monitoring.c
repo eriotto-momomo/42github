@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 21:17:19 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/29 12:14:23 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/29 13:26:04 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,39 +16,33 @@
 /*
 * Fonction give_priority et qui check et qui du coup fais wait les philos qui ont mange il y'a moins de 2 / tto_die*/
 
-
-
-//bool	is_prior(t_main *s, t_time time_to_check, int id)
+//static bool philo_died(t_philo *p)
 //{
-//	int		i;
-//	t_time	time;
-//	int		equal_times;
-//	bool	is_prior;
-
-//	time = time_to_check;
-//	equal_times = 0;
-//	is_prior = false;
-//	i = 0;
-//	fprintf(stderr, "❗️is_prior | time to check...: %llu | philo with id: %d check others\n", time_to_check, id);
-//	while (i < s->in[N_PHILO])
+//	handle_mutex(&p->s->read_lock, LOCK);
+//	if (get_time() >= p->starving_time)
 //	{
-//		fprintf(stderr, "⏰is_prior | p[%d]p->last_meal: %llu\n", s->philos[i].id, s->philos[i].last_meal);
-//		if (s->philos[i].last_meal == time_to_check)
-//			equal_times++;
-//		if (time < s->philos[i].last_meal)
-//			is_prior = true;
-//		else
-//			is_prior = false;
-//		time = s->philos[i].last_meal;
-//		i++;
+//		handle_mutex(&p->s->read_lock, UNLOCK);
+//		print_philo(p, "died", true);
+//		//handle_mutex(&p->s->main_lock, LOCK);
+//		////*p->s->philo_died = true;
+//		//handle_mutex(&p->s->main_lock, UNLOCK);
+//		return (NULL);
 //	}
-//	if ((equal_times) == s->in[N_PHILO])
-//		is_prior = true;
-//	fprintf(stderr, "is_prior | equal_times: %d | is_prior: %d\n", equal_times, is_prior);
-//	if (is_prior == true)
-//		return (true);
+//	handle_mutex(&p->s->read_lock, UNLOCK);
 //	return (false);
 //}
+
+static bool all_philos_are_full(t_main *s)
+{
+	handle_mutex(&s->read_lock, LOCK);
+	if (s->philos_full == s->in[N_PHILO])
+	{
+		handle_mutex(&s->read_lock, UNLOCK);
+		return (true);
+	}
+	handle_mutex(&s->read_lock, UNLOCK);
+	return (false);
+}
 
 void	*waiter_routine(void *data)
 {
@@ -64,12 +58,11 @@ void	*waiter_routine(void *data)
 		i = 0;
 		while (i < s->in[N_PHILO])
 		{
-			handle_mutex(&s->read_lock, LOCK);
-			if (s->philos_full == s->in[N_PHILO])
-			{
-				handle_mutex(&s->read_lock, UNLOCK);
+			if (all_philos_are_full(s) == true)
 				return (NULL);
-			}
+			//if (philo_died(&s->philos[i]) == true)
+			//	return (NULL);
+			handle_mutex(&s->read_lock, LOCK);
 			if (get_time() >= s->philos[i].starving_time)
 			{
 				handle_mutex(&s->read_lock, UNLOCK);
