@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 21:17:19 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/29 13:26:04 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/29 14:14:51 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,29 +18,29 @@
 
 //static bool philo_died(t_philo *p)
 //{
-//	handle_mutex(&p->s->read_lock, LOCK);
+//	handle_mutex(&p->s->monitor_lock, LOCK);
 //	if (get_time() >= p->starving_time)
 //	{
-//		handle_mutex(&p->s->read_lock, UNLOCK);
+//		handle_mutex(&p->s->monitor_lock, UNLOCK);
 //		print_philo(p, "died", true);
 //		//handle_mutex(&p->s->main_lock, LOCK);
 //		////*p->s->philo_died = true;
 //		//handle_mutex(&p->s->main_lock, UNLOCK);
 //		return (NULL);
 //	}
-//	handle_mutex(&p->s->read_lock, UNLOCK);
+//	handle_mutex(&p->s->monitor_lock, UNLOCK);
 //	return (false);
 //}
 
 static bool all_philos_are_full(t_main *s)
 {
-	handle_mutex(&s->read_lock, LOCK);
+	handle_mutex(&s->monitor_lock, LOCK);
 	if (s->philos_full == s->in[N_PHILO])
 	{
-		handle_mutex(&s->read_lock, UNLOCK);
+		handle_mutex(&s->monitor_lock, UNLOCK);
 		return (true);
 	}
-	handle_mutex(&s->read_lock, UNLOCK);
+	handle_mutex(&s->monitor_lock, UNLOCK);
 	return (false);
 }
 
@@ -62,17 +62,17 @@ void	*waiter_routine(void *data)
 				return (NULL);
 			//if (philo_died(&s->philos[i]) == true)
 			//	return (NULL);
-			handle_mutex(&s->read_lock, LOCK);
+			handle_mutex(&s->monitor_lock, LOCK);
 			if (get_time() >= s->philos[i].starving_time)
 			{
-				handle_mutex(&s->read_lock, UNLOCK);
+				handle_mutex(&s->monitor_lock, UNLOCK);
 				print_philo(&s->philos[i], "died", true);
 				handle_mutex(&s->main_lock, LOCK);
 				*s->philo_died = true;
 				handle_mutex(&s->main_lock, UNLOCK);
 				return (NULL);
 			}
-			handle_mutex(&s->read_lock, UNLOCK);
+			handle_mutex(&s->monitor_lock, UNLOCK);
 			i++;
 		}
 		usleep(500);

@@ -6,32 +6,47 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 12:33:36 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/28 22:04:56 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/29 14:13:10 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-void	pick_forks(t_philo *p)
+static int choose_forks(t_philo *p, t_fork *first, t_fork *second)
 {
-	//while (p->is_prior == false)
-	//	usleep(100);
+	handle_mutex(&first->fork, LOCK);
+	print_philo(p, "has taken a fork", false);
+	if (dinner_is_done(p) != 0)
+	{
+		handle_mutex(&first->fork, UNLOCK);
+		return (1);
+	}
+	handle_mutex(&second->fork, LOCK);
+	print_philo(p, "has taken a fork", false);
+	if (dinner_is_done(p) != 0)
+	{
+		handle_mutex(&first->fork, UNLOCK);
+		handle_mutex(&second->fork, UNLOCK);
+		return (1);
+	}
+	return (0);
+}
+
+int	pick_forks(t_philo *p)
+{
+	if (dinner_is_done(p) != 0)
+		return (1);
 	if (p->id % 2 == 0)
 	{
-		handle_mutex(&p->scnd_fork->fork, LOCK);
-		print_philo(p, "has taken a fork", false);
-		if (dinner_is_done(p) == 1)
-			return ;
-		handle_mutex(&p->frst_fork->fork, LOCK);
+		if (choose_forks(p, p->scnd_fork, p->frst_fork) != 0)
+			return (1);
 	}
 	else
 	{
-		handle_mutex(&p->frst_fork->fork, LOCK);
-		print_philo(p, "has taken a fork", false);
-		if (dinner_is_done(p) == 1)
-			return ;
-		handle_mutex(&p->scnd_fork->fork, LOCK);
+		if (choose_forks(p, p->frst_fork, p->scnd_fork) != 0)
+			return (1);
 	}
+	return (0);
 }
 
 int	handle_thread(pthread_t *thread, t_routines mode,

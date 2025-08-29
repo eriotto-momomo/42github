@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:20:59 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/29 13:16:36 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/29 14:14:51 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	philo_think(t_philo *p)
 	if (dinner_is_done(p) != 0)
 		return (1);
 	print_philo(p, "is thinking", false);
-	usleep(100);
+	usleep(500);
 	return (0);
 }
 
@@ -56,16 +56,8 @@ int	philo_eat(t_philo *p)
 	//handle_mutex(&p->s->main_lock, LOCK); //🖨️❗️
 	//helper_print_philo(p); //🖨️❗️
 	//handle_mutex(&p->s->main_lock, UNLOCK); //🖨️❗️
-	if (dinner_is_done(p) != 0)
-		return (0);
-	pick_forks(p);
-	if (dinner_is_done(p) != 0)
-	{
-		handle_mutex(&p->frst_fork->fork, UNLOCK);
-		handle_mutex(&p->scnd_fork->fork, UNLOCK);
-		return (0);
-	}
-	print_philo(p, "has taken a fork", false);
+	if (pick_forks(p) != 0)
+		return (1);
 	print_philo(p, "is eating", false);
 	philo_wait(p, p->tto_eat);
 	handle_mutex(&p->frst_fork->fork, UNLOCK);
@@ -74,32 +66,30 @@ int	philo_eat(t_philo *p)
 	if (dinner_is_done(p) != 0)
 		return (0);
 	p->last_meal = get_time();
-	handle_mutex(&p->s->read_lock, LOCK);
+	handle_mutex(&p->s->monitor_lock, LOCK);
 	p->starving_time = p->last_meal + p->tto_die;
-	handle_mutex(&p->s->read_lock, UNLOCK);
+	handle_mutex(&p->s->monitor_lock, UNLOCK);
 	p->priority = 3;
 	//usleep(100);
 	return (0);
 }
 
-int	print_philo(t_philo *p, char *status, bool end_dinner)
+void	print_philo(t_philo *p, char *status, bool end_dinner)
 {
 	t_time	now;
 
-	if (handle_mutex(&p->s->main_lock, LOCK) != 0)
-		return (1);
 	now = get_time() - p->start_time;
-	if (*p->s->philo_died == false)
+	if (end_dinner == true)
 	{
 		printf("%llu %d %s\n", now, p->id, status);
-		if (end_dinner == true)
-		{
-			helper_print_philo(p); //🖨️❗️
-			*p->s->philo_died = true;
-		}
+		return ;
 	}
-	if (handle_mutex(&p->s->main_lock, UNLOCK) != 0)
-		return (1);
-	//dinner_is_done(p);
-	return (0);
+	handle_mutex(&p->s->main_lock, LOCK);
+	if (*p->s->philo_died == true)
+	{
+		handle_mutex(&p->s->main_lock, UNLOCK);
+		return ;
+	}
+	handle_mutex(&p->s->main_lock, UNLOCK);
+	printf("%llu %d %s\n", now, p->id, status);
 }

@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/08/29 13:14:17 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/29 14:14:52 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ typedef struct s_main_struct
 	pthread_t		waiter_thread;
 	pthread_mutex_t	main_lock;
 	pthread_mutex_t	start_lock;
-	pthread_mutex_t	read_lock;
+	pthread_mutex_t	monitor_lock;
 }	t_main;
 
 void	helper_print_philo(t_philo *p);	// HELPER
@@ -103,7 +103,7 @@ int		init_data(t_main *s);
 int		parse_input(int ac, char **av, t_main *s);
 
 // handlers.c
-void	pick_forks(t_philo *p);
+int	pick_forks(t_philo *p);
 int		handle_thread(pthread_t *thread, t_routines mode,
 			void *(*foo)(void *), void *data);
 int		handle_mutex(pthread_mutex_t *mutex, t_routines mode);
@@ -115,7 +115,7 @@ void	*waiter_routine(void *data);
 int		philo_think(t_philo *p);
 int		philo_sleep(t_philo *p);
 int		philo_eat(t_philo *p);
-int		print_philo(t_philo *p, char *status, bool end_dinner);
+void	print_philo(t_philo *p, char *status, bool end_dinner);
 
 // threads.c
 int		dinner_is_done(t_philo *p);
@@ -127,7 +127,6 @@ void	destroy_mutex(t_main *s);
 void	clean_free(t_main *s);
 
 // utils.c
-int		quit_dinner(t_philo *p);
 void	ft_putstr_fd(char *s, int fd);
 size_t	ft_strlen(char *s);
 int		ft_usleep(size_t milliseconds);

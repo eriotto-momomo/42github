@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 13:55:47 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/29 13:14:32 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/29 13:36:04 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static int	init_locks(t_main *s)
 		handle_mutex(&s->main_lock, DESTROY);
 		return (1);
 	}
-	if (handle_mutex(&s->read_lock, INIT) != 0)
+	if (handle_mutex(&s->monitor_lock, INIT) != 0)
 	{
 		handle_mutex(&s->main_lock, DESTROY);
 		handle_mutex(&s->start_lock, DESTROY);

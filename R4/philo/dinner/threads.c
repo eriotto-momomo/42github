@@ -6,16 +6,13 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/08/29 13:16:01 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/29 14:10:01 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../philo.h"
 
-// return(1) = TRUE
-// return(0) = FALSE
-// return(-1)= ERROR
 int	dinner_is_done(t_philo *p)
 {
 	if (handle_mutex(&p->s->main_lock, LOCK) != 0)
@@ -30,14 +27,11 @@ int	dinner_is_done(t_philo *p)
 		return (-1);
 	if (p->meals_eaten == p->meals_toeat)
 	{
-		handle_mutex(&p->s->read_lock, LOCK);
+		handle_mutex(&p->s->monitor_lock, LOCK);
 		p->s->philos_full++;
-		handle_mutex(&p->s->read_lock, UNLOCK);
+		handle_mutex(&p->s->monitor_lock, UNLOCK);
 		return (1);
 	}
-	//handle_mutex(&p->s->main_lock, LOCK); //🖨️❗️
-	//helper_print_philo(p); //🖨️❗️
-	//handle_mutex(&p->s->main_lock, UNLOCK); //🖨️❗️
 	return (0);
 }
 
@@ -48,6 +42,8 @@ static int	big_dinner(t_philo *p)
 		usleep(100);
 	while (1)
 	{
+		if (dinner_is_done(p) != 0)
+			break ;
 		if (philo_eat(p) == 1)
 			break ;
 		if (philo_sleep(p) == 1)
