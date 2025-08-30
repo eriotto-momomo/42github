@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:20:59 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/29 22:39:25 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/30 12:24:08 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ int	philo_eat(t_philo *p)
 		return (1);
 	print_philo(p, "is eating", false);
 	philo_wait(p, p->tto_eat); // error_handling
-	handle_mutex(&p->frst_fork->fork, UNLOCK);
-	handle_mutex(&p->scnd_fork->fork, UNLOCK);
+	if (give_forks(p) != 0)
+		return (1);
 	handle_mutex(&p->s->monitor_lock, LOCK);
 	if (gettimeofday(&p->last_meal, NULL) != 0)
 	{
@@ -71,7 +71,7 @@ int	philo_eat(t_philo *p)
 	return (0);
 }
 
-void	print_philo(t_philo *p, char *status, bool end_dinner)
+int	print_philo(t_philo *p, char *status, bool end_dinner)
 {
 	t_time	now;
 
@@ -81,13 +81,14 @@ void	print_philo(t_philo *p, char *status, bool end_dinner)
 	{
 		printf("%llu %d %s\n", now, p->id, status);
 		handle_mutex(&p->s->main_lock, UNLOCK);
-		return ;
+		return (0);
 	}
 	if (*p->s->philo_died == true)
 	{
 		handle_mutex(&p->s->main_lock, UNLOCK);
-		return ;
+		return (0);
 	}
 	printf("%llu %d %s\n", now, p->id, status);
 	handle_mutex(&p->s->main_lock, UNLOCK);
+	return (0);
 }

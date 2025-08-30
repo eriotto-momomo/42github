@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 14:49:52 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/29 22:35:10 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/30 13:17:05 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,42 +85,29 @@ typedef struct s_main_struct
 	struct timeval	ref_time;
 	int				philos_init;
 	int				philos_full;
-	bool			start_flag; // delete
 	pthread_t		monitoring;
 	pthread_mutex_t	main_lock;
 	pthread_mutex_t	start_lock;
 	pthread_mutex_t	monitor_lock;
 }	t_main;
 
-// init.c & parse_input.c
 int		init_data(t_main *s);
 int		parse_input(int ac, char **av, t_main *s);
-
-// handlers.c
+int		give_forks(t_philo *p);
 int		pick_forks(t_philo *p);
 int		handle_thread(pthread_t *thread, t_routines mode,
 			void *(*foo)(void *), void *data);
 int		handle_mutex(pthread_mutex_t *mutex, t_routines mode);
-
-// monitor.c
 void	*waiter_routine(void *data);
-
-// philos.c
 int		philo_think(t_philo *p);
 int		philo_sleep(t_philo *p);
 int		philo_eat(t_philo *p);
-void	print_philo(t_philo *p, char *status, bool end_dinner);
-
-// threads.c
+int		print_philo(t_philo *p, char *status, bool end_dinner);
 int		dinner(t_main *s);
-
-// clean_free.c
+int		dinner_is_done(t_philo *p);
 void	free_structs(t_main *s);
 void	destroy_mutex(t_main *s);
 void	clean_free(t_main *s);
-
-// utils.c
-int		dinner_is_done(t_philo *p);
 void	ft_putstr_fd(char *s, int fd);
 size_t	ft_strlen(char *s);
 int		get_time_ms(struct timeval ref_time);

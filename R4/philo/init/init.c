@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 13:55:47 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/29 22:34:56 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/30 13:17:18 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ static int	init_structs(t_main *s)
 	if (!s->philo_died)
 		return (1);
 	*(s->philo_died) = false;
-	s->start_flag = false;
 	s->philos_full = 0;
+	s->philos_init = -1;
 	s->philos = malloc(sizeof(t_philo) * (*s).in[N_PHILO]);
 	s->forks = malloc(sizeof(t_fork) * (*s).in[N_PHILO]);
 	if (!s->philos || !s->forks)

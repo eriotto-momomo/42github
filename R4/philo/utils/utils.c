@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 10:56:37 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/29 22:34:52 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/30 12:52:36 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,28 +24,6 @@ int	get_time_ms(struct timeval ref_time)
 	if (now > INT_MAX)
 		return (-1);
 	return ((int)now);
-}
-
-int	dinner_is_done(t_philo *p)
-{
-	if (handle_mutex(&p->s->main_lock, LOCK) != 0)
-		return (-1);
-	if (*p->s->philo_died == true)
-	{
-		if (handle_mutex(&p->s->main_lock, UNLOCK) != 0)
-			return (-1);
-		return (1);
-	}
-	if (handle_mutex(&p->s->main_lock, UNLOCK) != 0)
-		return (-1);
-	if (p->meals_eaten == p->meals_toeat)
-	{
-		handle_mutex(&p->s->monitor_lock, LOCK);
-		p->s->philos_full++;
-		handle_mutex(&p->s->monitor_lock, UNLOCK);
-		return (1);
-	}
-	return (0);
 }
 
 size_t	ft_strlen(char *s)
