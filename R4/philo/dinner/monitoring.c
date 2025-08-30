@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 21:17:19 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/30 14:49:45 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/30 15:19:44 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,10 @@ static bool	philo_died(t_philo *p)
 		*p->s->philo_died = true;
 		if (handle_mutex(&p->s->main_lock, UNLOCK) != 0)
 			return (true);
+		if (handle_mutex(&p->s->monitor_lock, LOCK) != 0)
+			return (true);
 		print_philo(p, "died", true);
+		handle_mutex(&p->s->monitor_lock, UNLOCK);
 		return (true);
 	}
 	return (false);
@@ -83,21 +86,23 @@ void	*waiter_routine(void *data)
 	t_main	*s;
 
 	s = (t_main *)data;
-	usleep(500);
+	if (handle_mutex(&s->start_lock, LOCK) != 0)
+		return (NULL);
 	while (1)
 	{
 		if (handle_mutex(&s->main_lock, LOCK) != 0)
-			return (NULL);
+			break ;
 		if (*s->philo_died == true)
 		{
 			handle_mutex(&s->main_lock, UNLOCK);
 			break ;
 		}
 		if (handle_mutex(&s->main_lock, UNLOCK) != 0)
-			return (NULL);
+			break ;
 		if (check_philos(s) != 0)
-			return (NULL);
+			break ;
 		usleep(500);
 	}
+	handle_mutex(&s->start_lock, UNLOCK);
 	return (NULL);
 }
