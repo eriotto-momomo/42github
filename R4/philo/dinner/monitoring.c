@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 21:17:19 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/30 14:11:59 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/30 14:49:45 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,12 @@ static bool	philo_died(t_philo *p)
 {
 	if (philo_starved(p))
 	{
-		if (print_philo(p, "died", true) != 0)
-			return (true);
 		if (handle_mutex(&p->s->main_lock, LOCK) != 0)
 			return (true);
 		*p->s->philo_died = true;
-		handle_mutex(&p->s->main_lock, UNLOCK);
+		if (handle_mutex(&p->s->main_lock, UNLOCK) != 0)
+			return (true);
+		print_philo(p, "died", true);
 		return (true);
 	}
 	return (false);

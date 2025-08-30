@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:20:59 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/30 14:22:26 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/30 14:53:34 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ int	philo_eat(t_philo *p)
 	if (pick_forks(p) != 0)
 		return (1);
 	if (print_philo(p, "is eating", false) != 0)
-		return (1);
+		return (give_forks(p), 1);
 	if (philo_wait(p, p->tto_eat) != 0)
-		return (1);
+		return (give_forks(p), 1);
 	if (give_forks(p) != 0)
 		return (1);
 	if (handle_mutex(&p->s->monitor_lock, LOCK) != 0)
