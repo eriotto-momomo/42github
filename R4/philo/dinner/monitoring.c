@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 21:17:19 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/30 13:38:37 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/30 14:11:59 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ static bool	philo_starved(t_philo *p)
 		return (true);
 	elapsed_time = get_time_ms(p->last_meal);
 	if (elapsed_time < 0)
+	{
+		handle_mutex(&p->s->monitor_lock, UNLOCK);
 		return (true);
+	}
 	if (elapsed_time > p->tto_die)
 	{
 		handle_mutex(&p->s->monitor_lock, UNLOCK);

@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:20:59 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/30 13:37:45 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/30 14:22:26 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ int	philo_think(t_philo *p)
 {
 	if (dinner_is_done(p) != 0)
 		return (1);
-	print_philo(p, "is thinking", false);
+	if (print_philo(p, "is thinking", false) != 0)
+		return (1);
 	return (0);
 }
 
@@ -46,8 +47,10 @@ int	philo_sleep(t_philo *p)
 {
 	if (dinner_is_done(p) != 0)
 		return (1);
-	print_philo(p, "is sleeping", false);
-	philo_wait(p, p->tto_slp); // error_handling
+	if (print_philo(p, "is sleeping", false) != 0)
+		return (1);
+	if (philo_wait(p, p->tto_slp) != 0)
+		return (1);
 	return (0);
 }
 
@@ -55,43 +58,49 @@ int	philo_eat(t_philo *p)
 {
 	if (pick_forks(p) != 0)
 		return (1);
-	print_philo(p, "is eating", false);
-	philo_wait(p, p->tto_eat); // error_handling
+	if (print_philo(p, "is eating", false) != 0)
+		return (1);
+	if (philo_wait(p, p->tto_eat) != 0)
+		return (1);
 	if (give_forks(p) != 0)
 		return (1);
-	handle_mutex(&p->s->monitor_lock, LOCK);
+	if (handle_mutex(&p->s->monitor_lock, LOCK) != 0)
+		return (1);
 	if (gettimeofday(&p->last_meal, NULL) != 0)
 	{
 		handle_mutex(&p->s->monitor_lock, UNLOCK);
 		return (1);
 	}
 	p->meals_eaten++;
-	handle_mutex(&p->s->monitor_lock, UNLOCK);
+	if (handle_mutex(&p->s->monitor_lock, UNLOCK) != 0)
+		return (1);
 	if (dinner_is_done(p) != 0)
-		return (0);
+		return (1);
 	return (0);
 }
 
 int	print_philo(t_philo *p, char *status, bool end_dinner)
 {
-	int	now;  //now == %d a la place de %llu
+	int	now;
 
-	now = get_time_ms(p->s->ref_time); // error_handling
+	now = get_time_ms(p->s->ref_time);
 	if (now < 0)
 		return (1);
-	handle_mutex(&p->s->main_lock, LOCK);
+	if (handle_mutex(&p->s->main_lock, LOCK) != 0)
+		return (1);
 	if (end_dinner == true)
 	{
-		printf("%d %d %s\n", now, p->id, status);  //now == %d a la place de %llu
+		printf("%d %d %s\n", now, p->id, status);
 		handle_mutex(&p->s->main_lock, UNLOCK);
-		return (0);
+		return (1);
 	}
 	if (*p->s->philo_died == true)
 	{
 		handle_mutex(&p->s->main_lock, UNLOCK);
-		return (0);
+		return (1);
 	}
-	printf("%d %d %s\n", now, p->id, status); //now == %d a la place de %llu
-	handle_mutex(&p->s->main_lock, UNLOCK);
+	printf("%d %d %s\n", now, p->id, status);
+	if (handle_mutex(&p->s->main_lock, UNLOCK) != 0)
+		return (1);
 	return (0);
 }

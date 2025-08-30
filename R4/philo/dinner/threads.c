@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:20:59 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/30 13:21:44 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/30 14:15:56 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,10 @@ static int	solo_dinner(t_philo *p)
 			return (1);
 		}
 		while (1)
+		{
 			if (dinner_is_done(p) != 0)
 				break ;
+		}
 		if (handle_mutex(&p->frst_fork->fork, UNLOCK) != 0)
 			return (1);
 	}
@@ -80,7 +82,10 @@ static void	*start_dinner(void *data)
 	if (handle_mutex(&p->s->start_lock, LOCK) != 0)
 		return (NULL);
 	if (gettimeofday(&p->start_time, NULL) != 0)
+	{
+		handle_mutex(&p->s->start_lock, UNLOCK);
 		return (NULL);
+	}
 	p->last_meal = p->start_time;
 	if (p->n_philos > 1)
 	{

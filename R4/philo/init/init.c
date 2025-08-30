@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 13:55:47 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/30 13:17:18 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/30 14:18:45 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,8 @@ int	init_data(t_main *s)
 	if (init_forks(s->in[N_PHILO], s->forks) != 0)
 	{
 		handle_mutex(&s->main_lock, DESTROY);
+		handle_mutex(&s->start_lock, DESTROY);
+		handle_mutex(&s->monitor_lock, DESTROY);
 		free_structs(s);
 		return (1);
 	}

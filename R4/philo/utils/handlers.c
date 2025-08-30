@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 12:33:36 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/30 12:51:22 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/30 14:23:38 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	give_forks(t_philo *p)
 	return (0);
 }
 
-//v.2
 static int	choose_forks(t_philo *p, t_fork *first, t_fork *second)
 {
 	int	ret;
@@ -35,12 +34,6 @@ static int	choose_forks(t_philo *p, t_fork *first, t_fork *second)
 		return (1);
 	if (print_philo(p, "has taken a fork", false) != 0)
 		ret = 1;
-	//if (dinner_is_done(p) != 0)
-	//{
-	//	if (handle_mutex(&first->fork, UNLOCK) != 0)
-	//		return (1);
-	//	return (1);
-	//}
 	if (!ret && handle_mutex(&second->fork, LOCK) != 0)
 		ret = 1;
 	if (!ret && dinner_is_done(p) != 0)
@@ -51,43 +44,6 @@ static int	choose_forks(t_philo *p, t_fork *first, t_fork *second)
 		give_forks(p);
 	return (ret);
 }
-
-//v1
-//static int	choose_forks(t_philo *p, t_fork *first, t_fork *second)
-//{
-//	int	ret;
-
-//	ret = 0;
-//	if (handle_mutex(&first->fork, LOCK) != 0)
-//		return (1);
-//	if (print_philo(p, "has taken a fork", false) != 0)
-//	{
-//		if (handle_mutex(&first->fork, UNLOCK) != 0)
-//			return (1);
-//		return (1);
-//	}
-//	if (dinner_is_done(p) != 0)
-//	{
-//		if (handle_mutex(&first->fork, UNLOCK) != 0)
-//			return (1);
-//		return (1);
-//	}
-//	if (handle_mutex(&second->fork, LOCK) != 0)
-//	{
-//		if (handle_mutex(&first->fork, UNLOCK) != 0)
-//			return (1);
-//		return (1);
-//	}
-//	if (print_philo(p, "has taken a fork", false) != 0)
-//		return (give_forks(p), 1);
-//	if (dinner_is_done(p) != 0)
-//	{
-//		if (give_forks(p) != 0)
-//			return (1);
-//		return (1);
-//	}
-//	return (0);
-//}
 
 int	pick_forks(t_philo *p)
 {
