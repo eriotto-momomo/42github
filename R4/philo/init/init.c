@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 13:55:47 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/30 14:18:45 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/30 16:51:03 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static void	init_philos(t_main *s)
 	while (++i < s->in[N_PHILO])
 	{
 		s->philos[i].id = i + 1;
+		s->philos[i].frst_fork = &s->forks[i];
+		s->philos[i].scnd_fork = &s->forks[(i + 1) % s->in[N_PHILO]];
 		s->philos[i].frst_fork = &s->forks[i];
 		s->philos[i].scnd_fork = &s->forks[(i + 1) % s->in[N_PHILO]];
 		s->philos[i].meals_eaten = 0;

@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:20:59 by emonacho          #+#    #+#             */
-/*   Updated: 2025/08/30 14:53:34 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/08/30 16:49:37 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,20 @@ static int	philo_wait(t_philo *p, int tto_wait)
 
 int	philo_think(t_philo *p)
 {
+	int	think_time;
+
 	if (dinner_is_done(p) != 0)
 		return (1);
 	if (print_philo(p, "is thinking", false) != 0)
 		return (1);
+	think_time = p->tto_eat * 2 - p->tto_slp;
+	if (p->s->in[N_PHILO] % 2 != 0)
+	{
+		if (p->id % 2 != 0)
+			usleep((think_time * 500) * 0.45);
+		else
+			usleep(1000);
+	}
 	return (0);
 }
 
@@ -60,10 +70,6 @@ int	philo_eat(t_philo *p)
 		return (1);
 	if (print_philo(p, "is eating", false) != 0)
 		return (give_forks(p), 1);
-	if (philo_wait(p, p->tto_eat) != 0)
-		return (give_forks(p), 1);
-	if (give_forks(p) != 0)
-		return (1);
 	if (handle_mutex(&p->s->monitor_lock, LOCK) != 0)
 		return (1);
 	if (gettimeofday(&p->last_meal, NULL) != 0)
@@ -71,8 +77,12 @@ int	philo_eat(t_philo *p)
 		handle_mutex(&p->s->monitor_lock, UNLOCK);
 		return (1);
 	}
-	p->meals_eaten++;
 	if (handle_mutex(&p->s->monitor_lock, UNLOCK) != 0)
+		return (1);
+	if (philo_wait(p, p->tto_eat) != 0)
+		return (give_forks(p), 1);
+	p->meals_eaten++;
+	if (give_forks(p) != 0)
 		return (1);
 	if (dinner_is_done(p) != 0)
 		return (1);
